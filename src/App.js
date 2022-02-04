@@ -6,10 +6,11 @@ import {
   Link } from "react-router-dom";
 import logo from './logo.svg';
 import './App.css';
-import Chat from './components/Chat.js'
-import Hub from './components/Hub.js'
-import Login from './components/Login.js'
-
+import Chat from './views/Chat.js'
+import Profile from './views/Profile.js'
+import Login from './views/Login.js'
+import Admin from './views/Admin.js'
+import Circles from './views/Circles.js'
 function App() {
   return (
     <div className="App">
@@ -17,12 +18,16 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
       <Router>
         <Link to="/chat">chat</Link>
-        <Link to="/hub">hub</Link>
+        <Link to="/profile">profile</Link>
         <Link to="/login">login</Link>
+        <Link to="/circles">circles</Link>
+        <Link to="/admin">admin</Link>
         <div className='main'>
           <Routes>
             <Route path="/chat" element={<Chat/>}/>
-            <Route path="/hub" element={<Hub/>}/>
+            <Route path="/profile" element={<Profile/>}/>
+            <Route path="/circles" element={<Circles/>}/>
+            <Route path="/admin" element={<Admin/>}/>
             <Route path="/login" element={<Login/>}/>
           </Routes>
         </div>
