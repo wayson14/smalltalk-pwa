@@ -11,7 +11,12 @@ import Profile from './views/Profile.js'
 import Login from './views/Login.js'
 import Admin from './views/Admin.js'
 import Circles from './views/Circles.js'
+
+import {request, hosts} from './client';
+
 function App() {
+  request()
+    .then(res => {console.log(res);})
   return (
     <div className="App">
       <header className="App-header">
