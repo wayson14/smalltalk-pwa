@@ -1,0 +1,69 @@
+{
+    "user" : [
+        {
+            "userID": 1,
+            "email": "sposob.1104@gmail.com",
+            "password": "hash",
+            "facebook": "https://www.facebook.com/",
+            "fullName": "Szymon",
+            "name": "wayson",
+            "circlesID": [
+                1,
+                2,
+                3
+            ],
+            "sentMessages": [
+                1,
+                2,
+                3
+            ],
+            "receivedMessages": [
+                4,
+                5
+            ],
+            "matchID": 2,
+            "stats:":{
+                "longestConversation": 5
+            },
+            "isActive": true,
+            "status": "free" 
+
+            
+        }
+    ],
+    "message" : [
+        {
+            "messageID": 1,
+            "sendTime": "12:45",
+            "senderUserID": 2,
+            "receiverUserID": 1,
+            "content": "Hello world!",
+            "isRead": false
+        }
+    ],
+    "circle" : [
+        {
+            "circleId": 1,
+            "name": "Wiśniowa",
+            "localisation": "Warszawa",
+            "description": "Opis Kręgu",
+            "adminsID": [1],
+            "expireDate": "01.04.2022",
+            "creationDate": "01.02.2022",
+            "maxUsers": 50,
+            "reportsID": [1],
+            "usersID": [1, 2],
+            "stats": []
+        }
+    ],
+    "reports" : [
+        {
+            "reportID": 1,
+            "reason": "Fun.",
+            "description": "Description",
+            "reportedUserID": 1,
+            "reportingUserID": 2,
+            "responsibleCircleID": 1
+        }
+    ]
+  }
