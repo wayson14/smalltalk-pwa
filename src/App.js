@@ -4,7 +4,6 @@ import {
   Route,
   Routes,
   Link } from "react-router-dom";
-import logo from './logo.svg';
 import './App.css';
 import Chat from './views/Chat.js'
 import Profile from './views/Profile.js'
@@ -12,15 +11,14 @@ import Login from './views/Login.js'
 import Admin from './views/Admin.js'
 import Circles from './views/Circles.js'
 
-import {request, hosts} from './client';
+import {request} from './client';
 
 function App() {
-  request()
+  request('http://localhost:7000','/user')
     .then(res => {console.log(res);})
   return (
     <div className="App">
       <header className="App-header">
-        {/* <img src={logo} className="App-logo" alt="logo" /> */}
       <Router>
         <Link to="/chat">chat</Link>
         <Link to="/profile">profile</Link>
@@ -29,6 +27,7 @@ function App() {
         <Link to="/admin">admin</Link>
         <div className='main'>
           <Routes>
+            <Route path="/" element={<Profile/>}/>
             <Route path="/chat" element={<Chat/>}/>
             <Route path="/profile" element={<Profile/>}/>
             <Route path="/circles" element={<Circles/>}/>

@@ -1,8 +1,9 @@
+export const apiUrl = process.env.REACT_APP_API_URL;
+
 export const request = (host, path, options) => {
-    const address = process.env.REACT_APP_API_URL;
-    const location = "/test"
-    const url = address+location;
-    console.log(url);
+    host = host || process.env.REACT_APP_API_URL;
+    path  = path || "/test";
+    const url = host+path;
     return fetch(url, options).then(parseResponse);
 }
 
