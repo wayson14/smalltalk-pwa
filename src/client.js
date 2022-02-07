@@ -1,8 +1,38 @@
 export const apiUrl = process.env.REACT_APP_API_URL;
 
-export const request = ({host = process.env.REACT_APP_API_URL,
-     path = "/",
-     options = null}) => {
+export const request = ({
+    address = process.env.REACT_APP_API_URL,
+    path = "/",
+    options = {} }) => {
+        const {
+            headers,
+            query = null,
+            method = 'GET',
+            body, 
+            host = address
+        } = options;
+        assertPath(path);
+
+        const requestConfig = {
+            method, 
+            headers: {
+                'Content-Type': 'application/json',
+                ...headers,
+            }
+        };
+
+        if (body) {
+            requestConfig.body = typeof body === 'object' ? JSON.stringify(body): body;
+        }
+
+        let queryString = '';
+        if (query) {
+            queryString = new URLSearchParams(query).toString();
+            queryString = queryString && `?${queryString}`;
+        }
+
+        return fetch(`${host}${path}${queryString}`, requestConfig)
+        .then(parseResponse)
     // host = host || process.env.REACT_APP_API_URL;
     // path  = path || "/";
     const url = host+path;
@@ -21,7 +51,6 @@ const parseResponse = (response) => {
         .catch((err) => {
             return err.message;
         })
-        
 }
 
 function assertPath(path) {
