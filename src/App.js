@@ -14,8 +14,8 @@ import Circles from './views/Circles.js'
 import {request} from './client';
 
 function App() {
-  request('http://localhost:7000','/user')
-    .then(res => {console.log(res);})
+  // request('http://localhost:7000','/user')
+  //   .then(res => {console.log(res);})
   return (
     <div className="App">
       <header className="App-header">
