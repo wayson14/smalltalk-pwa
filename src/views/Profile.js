@@ -1,6 +1,6 @@
 import {React, useState, useEffect} from 'react';
 import {request} from '../client';
-import { getUser, getUserByID } from '../api_methods';
+import { getUser, createUser } from '../api_methods';
 const Profile = () => {
   const [userData, setUserData] = useState({});
   useEffect(() => {
@@ -9,7 +9,11 @@ const Profile = () => {
   return <div>
       <button onClick={()=> {
         getUser(4).then(user => console.log(user))
-      }}>fetch</button>
+      }}>fetch user 4</button>
+
+      <button onClick={()=> {
+        createUser('sposob', 'sposob.1104@gmail.com', 'passwdroot').then(user => console.log(user))
+      }}>create user</button>
     </div>;
 };
 
