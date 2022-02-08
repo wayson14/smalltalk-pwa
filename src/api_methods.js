@@ -19,6 +19,15 @@ export const createUser = (username, email, password) => {
     })
 }
 
+export const deleteUser = (id) => {
+    return request({
+        path: '/users/'+id+'/',
+        options: {
+            method: 'DELETE',
+        }
+    })
+}
+
 // export const createUser = (user) => {
 //     return request({path: '/users/'+id})
 // }

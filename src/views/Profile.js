@@ -1,6 +1,6 @@
 import {React, useState, useEffect} from 'react';
 import {request} from '../client';
-import { getUser, createUser } from '../api_methods';
+import { getUser, createUser, deleteUser } from '../api_methods';
 const Profile = () => {
   const [userData, setUserData] = useState({});
   useEffect(() => {
@@ -14,6 +14,10 @@ const Profile = () => {
       <button onClick={()=> {
         createUser('sposob', 'sposob.1104@gmail.com', 'passwdroot').then(user => console.log(user))
       }}>create user</button>
+
+<button onClick={()=> {
+        deleteUser(7).then(user => console.log(user))
+      }}>delete user</button>
     </div>;
 };
 

@@ -1,5 +1,16 @@
+:root {
+  --res-size: calc(10px + 2vmin);
+  --small-res-size: calc(var(--res-size) * 0.5);
+  --big-res-size: calc(var(--res-size) * 1.5);
+}
+
 .App {
   text-align: center;
+  background-color: #454952;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .App-logo {
@@ -15,17 +26,35 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
+.nav-item {
+  color: white;
+  padding: var(--small-res-size);
+}
+.logo {
+  justify-self: flex-end;
+  width: 100%;
+  text-align: end;
+  margin: var(--res-size);
+}
 .App-link {
   color: #61dafb;
+}
+
+.main {
+  width: 80%;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  padding: var(--res-size);
+  color: white;
 }
 
 @keyframes App-logo-spin {
@@ -35,4 +64,22 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* messages and chat */
+.Chat {
+  display: flex;
+  flex-direction: column; 
+  height: 70vh;
+}
+.message-body {
+  display: flex;
+}
+.messages-array {
+  height: 100%;
+}
+.input-section {
+  justify-self: flex-end;
+  display: flex;
+  justify-content: center; 
 }
