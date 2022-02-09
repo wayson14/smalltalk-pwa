@@ -6,7 +6,32 @@ const Chat = () => {
   const [message, setMessage] = useState('');
   const [count,setCount] = useState(0);
   // const [username, setUsername] = useState('asdf');
-  const [messagesArray, setMessagesArray] = useState([]);
+  const [messagesArray, setMessagesArray] = useState([{
+    username: "Bóg",
+    message: "Łona, co tam się dzieje?"
+  },
+  {
+    username: "Bóg",
+    message: "Święty Piotr wybrał losowo Twój numer Ja tu nic nie widzę z góry, bo mi zasłaniają chmury Widoczność licha, więc przestań pieprzyć, mów co słychać!"
+  },
+  {
+    username: "Łona",
+    message: "Aaa... kicha, każdy bezimienny Wszędzie jak nie wojna, to przynajmniej stan wojenny Władza to banda cwaniaków z największym na czele A Biblia dawno już przestała być bestsellerem"
+  },
+  {
+    username: "Bóg",
+    message: "Hmmm, to może jeszcze raz Mesjasza ześlę?"
+  },
+  {
+    username: "Łona",
+    message: "Nie wygłupiaj się, skończy na elektrycznym krześle!"
+  },
+  {
+    username: "Łona",
+    message: "Nie warto, szkoda czasu, ludziom w głowach się przewraca Jest już za późno, by nawracać"
+  }
+
+]);
   const [connectionStatus, setConnectionStatus] = useState(false);
   const [room, setRoom] = useState(1);
 
