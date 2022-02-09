@@ -1,12 +1,16 @@
-import {React, useState, useEffect} from 'react';
-import {request} from '../client';
-import { getUser, createUser, deleteUser } from '../api_methods';
+import {React, useState, useEffect, useContext} from 'react';
+import {request} from '../services/client';
+import { getUser, createUser, deleteUser } from '../services/api_methods';
+import { UserContext } from '../services/UserContext';
 const Profile = () => {
+
+  const { user, setUser } = useContext(UserContext)
   const [userData, setUserData] = useState({});
   useEffect(() => {
     console.log(userData);
   }, [userData])
-  return <div>
+  return (
+    <div>
       <button onClick={()=> {
         getUser(4).then(user => console.log(user))
       }}>fetch user 4</button>
@@ -15,10 +19,11 @@ const Profile = () => {
         createUser('sposob', 'sposob.1104@gmail.com', 'passwdroot').then(user => console.log(user))
       }}>create user</button>
 
-<button onClick={()=> {
+      <button onClick={()=> {
         deleteUser(7).then(user => console.log(user))
       }}>delete user</button>
-    </div>;
+      <>{user}</>
+    </div>)
 };
 
 export default Profile;

@@ -27,7 +27,10 @@ export const deleteUser = (id) => {
         }
     })
 }
-
+// chat
+export const getChatID = () => {
+    return 0;
+}
 // export const createUser = (user) => {
 //     return request({path: '/users/'+id})
 // }

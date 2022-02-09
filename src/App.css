@@ -48,6 +48,10 @@
   color: #61dafb;
 }
 
+/*utils*/
+.vertical {
+  flex-direction: column;
+}
 .main {
   width: 80%;
   justify-content: center;
@@ -83,3 +87,5 @@
   display: flex;
   justify-content: center; 
 }
+
+/* login */

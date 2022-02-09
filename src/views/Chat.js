@@ -1,13 +1,16 @@
-import {React, useState, useEffect} from 'react';
+import {React, useState, useEffect, useContext} from 'react';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
+import { UserContext } from '../services/UserContext';
 const Chat = () => {
 
   const [message, setMessage] = useState('');
   const [count,setCount] = useState(0);
-  const [username, setUsername] = useState('asdf');
+  // const [username, setUsername] = useState('asdf');
   const [messagesArray, setMessagesArray] = useState([]);
   const [connectionStatus, setConnectionStatus] = useState(false);
   const [room, setRoom] = useState(1);
+
+  const { user, setUser } = useContext(UserContext);
 
   let renderChat = 1;
 
@@ -18,7 +21,7 @@ const Chat = () => {
     client.send(JSON.stringify({
       type: "message",
       message: message,
-      username: username
+      username: user.username
     }));
   }
   
@@ -65,7 +68,7 @@ const Chat = () => {
         <div className="messages-array">{messagesArray.map(mes => {
           return <div className="message-body">
             <div className="message-sender">
-              {mes?.username}: 
+              {mes?.username + ": "} 
             </div>
             <div className="message-content">
               {mes?.message}
