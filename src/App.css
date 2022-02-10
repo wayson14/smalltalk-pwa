@@ -43,6 +43,8 @@
   width: 100%;
   text-align: end;
   margin: var(--res-size);
+  text-decoration: none;
+  color: white;
 }
 .App-link {
   color: #61dafb;
@@ -52,8 +54,15 @@
 .vertical {
   flex-direction: column;
 }
-.main {
+
+.wrapper {
   width: 80%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+.main {
+  width: fit-content;
   justify-content: center;
   display: flex;
   flex-direction: column;
