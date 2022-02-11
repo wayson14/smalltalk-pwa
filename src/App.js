@@ -6,7 +6,7 @@ import {
   Link } from "react-router-dom";
 import { UserContext } from "./services/UserContext";
 
-import './App.css';
+import './App.scss';
 import Chat from './views/Chat.js'
 import Profile from './views/Profile.js'
 import Login from './views/Login.js'
@@ -25,11 +25,11 @@ function App() {
       <UserContext.Provider value={value}>
         <Router>
           <header className="App-header">
-            <Link className="nav-item" to="/chat">chat</Link>
-            <Link className="nav-item" to="/profile">profile</Link>
-            <Link className="nav-item" to="/login">login</Link>
-            <Link className="nav-item" to="/circles">circles</Link>
-            <Link className="nav-item" to="/admin">admin</Link>
+            <Link className="nav-item" to="/chat">Chat</Link>
+            <Link className="nav-item" to="/profile">Profile</Link>
+            <Link className="nav-item" to="/circles">Circles</Link>
+            <Link className="nav-item" to="/login">Login</Link>
+            {/* <Link className="nav-item" to="/admin">admin</Link> */}
             <span className="nav-item">{user.username}</span>
             <h4 className='logo'>smallTalk</h4>
           </header>
