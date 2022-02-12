@@ -9,6 +9,7 @@ const Profile = () => {
   useEffect(() => {
     console.log(userData);
   }, [userData])
+
   return (
     <div>
       <button onClick={()=> {
@@ -22,7 +23,15 @@ const Profile = () => {
       <button onClick={()=> {
         deleteUser(7).then(user => console.log(user))
       }}>delete user</button>
-      <>{user}</>
+      <div className="userInfo">
+        <ul>
+          {Object.keys(user).map(key => {
+            return (
+                <li key={key}>{`${key}: ${user[key]}`}</li>
+              )})
+          }
+        </ul>
+      </div>
     </div>)
 };
 

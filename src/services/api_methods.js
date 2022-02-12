@@ -34,3 +34,37 @@ export const getChatID = () => {
 // export const createUser = (user) => {
 //     return request({path: '/users/'+id})
 // }
+
+//auth
+export const authUserLogin = (email, password) => {
+    //tu będzie połączenie z bazą danych autentykacji
+    //placeholder
+    return new Promise ((resolve, reject) => {
+        setTimeout(() => {
+            resolve({
+                username: email,
+                password: password
+            })
+        }, 1000)
+
+    })
+};
+
+export const authUserLogout = () => {
+    //połączenie z bazą danych i wylogowanie użytkownika
+    //placeholder
+    return new Promise ((resolve, reject) => {
+        setTimeout(() => {
+            resolve('')
+        }, 1000)
+    })
+
+};
+
+export const authUserRegister = () => {
+    return new Promise ((resolve, reject) => {
+        setTimeout(() => {
+            resolve('')
+        }, 1000)
+    })
+};

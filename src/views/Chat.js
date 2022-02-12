@@ -32,15 +32,21 @@ const Chat = () => {
   }
 
 ]);
-  const [connectionStatus, setConnectionStatus] = useState(false);
-  const [room, setRoom] = useState(1);
 
+
+
+  const [room, setRoom] = useState(0);
   const { user, setUser } = useContext(UserContext);
+  const [moreInfoTrigger, setMoreInfoTrigger] = useState(false);
 
   let renderChat = 1;
 
-  const url = `ws://127.0.0.1:8000/ws/chat/${room}/`
+  const chatEndpoint = process.env.REACT_APP_CHAT_URL;
+  const url = `${chatEndpoint}/${room}/`
   const client = new W3CWebSocket(url);
+  const [connectionStatus, setConnectionStatus] = useState(false);
+
+
 
   const sendMessage = (e, mes) => {
     client.send(JSON.stringify({
@@ -49,16 +55,7 @@ const Chat = () => {
       username: user.username
     }));
   }
-  
-  // const useStyles = theme => ({
-  //   paper: {
-  //     marginTop: theme.spacing(8),
-  //   },
-  //   avatar: {
-  //     margin: theme.spacing(1),
-  //     backgroundColor: theme.palette.secondary.main,
-  //   }
-  // })
+
   useEffect(() => {
     client.onopen = () => {
       console.log('WebSocket Client Connected');
@@ -84,6 +81,9 @@ const Chat = () => {
   useEffect(() => {
     console.log(messagesArray);
   }, [messagesArray])
+  useEffect(() => {
+    console.log(user);
+  }, [moreInfoTrigger])
 
   return (
       <div className="Chat">
@@ -91,7 +91,9 @@ const Chat = () => {
             <span>{message.message}: </span>
         })} */}
         <div className="messages-array">{messagesArray.map(mes => {
-          return <div className="message-body">
+          return <div className="message-body" onClick={(e) => {
+            setMoreInfoTrigger(!moreInfoTrigger);
+          }}>
             <div className="message-sender">
               {mes?.username + ": "} 
             </div>
