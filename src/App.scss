@@ -4,6 +4,7 @@ $purpel:#8C00FF;
 $black: #000000;
 *{
   background-color: $white;
+  color: $black;
 }
 :root {
   --res-size: calc(10px + 2vmin);
@@ -52,7 +53,6 @@ $black: #000000;
 }
 .App-link {
   background-color: #282c34;
-  color: $white;
 }
 
 /*utils*/
@@ -112,6 +112,7 @@ $black: #000000;
     border: none;
     height: 1.6rem;
     width: 100vw;
+    background-color: chocolate;
   }
 }
 /* login */
@@ -139,10 +140,9 @@ $black: #000000;
     height: 29px;
     top: 435px;
     background: $purpel;
-    box-shadow: 5px 4px 10px -3px rgba(0, 0, 0, 0.25);
-    border-radius: 14.5px;
-  }
-  img{
+    height: 29px;
+    top: 435px;
+    background: $purpel;
     float: left;
   }
   .inputLogin{
@@ -194,13 +194,9 @@ $black: #000000;
     }
   }
   .Register{
-    input{
-      background-color: $white;
-      border: none;
-    }
-    .inputLogin{
-      margin-top: 18vw;
-    }
+    height: 29px;
+    top: 435px;
+    background: $purpel;
     .pass2{
       margin-top: 25px;
     }

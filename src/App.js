@@ -45,7 +45,7 @@ function App() {
             <div className='main'>
               <Routes>
                 <Route path="/" element={user ? <Profile/> : <Login info={info}/>}/>
-                <Route path="/chat" element={user ? (user.room_id ? <Chat/> : <Match/>) : <Login info="Musisz się najpierw zalogować!"/>}/>
+                <Route path="/chat" element={user ? (user.roomID ? <Chat/> : <Match/>) : <Login info="Musisz się najpierw zalogować!"/>}/>
                 <Route path="/profile" element={user ? <Profile/> : <Login info="Musisz się najpierw zalogować!"/>}/>
                 <Route path="/circles" element={user ? <Circles/> : <Login info="Musisz się najpierw zalogować!"/>}/>
                 <Route path="/admin" element={<Admin/>}/>

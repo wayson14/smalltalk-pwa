@@ -76,7 +76,7 @@ const Login = ({info}) => {
   }
   
 
-  return <div className="Login">
+  return <div className="Login" onKeyUp={e => (e.key === 'Enter' && login())}>
     {!user ? (formType === 'login' ? 
     <div className='input-section vertical'>
       {/* <ArrayList array={loginInfo}></ArrayList> */}
