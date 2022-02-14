@@ -101,11 +101,14 @@ const Chat = () => {
         const code = mes.message.slice(1,4);
         console.log(code);
 
-        if (code == '001'){
+        if (code === '000'){
+          console.log(`Normal text message.`)
+        }
+        if (code === '001'){
           console.log(`${mes.username} wants to reveal.`)
         }
-        else if (code == '002'){
-          console.log(`Both parties want to reveal.`)
+        else if (code === '002'){ 
+          console.log(`Reveal signal.`)
         }
       }
       setMessagesArray(messagesArray => [...messagesArray, mes]);
