@@ -5,9 +5,12 @@ const placeholderPromise = (promisedReturnType) => {
         if (promisedReturnType === 'number') {
             resolve(1);
         }
-        if (promisedReturnType === 'ID') {
+        else if (promisedReturnType === 'ID') {
             const id = UUID.create(1);
             resolve(id);
+        }
+        else if (promisedReturnType === 'randomNumber') {
+            resolve(Math.floor(Math.random()*10000));
         }
         else if (promisedReturnType === 'string') {
             resolve('hello');
@@ -77,13 +80,14 @@ export const authUserLogin = (email, password) => {
     //tu będzie połączenie z bazą danych autentykacji
     //placeholder
     return new Promise ((resolve, reject) => {
-        const id = placeholderPromise('ID')
+        const id = 
         setTimeout(() => {
+            placeholderPromise('randomNumber').then(val => 
             resolve({
                 username: email,
                 password: password,
-                id: id
-            })
+                id: val
+            }))
         }, 1000)
 
     })

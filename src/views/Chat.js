@@ -1,10 +1,12 @@
 import {React, useState, useEffect, useContext} from 'react';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 import { UserContext } from '../services/UserContext';
+import useAsyncState from '../services/useAsyncState';
 const Chat = () => {
 
   const [message, setMessage] = useState('');
   const [count,setCount] = useState(0);
+  const [ifWanting, setIfWanting] = useAsyncState(false);
   // const [username, setUsername] = useState('asdf');
   const [messagesArray, setMessagesArray] = useState([{
     username: "Bóg",
@@ -40,7 +42,7 @@ const Chat = () => {
   const [moreInfoTrigger, setMoreInfoTrigger] = useState(false);
 
   let renderChat = 1;
-
+  const debug = process.env.REACT_APP_DEBUG;
   const chatEndpoint = process.env.REACT_APP_CHAT_URL;
   const url = `${chatEndpoint}/${room}/`
   const client = new W3CWebSocket(url);
@@ -60,11 +62,33 @@ const Chat = () => {
   }
 
   const revealUser = () =>{
-    return true;
+    setIfWanting(ifWanting => !ifWanting)
+      .then(currentState => {console.log(currentState)
+        client.send(JSON.stringify({
+          type: "message",
+          message: `#001 user of id: ${user.id} ${(currentState ? 'wants' : 'doesn\'t want to')} to reveal`,
+          username: user.username,
+          sendTime: new Date()
+        }));
+      })
+  
   }
   const rejectUser = () =>{
-    return true;
+    return true
   }
+
+  const sendRevealSignal = () => {
+    client.send(JSON.stringify({
+      type: "message",
+      message: `#002`,
+      username: 'server',
+      sendTime: new Date()
+    }));
+  }
+  // useEffect(() => {
+  //   {ifWanting & connectionStatus && 
+  //   }
+  // }, [ifWanting, connectionStatus])
   useEffect(() => {
     client.onopen = () => {
       console.log('WebSocket Client Connected');
@@ -72,8 +96,19 @@ const Chat = () => {
     }
 
     client.onmessage = (message) => {
-      const dataFromServer = JSON.parse(message.data);
-      setMessagesArray(messagesArray => [...messagesArray, dataFromServer]);
+      const mes = JSON.parse(message.data);
+      if (mes?.message.indexOf('#') === 0){
+        const code = mes.message.slice(1,4);
+        console.log(code);
+
+        if (code == '001'){
+          console.log(`${mes.username} wants to reveal.`)
+        }
+        else if (code == '002'){
+          console.log(`Both parties want to reveal.`)
+        }
+      }
+      setMessagesArray(messagesArray => [...messagesArray, mes]);
       setCount(count => count+1);
     }
 
@@ -93,6 +128,7 @@ const Chat = () => {
   // useEffect(() => {
   //   console.log(user);
   // }, [moreInfoTrigger])
+  
 
   return (
       <div className="Chat" onKeyUp={e => (e.key === 'Enter' && sendMessage(e,message))}>
@@ -100,6 +136,9 @@ const Chat = () => {
             <span>{message.message}: </span>
         })} */}
         <h2>chat nr {user.roomID}</h2>
+        {{debug} && <div>
+          <button onClick={()=> sendRevealSignal()}>send reveal signal</button>
+          </div>}
         <button onClick={() => revealUser()}>reveal</button>
         <button onClick={() => rejectUser()}>reject</button>
         <div className="messages-array">{messagesArray.map(mes => {
