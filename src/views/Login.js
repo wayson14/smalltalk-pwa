@@ -76,7 +76,11 @@ const Login = ({info}) => {
   }
   
 
-  return <div className="Login" onKeyUp={e => (e.key === 'Enter' && login())}>
+  return <div className="Login" onLoad={
+    ()=>authUserLogin('asdf@asdf.com', 'password')
+    .then(user => setUser(user))
+    .catch(err => setLoginInfo(err))
+    } onKeyUp={e => (e.key === 'Enter' && login())}>
     {!user ? (formType === 'login' ? 
     <div className='input-section vertical'>
       {/* <ArrayList array={loginInfo}></ArrayList> */}

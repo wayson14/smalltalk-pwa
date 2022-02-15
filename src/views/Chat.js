@@ -1,13 +1,23 @@
-import {React, useState, useEffect, useContext} from 'react';
+import { React, useState, useEffect, useContext } from 'react';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 import { UserContext } from '../services/UserContext';
 import useAsyncState from '../services/useAsyncState';
+import ChatEndView from './ChatEndView';
+
 const Chat = () => {
 
+  const { user, setUser } = useContext(UserContext);
+  const [contactUser, setContactUser] = useAsyncState(null);
+
   const [message, setMessage] = useState('');
-  const [count,setCount] = useState(0);
-  const [ifWanting, setIfWanting] = useAsyncState(false);
-  // const [username, setUsername] = useState('asdf');
+  const [count, setCount] = useState(0);
+  const [room, setRoom] = useState(0);
+
+  const [ifWanting, setIfWanting] = useAsyncState(false); //wanting to reveal
+  const [ifWantToReject, setIfWantToReject] = useAsyncState(false);
+  const [ifRevealed, setIfRevealed] = useAsyncState(false);
+  const [ifRejected, setIfRejected] = useAsyncState(false);
+
   const [messagesArray, setMessagesArray] = useState([{
     username: "Bóg",
     message: "Łona, co tam się dzieje?"
@@ -16,32 +26,12 @@ const Chat = () => {
     username: "Bóg",
     message: "Święty Piotr wybrał losowo Twój numer Ja tu nic nie widzę z góry, bo mi zasłaniają chmury Widoczność licha, więc przestań pieprzyć, mów co słychać!"
   },
-  // {
-  //   username: "Łona",
-  //   message: "Aaa... kicha, każdy bezimienny Wszędzie jak nie wojna, to przynajmniej stan wojenny Władza to banda cwaniaków z największym na czele A Biblia dawno już przestała być bestsellerem"
-  // },
-  // {
-  //   username: "Bóg",
-  //   message: "Hmmm, to może jeszcze raz Mesjasza ześlę?"
-  // },
-  // {
-  //   username: "Łona",
-  //   message: "Nie wygłupiaj się, skończy na elektrycznym krześle!"
-  // },
-  // {
-  //   username: "Łona",
-  //   message: "Nie warto, szkoda czasu, ludziom w głowach się przewraca Jest już za późno, by nawracać"
-  // }
-
-]);
+  ]);
 
 
-
-  const [room, setRoom] = useState(0);
-  const { user, setUser } = useContext(UserContext);
   const [moreInfoTrigger, setMoreInfoTrigger] = useState(false);
 
-  let renderChat = 1;
+  const contact = '';
   const debug = process.env.REACT_APP_DEBUG;
   const chatEndpoint = process.env.REACT_APP_CHAT_URL;
   const url = `${chatEndpoint}/${room}/`
@@ -61,9 +51,10 @@ const Chat = () => {
     setMessage(message => '')
   }
 
-  const revealUser = () =>{
+  const revealUser = () => {
     setIfWanting(ifWanting => !ifWanting)
-      .then(currentState => {console.log(currentState)
+      .then(currentState => {
+        console.log(currentState)
         client.send(JSON.stringify({
           type: "message",
           message: `#001 user of id: ${user.id} ${(currentState ? 'wants' : 'doesn\'t want to')} to reveal`,
@@ -71,18 +62,30 @@ const Chat = () => {
           sendTime: new Date()
         }));
       })
-  
+
   }
-  const rejectUser = () =>{
-    return true
+  const rejectUser = () => {
+    setIfWanting(ifWantToReject => !ifWantToReject)
+      .then(currentState => {
+        console.log(currentState)
+        client.send(JSON.stringify({
+          type: "message",
+          message: `#003 user of id: ${user.id} ${(currentState ? 'wants' : 'doesn\'t want to')} to reject`,
+          username: user.username,
+          sendTime: new Date()
+        }));
+        return 
+      })
+      .then()
   }
 
   const sendRevealSignal = () => {
     client.send(JSON.stringify({
       type: "message",
-      message: `#002`,
+      message: `#002 https://wp.pl`,
       username: 'server',
       sendTime: new Date()
+      //user object powinien tu być
     }));
   }
   // useEffect(() => {
@@ -97,22 +100,28 @@ const Chat = () => {
 
     client.onmessage = (message) => {
       const mes = JSON.parse(message.data);
-      if (mes?.message.indexOf('#') === 0){
-        const code = mes.message.slice(1,4);
+      if (mes?.message.indexOf('#') === 0) {
+        const code = mes.message.slice(1, 4);
+        setContactUser(mes.message.slice(4, mes.message.length))
         console.log(code);
 
-        if (code === '000'){
+        if (code === '000') {
           console.log(`Normal text message.`)
         }
-        if (code === '001'){
+        else if (code === '001') {
           console.log(`${mes.username} wants to reveal.`)
         }
-        else if (code === '002'){ 
+        else if (code === '002') {
           console.log(`Reveal signal.`)
+          setIfRevealed(true)
+        }
+        else if (code === '003') {
+          console.log(`${mes.username} rejects relationship.`);
+          setIfRejected(true);
         }
       }
       setMessagesArray(messagesArray => [...messagesArray, mes]);
-      setCount(count => count+1);
+      setCount(count => count + 1);
     }
 
     client.onclose = () => {
@@ -131,37 +140,43 @@ const Chat = () => {
   // useEffect(() => {
   //   console.log(user);
   // }, [moreInfoTrigger])
-  
+
 
   return (
-      <div className="Chat" onKeyUp={e => (e.key === 'Enter' && sendMessage(e,message))}>
-        {/* {messagesArray.map(message => {
+    <div className="Chat" onKeyUp={e => (e.key === 'Enter' && sendMessage(e, message))}>
+      {/* {messagesArray.map(message => {
             <span>{message.message}: </span>
         })} */}
-        <h2>chat nr {user.roomID}</h2>
-        {{debug} && <div>
-          <button onClick={()=> sendRevealSignal()}>send reveal signal</button>
-          </div>}
-        <button onClick={() => revealUser()}>reveal</button>
-        <button onClick={() => rejectUser()}>reject</button>
-        <div className="messages-array">{messagesArray.map(mes => {
-          return <div className="message-body" onClick={(e) => {
-            setMoreInfoTrigger(!moreInfoTrigger);
-          }}>
-            <div className="message-sender">
-              {mes?.username + ": "} 
-            </div>
-            <div className="message-content">
-              {mes?.message}
-            </div>
-            
-          </div>})
-        }</div>
-        <div className="input-section">
-          <input className="input-chat" type="text" onChange={e => setMessage(e.target.value)}></input>
-          <button onClick={e => sendMessage(e,message)}>send</button>
+      {ifRevealed && <ChatEndView contactUser={contactUser} type='reveal'></ChatEndView>}
+      {ifRejected && <ChatEndView type='reject'></ChatEndView>}
+      <h2>chat nr {user.roomID}</h2>
+      {{ debug } && <div>
+        <button onClick={() => sendRevealSignal()}>send reveal signal</button>
+      </div>}
+      <button onClick={() => revealUser()}>reveal</button>
+      <button onClick={() => rejectUser()}>reject</button>
+      <div className="messages-array">{messagesArray.map(mes => {
+        return <div className="message-body" onClick={(e) => {
+          setMoreInfoTrigger(!moreInfoTrigger);
+        }}>
+          <div className="message-sender">
+            {mes?.username + ": "}
+          </div>
+          <div className="message-content">
+            {mes?.message}
+          </div>
+
         </div>
-      </div>)
+      })
+      }</div>
+      <div className="input-section">
+        <input className="input-chat" value={message} type="text" onChange={e => setMessage(e.target.value)}></input>
+        <button onClick={e => {
+          setMessage('');
+          sendMessage(e, message);
+        }}>send</button>
+      </div>
+    </div>)
 };
 
 export default Chat;

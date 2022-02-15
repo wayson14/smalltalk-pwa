@@ -93,6 +93,8 @@ export const authUserLogin = (email, password) => {
     })
 };
 
+
+
 export const authUserLogout = () => {
     //połączenie z bazą danych i wylogowanie użytkownika
     //placeholder
@@ -111,3 +113,4 @@ export const authUserRegister = () => {
         }, 1000)
     })
 };
+

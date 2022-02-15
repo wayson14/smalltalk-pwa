@@ -15,16 +15,16 @@ $black: #000000;
 .App {
   text-align: center;
   background-color: $white;
-  min-width: 30vmax;
-  height: 8vmax;
+  // min-width: 30vmax;
+  // height: 8vmax;
   flex-direction: column;
   align-items: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+// .App-logo {
+//   height: 40vmin;
+//   pointer-events: none;
+// }
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
@@ -37,7 +37,8 @@ $black: #000000;
   background-color: #282c34;
   align-items: center;
   justify-content:space-around;
-  max-width: 104vmin;
+  width: 100%;
+  // max-width: 104vmin;
   flex-direction: row;
   font-size: calc(10px + 2vmin);
   color: $white;
@@ -56,6 +57,14 @@ $black: #000000;
 }
 
 /*utils*/
+button {
+  width: 100px;
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .vertical {
   flex-direction: column;
 }
@@ -90,30 +99,39 @@ $black: #000000;
 .message-body {
   display: flex;
 }
-.messages-array {
-  margin-top: 20%;
-  padding-left: 10%;
-  margin-bottom: 10vw;
-  height: 100%;
-}
+// .messages-array {
+//   margin-top: 20%;
+//   padding-left: 10%;
+//   margin-bottom: 10vw;
+//   height: 100%;
+// }
 .input-section {
   justify-self: flex-end;
   display: flex;
   justify-content: center;
-  button{
-    border: none;
-    height: 1.7rem;
-    border-radius: 30px;
-    font-family: $font;
-    font-weight: bold;
-  }
+  // button{
+  //   border: none;
+  //   height: 1.7rem;
+  //   border-radius: 30px;
+  //   font-family: $font;
+  //   font-weight: bold;
+  // }
   input{
-    border-radius: 10px;
+    border-radius: 5px;
     border: none;
     height: 1.6rem;
     width: 100vw;
-    background-color: chocolate;
+    background-color: lightcoral;
   }
+
+}
+.modal {
+  z-index: 5;
+  height: 100vh;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 /* login */
 .Login{

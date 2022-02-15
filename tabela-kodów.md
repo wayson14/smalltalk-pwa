@@ -4,3 +4,4 @@ Wiadomość może mieć tylko jeden kod lub żadnego.
 #000 (lub brak kodu na początku) - domyślna wiadomość tekstowa
 #001 - nadawca wiadomości chce ujawnienia
 #002 - sygnał wysyłany przez serwer dla klientów, że następuje ujawnienie
+#003 - nadawca wiadomości chce rozłączenia
