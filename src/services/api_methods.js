@@ -1,7 +1,7 @@
-import {request} from './client';
+import { request } from './client';
 const UUID = require('uuid-js');
 const placeholderPromise = (promisedReturnType) => {
-    return new Promise ((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         if (promisedReturnType === 'number') {
             resolve(1);
         }
@@ -10,7 +10,7 @@ const placeholderPromise = (promisedReturnType) => {
             resolve(id);
         }
         else if (promisedReturnType === 'randomNumber') {
-            resolve(Math.floor(Math.random()*10000));
+            resolve(Math.floor(Math.random() * 10000));
         }
         else if (promisedReturnType === 'string') {
             resolve('hello');
@@ -34,15 +34,19 @@ const placeholderPromise = (promisedReturnType) => {
             reject('some error');
         }
     }
-    )}
+    )
+}
 
-export const getUser = (id) => {
-    return request({path: '/users/'+id+'/'})
+export const getUser = (token) => {
+    return request({ 
+        path: '/auth/user/',
+        token: token,
+    })
 }
 
 export const createUser = (username, email, password) => {
     return request({
-        path: '/users/',
+        path: '/models/users/',
         options: {
             method: 'POST',
             body: {
@@ -56,7 +60,7 @@ export const createUser = (username, email, password) => {
 
 export const deleteUser = (id) => {
     return request({
-        path: '/users/'+id+'/',
+        path: '/models/users/' + id + '/',
         options: {
             method: 'DELETE',
         }
@@ -77,20 +81,31 @@ export const authRoom = () => {
 
 //auth
 export const authUserLogin = (email, password) => {
-    //tu będzie połączenie z bazą danych autentykacji
-    //placeholder
-    return new Promise ((resolve, reject) => {
-        const id = 
-        setTimeout(() => {
-            placeholderPromise('randomNumber').then(val => 
-            resolve({
-                username: email,
-                password: password,
-                id: val
-            }))
-        }, 1000)
-
+    //zwraca token autentykacyjny
+    return request({
+        path: '/auth/login/',
+        options: {
+            method: 'POST',
+            body: {
+                email: email,
+                password: password
+            }
+        } 
     })
+
+
+    // return new Promise((resolve, reject) => {
+    //     const id =
+    //         setTimeout(() => {
+    //             placeholderPromise('randomNumber').then(val =>
+    //                 resolve({
+    //                     username: email,
+    //                     password: password,
+    //                     id: val
+    //                 }))
+    //         }, 1000)
+
+    // })
 };
 
 
@@ -98,7 +113,7 @@ export const authUserLogin = (email, password) => {
 export const authUserLogout = () => {
     //połączenie z bazą danych i wylogowanie użytkownika
     //placeholder
-    return new Promise ((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         setTimeout(() => {
             resolve('')
         }, 1000)
@@ -107,7 +122,7 @@ export const authUserLogout = () => {
 };
 
 export const authUserRegister = () => {
-    return new Promise ((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         setTimeout(() => {
             resolve('')
         }, 1000)

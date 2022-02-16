@@ -1,6 +1,7 @@
 export const apiUrl = process.env.REACT_APP_API_URL;
 
 export const request = ({
+    token = '',
     address = process.env.REACT_APP_API_URL,
     path = "/",
     options = {} }) => {
@@ -13,6 +14,9 @@ export const request = ({
         } = options;
         assertPath(path);
 
+        if (token) {
+
+        }
         const requestConfig = {
             method, 
             headers: {
@@ -25,6 +29,9 @@ export const request = ({
             requestConfig.body = typeof body === 'object' ? JSON.stringify(body): body;
         }
 
+        if (token) {
+            requestConfig.headers.Authorization = 'Token '+token;
+        }
         let queryString = '';
         if (query) {
             queryString = new URLSearchParams(query).toString();
@@ -33,10 +40,10 @@ export const request = ({
 
         return fetch(`${host}${path}${queryString}`, requestConfig)
         .then(res => {
-            // if (!res.ok) console.log(res.statusText);
+            if (!res.ok) return null
             return parseResponse(res);
         })
-        .catch(err => console.log(err))
+        
     // host = host || process.env.REACT_APP_API_URL;
     // path  = path || "/";
     const url = host+path;
