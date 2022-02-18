@@ -1,4 +1,4 @@
-import { React, useState, useEffect, useContext } from 'react';
+import { React, useState, useEffect, useRef, useContext } from 'react';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 import { UserContext } from '../services/UserContext';
 import useAsyncState from '../services/useAsyncState';
@@ -9,6 +9,7 @@ const Chat = () => {
   const { user, setUser } = useContext(UserContext);
   const [contactUser, setContactUser] = useAsyncState(null);
 
+  const client = useRef();
   const [message, setMessage] = useState('');
   const [count, setCount] = useState(0);
   const [room, setRoom] = useState(0);
@@ -34,71 +35,22 @@ const Chat = () => {
   const contact = '';
   const debug = process.env.REACT_APP_DEBUG;
   const chatEndpoint = process.env.REACT_APP_CHAT_URL;
-  const url = `${chatEndpoint}/${room}/`
-  const client = new W3CWebSocket(url);
+  const url = `${chatEndpoint}/1/`
+  // const url = `${chatEndpoint}/${room}/`
   const [connectionStatus, setConnectionStatus] = useState(false);
 
 
-
-  const sendMessage = (e, mes) => {
-    console.log(mes);
-    client.send(JSON.stringify({
-      type: "message",
-      message: message,
-      username: user.username,
-      sendTime: new Date()
-    }));
-    setMessage(message => '')
-  }
-
-  const revealUser = () => {
-    setIfWanting(ifWanting => !ifWanting)
-      .then(currentState => {
-        console.log(currentState)
-        client.send(JSON.stringify({
-          type: "message",
-          message: `#001 user of id: ${user.id} ${(currentState ? 'wants' : 'doesn\'t want to')} to reveal`,
-          username: user.username,
-          sendTime: new Date()
-        }));
-      })
-
-  }
-  const rejectUser = () => {
-    setIfWanting(ifWantToReject => !ifWantToReject)
-      .then(currentState => {
-        console.log(currentState)
-        client.send(JSON.stringify({
-          type: "message",
-          message: `#003 user of id: ${user.id} ${(currentState ? 'wants' : 'doesn\'t want to')} to reject`,
-          username: user.username,
-          sendTime: new Date()
-        }));
-        return 
-      })
-      .then()
-  }
-
-  const sendRevealSignal = () => {
-    client.send(JSON.stringify({
-      type: "message",
-      message: `#002 https://wp.pl`,
-      username: 'server',
-      sendTime: new Date()
-      //user object powinien tu być
-    }));
-  }
-  // useEffect(() => {
-  //   {ifWanting & connectionStatus && 
-  //   }
-  // }, [ifWanting, connectionStatus])
+  
   useEffect(() => {
-    client.onopen = () => {
+
+    client.current = new WebSocket(url)
+
+    client.current.onopen = () => {
       console.log('WebSocket Client Connected');
       setConnectionStatus(true);
     }
 
-    client.onmessage = (message) => {
+    client.current.onmessage = (message) => {
       const mes = JSON.parse(message.data);
       if (mes?.message.indexOf('#') === 0) {
         const code = mes.message.slice(1, 4);
@@ -124,15 +76,70 @@ const Chat = () => {
       setCount(count => count + 1);
     }
 
-    client.onclose = () => {
+    client.current.onclose = () => {
       console.log('WebSocket Client Disconnected');
       setConnectionStatus(false);
     }
 
+    client.current.onerror = (e) => {
+      console.log('Error' + e.code);
+    }
+
     // w przyszłości
     // setUsername(getUsername())
-
+    
   }, [])
+
+  const revealUser = () => {
+    setIfWanting(ifWanting => !ifWanting)
+      .then(currentState => {
+        console.log(currentState)
+        client.current.send(JSON.stringify({
+          type: "message",
+          message: `#001 user of id: ${user.id} ${(currentState ? 'wants' : 'doesn\'t want to')} to reveal`,
+          username: user.username,
+          sendTime: new Date()
+        }));
+      })
+
+  }
+  const rejectUser = () => {
+    setIfWanting(ifWantToReject => !ifWantToReject)
+      .then(currentState => {
+        console.log(currentState)
+        client.current.send(JSON.stringify({
+          type: "message",
+          message: `#003 user of id: ${user.id} ${(currentState ? 'wants' : 'doesn\'t want to')} to reject`,
+          username: user.username,
+          sendTime: new Date()
+        }));
+        return
+      })
+      .then()
+  }
+
+  const sendRevealSignal = () => {
+    client.current.send(JSON.stringify({
+      type: "message",
+      message: `#002 https://wp.pl`,
+      username: 'server',
+      sendTime: new Date()
+      //user object powinien tu być
+    }));
+  }
+
+  const sendMessage = (e, mes) => {
+    console.log(mes, user.username);
+    client.current.send(JSON.stringify({
+      // type: "message",
+      message: message,
+      username: user.username,
+      // sendTime: new Date()
+    }));
+    setMessage(message => '')
+  }
+
+  
 
   useEffect(() => {
     console.log(messagesArray);

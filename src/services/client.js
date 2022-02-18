@@ -18,7 +18,9 @@ export const request = ({
 
         }
         const requestConfig = {
+            
             method, 
+            credentials: 'include', //wystarczyło dopisać jedną linię
             headers: {
                 'Content-Type': 'application/json',
                 ...headers,

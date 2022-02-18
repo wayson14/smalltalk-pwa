@@ -15,7 +15,6 @@
     "uuid-js": "^0.7.5",
     "web-vitals": "^0.2.4",
     "websocket": "^1.0.34",
-    "websockets": "^0.2.0",
     "workbox-background-sync": "^5.1.4",
     "workbox-broadcast-update": "^5.1.4",
     "workbox-cacheable-response": "^5.1.4",

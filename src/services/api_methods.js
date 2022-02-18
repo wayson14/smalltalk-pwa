@@ -88,24 +88,11 @@ export const authUserLogin = (email, password) => {
             method: 'POST',
             body: {
                 email: email,
-                password: password
+                password: password,
+                // csrfmiddlewaretoken: 'kw5wMHQxHJKAdZWArdYQn1e6oexuEL9vEdVaV5UugD068o1Za7h0qRX8y2WPtXEg' 
             }
         } 
     })
-
-
-    // return new Promise((resolve, reject) => {
-    //     const id =
-    //         setTimeout(() => {
-    //             placeholderPromise('randomNumber').then(val =>
-    //                 resolve({
-    //                     username: email,
-    //                     password: password,
-    //                     id: val
-    //                 }))
-    //         }, 1000)
-
-    // })
 };
 
 
@@ -121,11 +108,33 @@ export const authUserLogout = () => {
 
 };
 
-export const authUserRegister = () => {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve('')
-        }, 1000)
+export const authUserRegister = (email, password, username, socialContact) => {
+    return request({
+        path: '/auth/register/',
+        options: {
+            method: 'POST',
+            body: {
+                email: email,
+                password1: password,
+                password2: password,
+                social_contact: socialContact,
+                username: username
+            }
+        } 
     })
+
+   
+   
+   
+   
+   
+   
+   
+   
+    // return new Promise((resolve, reject) => {
+    //     setTimeout(() => {
+    //         resolve('')
+    //     }, 1000)
+    // })
 };
 

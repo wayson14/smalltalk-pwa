@@ -10,20 +10,26 @@ import ArrayList from '../components/ArrayList';
 import { authUserLogin, authUserLogout, authUserRegister, getUser } from '../services/api_methods';
 import useAsyncState from '../services/useAsyncState';
 
+// import coreapi from 'coreapi' 
 const Login = ({info}) => {
   
   const { user, setUser } = useContext(UserContext);
 
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
+  const [ username, setUsername ] = useState('');
   const [ confirmPassword, setConfirmPassword ] = useState('');
   const [ socialContact, setSocialContact ] = useState('');
 
   const [ token, setToken ] = useAsyncState('');
 
-  const [formType, setFormType ] = useState('login');
+  const [ formType, setFormType ] = useState('login');
   const [ loginInfo, setLoginInfo ] = useState([]);
   const [ submitted, setSubmitted ] = useState(false);
+
+
+  // let client  = new coreapi.Client()
+
   useEffect(() => {
     setLoginInfo(info);
   }, [info])
@@ -66,6 +72,11 @@ const Login = ({info}) => {
         // setUser(user);
       })
       .then(token => {
+        // let auth = client.auth.TokenAuthentication({
+        //   token: token
+        // })
+        // client = window.coreapi.Client({auth: auth})
+
         return getUser(token) //gdzieś by można przechowywać ten token,
         // jeszcze nie wiem gdzie 
       })
@@ -87,9 +98,10 @@ const Login = ({info}) => {
   }
 
   const register = () => {
+    console.log(email, password, username, socialContact);
     if(checkCredentials()){
-      authUserRegister()
-        .then(user => setUser(user))
+      authUserRegister(email, password, username, socialContact)
+        .then(res => console.log(res))
         .catch(err => setLoginInfo(err));
 
       setUser({
@@ -107,7 +119,10 @@ const Login = ({info}) => {
   //   .then(user => setUser(user))
   //   .catch(err => setLoginInfo(err))
   //   }
-     onKeyUp={e => (e.key === 'Enter' && login())}>
+     onKeyUp={e => {
+       e.key === 'Enter' & formType === 'login' && login()
+       e.key === 'Enter' & formType === 'register' && register()
+      }}>
     {!user ? (formType === 'login' ? 
     <div className='input-section vertical'>
       <ArrayList array={loginInfo}></ArrayList>
@@ -134,11 +149,14 @@ const Login = ({info}) => {
       <h1 className='hh1'>Rejestracja</h1>
       <div className='inputLogin'>
         <div className='loginInput'>
-          <input type="text" placeholder='Login' onChange={(e) => setEmail(e.target.value)}></input>
+          <input type="text" placeholder='Email' onChange={(e) => setEmail(e.target.value)}></input>
           <img src={userLogo} alt="" />
         </div>
         <div className='loginInput'>
           <input type="text" placeholder='Facebook/Telefon' onChange={(e) => setSocialContact(e.target.value)}></input>
+        </div>
+        <div className='loginInput'>
+          <input type="text" placeholder='Nazwa użytkownika' onChange={(e) => setUsername(e.target.value)}></input>
         </div>
         <div className='passwordInput'>
           <input type="password" placeholder='Hasło' onChange={(e) => setPassword(e.target.value)}></input>
