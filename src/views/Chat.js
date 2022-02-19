@@ -35,7 +35,7 @@ const Chat = () => {
   const contact = '';
   const debug = process.env.REACT_APP_DEBUG;
   const chatEndpoint = process.env.REACT_APP_CHAT_URL;
-  const url = `${chatEndpoint}/1/`
+  const url = `${chatEndpoint}/${user.roomID}/`
   // const url = `${chatEndpoint}/${room}/`
   const [connectionStatus, setConnectionStatus] = useState(false);
 
@@ -87,7 +87,9 @@ const Chat = () => {
 
     // w przyszłości
     // setUsername(getUsername())
-    
+    return () => {
+      client.current.close();
+    }
   }, [])
 
   const revealUser = () => {
