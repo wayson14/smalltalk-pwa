@@ -74,6 +74,13 @@ export const getRoomID = () => {
     })
 }
 
+export const getRoomMessages = () => {
+    return request({
+        path: '/get_room_messages/',
+        address: chatApiUrl 
+    })
+}
+
 export const joinWaitingroom = () => {
     return request({
         path: '/join_waitingroom/',
@@ -83,7 +90,14 @@ export const joinWaitingroom = () => {
 
 export const leaveWaitingroom = () => {
     return request({
-        path: '/join_waitingroom/',
+        path: '/leave_waitingroom/',
+        address: chatApiUrl 
+    })
+}
+
+export const closeSession = () => {
+    return request({
+        path: '/close_session/',
         address: chatApiUrl 
     })
 }

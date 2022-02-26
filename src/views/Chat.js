@@ -1,5 +1,7 @@
 import { React, useState, useEffect, useRef, useContext } from 'react';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
+import { request, chatApiUrl } from '../services/client'
+import { getRoomMessages } from '../services/api_methods'
 import { UserContext } from '../services/UserContext';
 import useAsyncState from '../services/useAsyncState';
 import ChatEndView from './ChatEndView';
@@ -42,7 +44,8 @@ const Chat = () => {
 
   
   useEffect(() => {
-
+    getRoomMessages()
+    .then(data => setMessagesArray(data.content))
     client.current = new WebSocket(url)
 
     client.current.onopen = () => {
@@ -101,8 +104,16 @@ const Chat = () => {
           message: `#001 user of id: ${user.id} ${(currentState ? 'wants' : 'doesn\'t want to')} to reveal`,
           username: user.username,
           sendTime: new Date()
-        }));
+        })); 
+        // tu należy dodać promisę, tak aby kod wykonywał się asynchronicznie
+        // z powodu tego, że ws jest wolniejsze od http???
       })
+      .then(() => {
+        return request({
+          address: chatApiUrl,
+          path: '/close_session/'
+      })
+    })
 
   }
   const rejectUser = () => {
@@ -115,9 +126,25 @@ const Chat = () => {
           username: user.username,
           sendTime: new Date()
         }));
+        request({
+          address: chatApiUrl,
+          path: '/leave_session/'
+        })
+        .then(() => {
+          return request({
+            address: chatApiUrl,
+            path: '/leave_waitingroom/'
+          })
+        })
+        .then(() =>{
+          return request({
+            address: chatApiUrl,
+            path: '/close_session/'
+          })
+        })
         return
       })
-      .then()
+
   }
 
   const sendRevealSignal = () => {
