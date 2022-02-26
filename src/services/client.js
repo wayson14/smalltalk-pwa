@@ -1,5 +1,5 @@
 export const apiUrl = process.env.REACT_APP_API_URL;
-
+export const chatApiUrl = process.env.REACT_APP_CHATAPI_URL;
 export const request = ({
     token = '',
     address = process.env.REACT_APP_API_URL,

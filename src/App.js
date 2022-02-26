@@ -13,12 +13,20 @@ import Login from './views/Login.js'
 import Admin from './views/Admin.js'
 import Circles from './views/Circles.js'
 import Match from './views/Match.js'
+
 import {request} from './services/client';
 
+import Test from './views/Test.js'
 function App() {
 
-  const [user, setUser] = useState('');
+  const [counter, setCounter] = useState(0);
+
+
+
+  const [user, setUser] = useState();
   const [info, setInfo] = useState('info');
+
+  
 
   const userValue = useMemo(() => ({ user, setUser }), [user, setUser]);
   const infoValue = useMemo(() => ({ info, setInfo}), [info, setInfo]);
@@ -30,7 +38,6 @@ function App() {
       
       <UserContext.Provider value={userValue}>
       <InfoContext.Provider value={infoValue}>
-        
         <Router>
           <header className="App-header">
             <Link className="nav-item" to="/chat">Chat</Link>
@@ -45,6 +52,7 @@ function App() {
             <div className='main'>
               <Routes>
                 <Route path="/" element={user ? <Profile/> : <Login info={info}/>}/>
+                <Route path="/counter" element={<Test counter={counter} setCounter={setCounter}/>}/>
                 <Route path="/chat" element={user ? (user.roomID ? <Chat/> : <Match/>) : <Login info="Musisz się najpierw zalogować!"/>}/>
                 <Route path="/profile" element={user ? <Profile/> : <Login info="Musisz się najpierw zalogować!"/>}/>
                 <Route path="/circles" element={user ? <Circles/> : <Login info="Musisz się najpierw zalogować!"/>}/>

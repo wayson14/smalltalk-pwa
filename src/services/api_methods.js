@@ -1,4 +1,4 @@
-import { request } from './client';
+import { request, apiUrl, chatApiUrl } from './client';
 const UUID = require('uuid-js');
 const placeholderPromise = (promisedReturnType) => {
     return new Promise((resolve, reject) => {
@@ -67,8 +67,25 @@ export const deleteUser = (id) => {
     })
 }
 // chat
-export const getRoomID = (userID) => {
-    return placeholderPromise('number');
+export const getRoomID = () => {
+    return request({
+        path: '/get_room_id/',
+        address: chatApiUrl 
+    })
+}
+
+export const joinWaitingroom = () => {
+    return request({
+        path: '/join_waitingroom/',
+        address: chatApiUrl 
+    })
+}
+
+export const leaveWaitingroom = () => {
+    return request({
+        path: '/join_waitingroom/',
+        address: chatApiUrl 
+    })
 }
 // export const createUser = (user) => {
 //     return request({path: '/users/'+id})
@@ -122,19 +139,21 @@ export const authUserRegister = (email, password, username, socialContact) => {
             }
         } 
     })
-
-   
-   
-   
-   
-   
-   
-   
-   
-    // return new Promise((resolve, reject) => {
-    //     setTimeout(() => {
-    //         resolve('')
-    //     }, 1000)
-    // })
 };
 
+// circles
+export const joinCircle = (code) => {
+    return placeholderPromise('number');
+    // return request({
+
+    // })
+}
+
+export const getCircle = (id) => {
+    return request({
+        path: '/models/circles/'+id,
+    });
+    // return request({
+
+    // })
+}

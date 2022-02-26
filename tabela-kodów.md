@@ -5,3 +5,5 @@ Wiadomość może mieć tylko jeden kod lub żadnego.
 #001 - nadawca wiadomości chce ujawnienia
 #002 - sygnał wysyłany przez serwer dla klientów, że następuje ujawnienie
 #003 - nadawca wiadomości chce rozłączenia
+#004 - błędny kod wiadomości (np.#4jj)
+#005 - nadawca wiadomości nie chce ujawnienia

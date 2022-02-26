@@ -12,6 +12,19 @@ $black: #000000;
   --big-res-size: calc(var(--res-size) * 1.5);
 }
 
+.square {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: blue;
+}
+.inner-square {
+  color: red;
+  width: 70%;
+  height: 70%;
+}
 .App {
   text-align: center;
   background-color: $white;
@@ -67,6 +80,10 @@ button {
 }
 .vertical {
   flex-direction: column;
+}
+.centered {
+  justify-content: center;
+  align-items: center;
 }
 .main {
   width: 80%;

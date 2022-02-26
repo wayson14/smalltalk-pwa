@@ -2,7 +2,7 @@ import React from 'react'
 
 const ArrayList = ({array}) => {
   return (
-    <>{array && 
+    <>{Array.isArray(array) && 
         <div>
             {array.map(el => {
                 return <div key={el}>{el}</div>
