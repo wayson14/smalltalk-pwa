@@ -1,7 +1,7 @@
 import { React, useState, useEffect, useRef, useContext } from 'react';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 import { request, chatApiUrl } from '../services/client'
-import { getRoomMessages } from '../services/api_methods'
+import { getRoomMessages, closeSession, leaveWaitingroom } from '../services/api_methods'
 import { UserContext } from '../services/UserContext';
 import useAsyncState from '../services/useAsyncState';
 import ChatEndView from './ChatEndView';
@@ -41,11 +41,14 @@ const Chat = () => {
   // const url = `${chatEndpoint}/${room}/`
   const [connectionStatus, setConnectionStatus] = useState(false);
 
-
+  const getMessageContent = (message) => {
+    return
+  }
   
   useEffect(() => {
     getRoomMessages()
-    .then(data => setMessagesArray(data.content))
+    .then(data => setMessagesArray(data?.content))
+    .catch(err => console.error(err))
     client.current = new WebSocket(url)
 
     client.current.onopen = () => {
@@ -57,6 +60,7 @@ const Chat = () => {
       const mes = JSON.parse(message.data);
       if (mes?.message.indexOf('#') === 0) {
         const code = mes.message.slice(1, 4);
+        
         setContactUser(mes.message.slice(4, mes.message.length))
         console.log(code);
 
@@ -67,10 +71,14 @@ const Chat = () => {
           console.log(`${mes.username} wants to reveal.`)
         }
         else if (code === '002') {
-          console.log(`Reveal signal.`)
+          console.log(`${mes}`)
           setIfRevealed(true)
         }
-        else if (code === '003') {
+        // else if (code === '003') {
+        //   console.log(`${mes.username} rejects relationship.`);
+        //   setIfRejected(true);
+        // }
+        else if (code === '006') {
           console.log(`${mes.username} rejects relationship.`);
           setIfRejected(true);
         }
@@ -96,56 +104,82 @@ const Chat = () => {
   }, [])
 
   const revealUser = () => {
-    setIfWanting(ifWanting => !ifWanting)
+    setIfWanting(ifWantint => !ifWanting)
       .then(currentState => {
         console.log(currentState)
-        client.current.send(JSON.stringify({
-          type: "message",
-          message: `#001 user of id: ${user.id} ${(currentState ? 'wants' : 'doesn\'t want to')} to reveal`,
-          username: user.username,
-          sendTime: new Date()
-        })); 
-        // tu należy dodać promisę, tak aby kod wykonywał się asynchronicznie
-        // z powodu tego, że ws jest wolniejsze od http???
-      })
-      .then(() => {
-        return request({
-          address: chatApiUrl,
-          path: '/close_session/'
+        return new Promise ((resolve, reject) => {
+          let messageInfo =  `${(currentState ? '#001' : '#005')} user of id: ${user.id} ${(currentState ? 'wants' : 'doesn\'t want to')} to reveal`
+          try{
+            client.current.send(JSON.stringify({
+              type: "message",
+              message: messageInfo,
+              username: user.username,
+              sendTime: new Date()
+          })
+          )
+        } catch (error) {
+          reject(error)
+        }
+          resolve(messageInfo)
       })
     })
+    .then(data => {
+      console.log(data)
+    })
+    // })
+    // .then(res => {
+    //   console.log(res)
+    //   return leaveWaitingroom()
+    // })
+    // .then(res => {
+    //   console.log(res)
+    //   setIfRevealed(true)
+    //   return 
+    // })
+    .catch(err => console.error(err))
+}
 
-  }
-  const rejectUser = () => {
-    setIfWanting(ifWantToReject => !ifWantToReject)
-      .then(currentState => {
-        console.log(currentState)
-        client.current.send(JSON.stringify({
-          type: "message",
-          message: `#003 user of id: ${user.id} ${(currentState ? 'wants' : 'doesn\'t want to')} to reject`,
-          username: user.username,
-          sendTime: new Date()
-        }));
-        request({
-          address: chatApiUrl,
-          path: '/leave_session/'
-        })
-        .then(() => {
-          return request({
-            address: chatApiUrl,
-            path: '/leave_waitingroom/'
+  
+const rejectUser = () => {
+  setIfWantToReject(ifWantToReject => !ifWantToReject)
+    .then(currentState => {
+      console.log(currentState)
+      return new Promise((resolve, reject) => {
+        let messageInfo = `#003 user of id: ${user.id} ${(currentState ? 'wants' : 'doesn\'t want to')} to reject`
+        try {
+          client.current.send(JSON.stringify({
+            type: "message",
+            message: messageInfo,
+            username: user.username,
+            sendTime: new Date()
           })
-        })
-        .then(() =>{
-          return request({
-            address: chatApiUrl,
-            path: '/close_session/'
-          })
-        })
-        return
+          )
+        } catch (error) {
+          reject(error)
+        }
+        resolve(messageInfo)
       })
+    })
+    // .then(data => {
+    //   console.log(data)
+    //   return closeSession()
+    // })
+    // .then(res => {
+    //   console.log(res)
+    //   return leaveWaitingroom()
+    // })
+    // .then(res => {
+    //   console.log(res)
+    //   setIfRejected(true)
+    //   return
+    // })
+    .catch(err => console.error(err))
+}
 
-  }
+      
+  //      
+
+  // }
 
   const sendRevealSignal = () => {
     client.current.send(JSON.stringify({

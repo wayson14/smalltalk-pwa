@@ -16,7 +16,7 @@ const Match = () => {
         }
         setUser(user => ({...user, roomID : res.message}))})
       .then(() => console.log(`User id: ${user.id} has been given a new room ID: ${user.roomID}`))
-      .catch(err => console.log(err))
+      .catch(err => console.error(err))
   }
 
   return (
