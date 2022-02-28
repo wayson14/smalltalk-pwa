@@ -1,4 +1,4 @@
-import {React, useState, useMemo } from 'react';
+import {React, useState, useMemo, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -13,6 +13,8 @@ import Login from './views/Login.js'
 import Admin from './views/Admin.js'
 import Circles from './views/Circles.js'
 import Match from './views/Match.js'
+
+// import OneSignal from 'react-onesignal';
 
 import {request} from './services/client';
 
@@ -31,6 +33,13 @@ function App() {
   const userValue = useMemo(() => ({ user, setUser }), [user, setUser]);
   const infoValue = useMemo(() => ({ info, setInfo}), [info, setInfo]);
   
+
+  // useEffect(() => {
+  //   OneSignal.init({
+  //     appId: "YOUR-APP-ID-HERE"
+  //   });
+  // }, []);
+
   // request('http://localhost:7000','/user')
   //   .then(res => {console.log(res);})
   return (
@@ -58,7 +67,7 @@ function App() {
                 <Route path="/circles" element={user ? <Circles/> : <Login info="Musisz się najpierw zalogować!"/>}/>
                 <Route path="/admin" element={<Admin/>}/>
                 <Route path="/login" element={<Login/>}/>
-                
+                <Route path="/test" element={<Test/>}/>
               </Routes>
             </div>
           </div>
