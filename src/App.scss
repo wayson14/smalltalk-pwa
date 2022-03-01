@@ -2,6 +2,7 @@ $font:'Lato', sans-serif;
 $white:#E5E5E5;
 $purpel:#8C00FF;
 $black: #000000;
+$header-height: 100px;
 *{
   background-color: $white;
   color: $black;
@@ -46,6 +47,8 @@ $black: #000000;
 }
 
 .App-header {
+  height: $header-height;
+  position: fixed;
   display: flex;
   background-color: #282c34;
   align-items: center;
@@ -87,6 +90,7 @@ button {
 }
 .main {
   width: 80%;
+  height: 100vh ;
   justify-content: center;
   display: flex;
   flex-direction: column;
