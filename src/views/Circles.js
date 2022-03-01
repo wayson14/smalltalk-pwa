@@ -1,11 +1,11 @@
 import { React, useState, useContext, useEffect } from 'react';
+import TopBar from './TopBar';
+import BottomBar from './BottomBar';
 import { UserContext } from '../services/UserContext';
 import { joinCircle, getCircle } from '../services/api_methods'
 import { request } from 'websocket';
 
 const Circles = () => {
-  const { user, setUser } = useContext(UserContext);
-  const [circleCode, setCircleCode ] = useState('')
   const [ circles, setCircles ] = useState([])
 
 
@@ -30,55 +30,10 @@ const Circles = () => {
   //   },
   // ]
 
-  useEffect(() => {
-    if(Array.isArray(user.circlesIDs)){
-      user.circlesIDs.map(circleID => {
-        getCircle(circleID)
-          .then(circleData => setCircles(circles => {
-            return [...circles, circleData]
-          }))
-      })
-    } 
-  }, [user])
+
 
   return <div>
-    <form>
-      <input type="text" placeholder="kod" onChange={
-        (e) => {setCircleCode(() => e.target.value)
-        }
-      }></input>
-      <button onClick={
-        (e)=>{
-          //to będzie robione w Django
-          e.preventDefault();
-          
-          
-    
-          joinCircle(circleCode)
-            .then(circleID => {
-              if (user.circlesIDs){
-                if(user.circlesIDs.indexOf(circleID) > -1){
-                  alert('Dołączono już do tego kręgu!')
-                  return
-                }
-                  
-              }
-              let IDs = [];
-              {Array.isArray(user.circlesIDs) ?
-                IDs = [...user.circlesIDs, circleID]
-                :
-                IDs = [circleID]
-              }
-              setUser(user => ({
-                ...user,
-                circlesIDs : IDs, 
-              }))
-            })
-            .catch(err => console.log(err)) }
-      }>
-        dołącz do kręgu
-      </button>
-    </form>
+    <TopBar/>
     {/* <pre>
       {circles.map((circle) => {
         return(
@@ -109,6 +64,7 @@ const Circles = () => {
       }
       
     </pre>
+    <BottomBar/>
   </div>;
 };
 

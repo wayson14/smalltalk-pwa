@@ -21,6 +21,7 @@ const Chat = () => {
   const [ifRevealed, setIfRevealed] = useAsyncState(false);
   const [ifRejected, setIfRejected] = useAsyncState(false);
 
+
   const [messagesArray, setMessagesArray] = useState([{
     username: "Bóg",
     message: "Łona, co tam się dzieje?"

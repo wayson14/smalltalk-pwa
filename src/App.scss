@@ -1,10 +1,25 @@
 $font:'Lato', sans-serif;
-$white:#E5E5E5;
+$grey:#A5A5A5;
+$white:#FFFFFF;
 $purpel:#8C00FF;
 $black: #000000;
+$red: #FC7171;
 *{
   background-color: $white;
   color: $black;
+  input:focus{
+    outline: none;
+    text-decoration: none;
+    .Bottom-header{
+      background-color: #000000;
+    }
+  }
+  button:focus{
+    outline: none;
+  }
+  textarea:focus{
+    outline: none;
+  }
 }
 :root {
   --res-size: calc(10px + 2vmin);
@@ -28,8 +43,8 @@ $black: #000000;
 .App {
   text-align: center;
   background-color: $white;
-  // min-width: 30vmax;
-  // height: 8vmax;
+  min-width: 30vmax;
+  height: 8vmax;
   flex-direction: column;
   align-items: center;
 }
@@ -47,34 +62,63 @@ $black: #000000;
 
 .App-header {
   display: flex;
-  background-color: #282c34;
+  background-color: $white;
   align-items: center;
   justify-content:space-around;
-  width: 100%;
-  // max-width: 104vmin;
+  min-width: 100vmin;
   flex-direction: row;
   font-size: calc(10px + 2vmin);
   color: $white;
+  .homeLogo{
+    box-shadow: none;
+  }
 }
 .nav-item {
   color: $white;
   text-decoration: none;
-  background-color: #282c34;
 }
 .logo {
   text-align: end;
-  background-color: #282c34;
 }
 .App-link {
   background-color: #282c34;
 }
-
+.Bottom-header{
+  z-index: 99;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  bottom: 0 !important; 
+  width: 100vw;
+  height: 56vw;
+  box-shadow: 0px -1px 11px 2px rgba(0, 0, 0, 0.25);
+  border-radius: 54px 54px 0 0;
+  background-color: $white;
+  margin-bottom: -45vw;
+  transition: 0.7s;
+  .nav-item{
+    width: 25vw;
+    background-color: $white;
+    color: $black;
+    font-weight: bold;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.35);
+    border-radius: 23px;
+    padding: 10px;
+  }
+  img{
+    margin-bottom: 5vw;
+    transition: .5s;
+    transform: rotate(180deg);
+  }
+  input{
+    display: none;
+  }
+}
 /*utils*/
 button {
   width: 100px;
 }
 .wrapper {
-  display: flex;
   flex-direction: column;
   align-items: center;
 }
@@ -150,7 +194,6 @@ button {
   top: 0;
   left: 0;
 }
-/* login */
 .Login{
   color: $black;
   h1{
@@ -160,6 +203,7 @@ button {
     margin-top: 20vw;
   }
   input{
+    font-family: $font;
     display: inline-flex;
     width: 80%;
     height: 31px;
@@ -173,27 +217,48 @@ button {
     font-family: $font;
     width: 94px;
     height: 29px;
-    top: 435px;
     background: $purpel;
-    height: 29px;
-    top: 435px;
-    background: $purpel;
+    box-shadow: 5px 4px 10px -3px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+  }
+  img{
     float: left;
+
   }
   .inputLogin{
+    display: flex;
+    flex-direction: column;
+    position: relative;
     margin-top: 22vw;
-    margin-left: 15vw;
+    margin-left: 8vw;
     margin-right: -5vw;
     border-radius: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.30);
+    width: 84vw;
+    height: 278px;
+    z-index: 2;
     button{
-      margin-top: 8vw;
-      margin-left: 44vw;
+      margin-top: 10vw;
+      position: relative;
+    }
+  }
+  .bttn{
+    display: flex;
+    justify-content: flex-end;
+    width: 90%;
+    button{
+      font-size: 15px;
+      height: 9vw;
+      width: 25vw;
     }
   }
   .loginInput{
     box-shadow: 5px 4px 10px -3px rgba(0, 0, 0, 0.25);
     border-radius: 2px;
     margin-bottom: 25px;
+    margin-top: 55px;
+    margin-left: 25px;
+    width: 80%;
     img{
       margin-top: 2vw;
       margin-left: 4vw;
@@ -202,6 +267,9 @@ button {
   .passwordInput{
     box-shadow: 5px 4px 10px -3px rgba(0, 0, 0, 0.25);
     border-radius: 2px;
+    margin-bottom: 10px;
+    margin-left: 25px;
+    width: 80%;
     img{
       margin-top: 2vw;
       margin-left: 4vw;
@@ -211,29 +279,77 @@ button {
     align-items:flex-end;
     display: inline-flex;
     position: fixed;
-    bottom: 0;
+    bottom: 3vw;
     width: 100%;
     justify-content: center;
     p{
+      font-weight: 400;
       z-index: 2;
-      font-weight: bold;
     }
     .option-button{
       align-self: center;
       z-index: 1;
-      width: 34%;
+      width: 30%;
       color: $purpel;
       background-color: $white;
       box-shadow: none;
       font-size: 15px;
+      font-weight: 400;
+      margin-left: -3vw;
+    }
+  }
+  .error{
+    animation: color-change 1.5s,shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    img{
+      animation: color-change 1.5s;
+    }
+    input{
+      color: #FFFFFF;
+      animation: color-change 1.5s;
+    }
+    ::placeholder{
+      color: $white;
+    }
+  }
+  @keyframes color-change {
+    0% { background-color: $white;}
+    50% { background-color: $red;}
+    100% { background-color: $white;}
+  }
+  @keyframes shake {
+    10%, 90% {
+      transform: translate3d(-1px, 0, 0);
+    }
+    
+    20%, 80% {
+      transform: translate3d(2px, 0, 0);
+    }
+  
+    30%, 50%, 70% {
+      transform: translate3d(-4px, 0, 0);
+    }
+  
+    40%, 60% {
+      transform: translate3d(4px, 0, 0);
     }
   }
   .Register{
-    height: 29px;
-    top: 435px;
-    background: $purpel;
+    .register{
+      height: 108vw;
+    }
+    .fb{
+      margin-top: 1vw;
+    }
+    input{
+      background-color: $white;
+      border: none;
+    }
+    .inputLogin{
+      margin-top: 18vw;
+    }
     .pass2{
-      margin-top: 25px;
+      margin-top: 20px;
+      margin-bottom: 10px;
     }
     .hh1{
       margin-top: 14vw;
@@ -251,11 +367,198 @@ button {
       margin-top: 4vw;
       background-color:$white;
       box-shadow: none;
-      width: 10%;
+      width: 15vw;
+      margin-left: 4vw;
       img{
         width: 10vw;
         height: 10vw;
       }
     }
+  }
+}
+//Bottom navabar
+.burger{
+  display: none;
+}
+input:checked + .Bottom-header{
+    margin-bottom: 0 !important;
+    transition: .7s;
+    .image{
+      transform: rotate(360deg);
+      transition: .5s;
+    }
+}
+.Bottom-header{
+  z-index: 99;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  bottom: 0 !important; 
+  width: 100vw;
+  height: 56vw;
+  box-shadow: 0px -1px 11px 2px rgba(0, 0, 0, 0.25);
+  border-radius: 54px 54px 0 0;
+  background-color: $white;
+  margin-bottom: -45vw;
+  transition: 0.7s;
+  .nav-item{
+    width: 25vw;
+    background-color: $white;
+    color: $black;
+    font-weight: bold;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.35);
+    border-radius: 23px;
+    padding: 10px;
+  }
+  img{
+    margin-bottom: 5vw;
+    transition: .5s;
+    transform: rotate(180deg);
+  }
+  input{
+    display: none;
+  }
+}
+.popUp{
+  z-index: 100;
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0, 0.3);
+  .window{
+    display: flex;
+    background-color: rgba(0,0,0, 0.0);
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    .contentt{
+      box-shadow: 0px -1px 11px 2px rgba(0, 0, 0, 0.25);
+      border-radius: 54px;
+    }
+  }
+}
+.inf{
+  padding: 0px 3.8vw;
+  .bc{
+    display: none;
+  }
+  p{
+    margin-top: -3vw;
+    color: #ABAAAA;
+  }
+  .des{
+    color: $black;
+    display: flex;
+    margin-left: 15%;
+    width: 70%;
+  }
+  .insta{
+    display: none;
+  }
+  .fb{
+    display: none;
+  }
+  .logOut{
+    display: none;
+  }
+  .chatBttns{
+    display: none;
+  }
+}
+.profile{
+  z-index: 101;
+  box-shadow: 0px -1px 11px 2px rgba(0, 0, 0, .5);;
+  padding: 0px 0 8px 0;
+  width: 70vw;
+  .user{
+    margin-top: 10vw;
+  }
+  .bc{
+    border-radius: 54px 54px 0 0 ;
+    width: 70vw;
+    height: 30vw;
+    background-color: $purpel;
+    display: flex;
+    justify-content: center;
+  }
+  .avatar{
+    border-radius: 52px;
+    display: flex;
+    margin-top: 16vw;
+    justify-content: center;
+    position: absolute;
+    width: 90px;
+    height: 90px;
+  }
+  .fb{
+    margin-top: 10vw;
+    margin-left: 8vw;
+    margin-bottom: -5vw;
+    width: 50vw;
+    display: flex;
+    img{
+      margin-right: 4vw;
+    }
+    p{
+      font-weight: 400;
+    }
+  }
+  .insta{
+    margin-left: 8vw;
+    display: flex;
+    img{
+      margin-right: 4vw;
+    }
+    p{
+      font-weight: 400;
+    }
+  }
+  .logOut{
+    border-radius: 35px;
+    height: 20vw;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    button{
+      font-family: $font;
+      width: 223px;
+      height: 22px;
+      font-size: 18px;
+      background-color: none;
+      border: none;
+      color: $red;
+    }
+  }
+  .chatBttns{
+    display: none;
+  }
+}
+.chatPopUp{
+  width: 59%;
+  padding: 30px 30px ;
+  img{
+    margin-top: 5vw;
+  }
+  .better{
+    margin-left: 15vw;
+  }
+  .bc{
+    display: none;
+  }
+  .fb{
+    display: none;
+  }
+  .logOut{
+    display: none;
+  }
+  .insta{
+    margin-top: -10vw;
+  }
+  .chatBttns{
+    display: none;
   }
 }

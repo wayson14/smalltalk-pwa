@@ -14,7 +14,7 @@ import useAsyncState from '../services/useAsyncState';
 const Login = ({info}) => {
   
   const { user, setUser } = useContext(UserContext);
-
+  const [ style, setStyle ] = useState('');
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
   const [ username, setUsername ] = useState('');
@@ -61,11 +61,18 @@ const Login = ({info}) => {
     console.log('logout');
   }
 
+
+  const loginError = ()=>{
+    setTimeout(function(){setStyle('error')},100)
+    setTimeout(function(){setStyle('')},1300)
+  }
+
   const login = () => {
     authUserLogin(email, password)
       .then(res => {
         if (res === null){
-          throw new Error('Złe dane logowania!');
+          // throw new Error('Złe dane logowania!');
+          loginError()
         }
         // setToken(token)
         return res.key;
@@ -125,18 +132,20 @@ const Login = ({info}) => {
       }}>
     {!user ? (formType === 'login' ? 
     <div className='input-section vertical'>
-      <ArrayList array={loginInfo}></ArrayList>
+      {/* <ArrayList array={loginInfo}></ArrayList> */}
       <h1>Logowanie</h1>
-      <div className='inputLogin'>
-        <div className='loginInput'>
+      <div className={`inputLogin`}>
+        <div className={`loginInput ${style}`}>
           <input type="text" placeholder='Login' onChange={(e) => setEmail(e.target.value)}></input>
           <img src={userLogo} alt="" />
         </div>
-        <div className='passwordInput'>
+        <div className={`passwordInput ${style}`}>
           <input type="password" placeholder='Hasło' onChange={(e) => setPassword(e.target.value)}></input>
           <img src={passwordLogo} alt="" />
         </div>
-        <button onClick={() => login()}>Zaloguj ➜</button>
+        <div className='bttn'>
+          <button onClick={() => login()}>Zaloguj ➜</button>
+        </div>
       </div>
       <div className="footer">
         <p>Nie masz konta?</p>
@@ -147,16 +156,16 @@ const Login = ({info}) => {
       <ArrayList array={loginInfo}></ArrayList>
       <button className="option" onClick={() => setFormType('login') }> <img src={arrowLogo} alt="" /> </button>
       <h1 className='hh1'>Rejestracja</h1>
-      <div className='inputLogin'>
-        <div className='loginInput'>
+      <div className='inputLogin register'>
+        <div className={`loginInput`}>
           <input type="text" placeholder='Email' onChange={(e) => setEmail(e.target.value)}></input>
           <img src={userLogo} alt="" />
         </div>
-        <div className='loginInput'>
-          <input type="text" placeholder='Facebook/Telefon' onChange={(e) => setSocialContact(e.target.value)}></input>
-        </div>
-        <div className='loginInput'>
+        <div className='loginInput fb'>
           <input type="text" placeholder='Nazwa użytkownika' onChange={(e) => setUsername(e.target.value)}></input>
+        </div>
+        <div className='loginInput fb'>
+          <input type="text" placeholder='Facebook/Telefon' onChange={(e) => setSocialContact(e.target.value)}></input>
         </div>
         <div className='passwordInput'>
           <input type="password" placeholder='Hasło' onChange={(e) => setPassword(e.target.value)}></input>
@@ -166,7 +175,9 @@ const Login = ({info}) => {
           <input type="password" placeholder='Powtórz Hasło' onChange={(e) => setConfirmPassword(e.target.value)}></input>
           <img src={passwordLogo} alt="" />
         </div>
-        <button onClick={() => register()}>Utwórz ➜</button>
+        <div className='bttn'>
+          <button onClick={() => register()}>Utwórz ➜</button>
+        </div>
       </div>
       <div className="footer">
         <p>Masz już konto?</p>

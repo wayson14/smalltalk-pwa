@@ -48,15 +48,6 @@ function App() {
       <UserContext.Provider value={userValue}>
       <InfoContext.Provider value={infoValue}>
         <Router>
-          <header className="App-header">
-            <Link className="nav-item" to="/chat">Chat</Link>
-            <Link className="nav-item" to="/profile">Profile</Link>
-            <Link className="nav-item" to="/circles">Circles</Link>
-            <Link className="nav-item" to="/login">Login</Link>
-            {/* <Link className="nav-item" to="/admin">admin</Link> */}
-            {/* <span className="nav-item">{user.username}</span> */}
-            <h4 className='logo'><Link to="/" className='logo'>smallTalk</Link></h4>
-          </header>
           <div className='wrapper'>
             <div className='main'>
               <Routes>
