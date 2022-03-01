@@ -13,6 +13,7 @@ import Login from './views/Login.js'
 import Admin from './views/Admin.js'
 import Circles from './views/Circles.js'
 import Match from './views/Match.js'
+import Searching from './views/Searching';
 
 // import OneSignal from 'react-onesignal';
 
@@ -56,6 +57,7 @@ function App() {
                 <Route path="/chat" element={user ? (user.roomID ? <Chat/> : <Match/>) : <Login info="Musisz się najpierw zalogować!"/>}/>
                 <Route path="/profile" element={user ? <Profile/> : <Login info="Musisz się najpierw zalogować!"/>}/>
                 <Route path="/circles" element={user ? <Circles/> : <Login info="Musisz się najpierw zalogować!"/>}/>
+                <Route path="/searching" element={<Searching/>}/>
                 <Route path="/admin" element={<Admin/>}/>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/test" element={<Test/>}/>

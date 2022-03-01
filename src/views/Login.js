@@ -63,7 +63,7 @@ const Login = ({info}) => {
 
 
   const loginError = ()=>{
-    setTimeout(function(){setStyle('error')},100)
+    setTimeout(function(){setStyle('loginError')},100)
     setTimeout(function(){setStyle('')},1300)
   }
 

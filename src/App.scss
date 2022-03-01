@@ -298,41 +298,6 @@ button {
       margin-left: -3vw;
     }
   }
-  .error{
-    animation: color-change 1.5s,shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
-    img{
-      animation: color-change 1.5s;
-    }
-    input{
-      color: #FFFFFF;
-      animation: color-change 1.5s;
-    }
-    ::placeholder{
-      color: $white;
-    }
-  }
-  @keyframes color-change {
-    0% { background-color: $white;}
-    50% { background-color: $red;}
-    100% { background-color: $white;}
-  }
-  @keyframes shake {
-    10%, 90% {
-      transform: translate3d(-1px, 0, 0);
-    }
-    
-    20%, 80% {
-      transform: translate3d(2px, 0, 0);
-    }
-  
-    30%, 50%, 70% {
-      transform: translate3d(-4px, 0, 0);
-    }
-  
-    40%, 60% {
-      transform: translate3d(4px, 0, 0);
-    }
-  }
   .Register{
     .register{
       height: 108vw;
@@ -376,6 +341,53 @@ button {
     }
   }
 }
+
+.codeCircleError{
+  animation: color-change 1.5s,shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+  input{
+    color: #FFFFFF;
+    animation: color-change 1.5s;
+  }
+  ::placeholder{
+    color: $white;
+  }
+}
+.loginError{
+  animation: color-change 1.5s,shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+  img{
+    animation: color-change 1.5s;
+  }
+  input{
+    color: #FFFFFF;
+    animation: color-change 1.5s;
+  }
+  ::placeholder{
+    color: $white;
+  }
+}
+@keyframes color-change {
+  0% { background-color: $white;}
+  50% { background-color: $red;}
+  100% { background-color: $white;}
+}
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
 //Bottom navabar
 .burger{
   display: none;
@@ -561,4 +573,135 @@ input:checked + .Bottom-header{
   .chatBttns{
     display: none;
   }
+}
+
+//Match QrScanner
+.Scanner{
+  position: relative;
+  width: 100vw;
+  height: 74vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  .codeInput{
+    width: 200px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    margin-left: 60px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    input{
+      z-index: 1;
+      font-family: $font;
+      font-weight: 700;
+      font-size: 14px;
+      margin-left: 50px;
+      margin-right: 20px;
+      width: 70px;
+      height: 40px;
+      border: none;
+    }
+    img{
+      padding: 3px 6px;
+      width: 26px;
+      height: 39px;
+      margin-bottom: -17px;
+      transform: rotate(180deg);
+      border-radius: 16px;
+    }
+    button{
+      width: 20px;
+      border-radius: 16px;
+      border: none;
+      padding: 0;
+      margin: 0;
+    }
+  }
+  .chatt{
+    width: 280px;
+    height: 73px;
+    font-size: 36px;
+    font-weight: 900;
+    background-color: $purpel;
+    color: $white;
+    font-family: $font;
+    border: none;
+    border-radius: 36.5px;
+    margin-top: 20vw;
+  }
+  .qr{
+    height: 160px;
+  }
+  .border{
+    mix-blend-mode: normal;
+    width: 320px;
+    height: 300px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.30);
+    border-radius: 20px;
+    margin-top: 20vw;
+  }
+}
+.Searching{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  img{
+    animation: spin 1s linear infinite;
+    -webkit-animation-timing-function: cubic-bezier(0.3, 0, 0.4, 1);
+    animation-timing-function: cubic-bezier(0.3, 0, 0.4, 1);
+    margin-top: -10vw;
+    margin-bottom: 30vw;
+  }
+  h1{
+    font-size: 45px;
+    color: #656565;
+  }
+  .dot{
+    color: #656565;
+    display:inline-block;
+		width:6px;
+		height:5px;
+		border-radius:50%;
+		margin-right:3px;
+ }
+ .searchinBttn{
+   width: 100vw;
+   height: 50vw;
+   margin-top: -8vw;
+   display: flex;
+   justify-content: center;
+   align-items: flex-end;
+   button{
+    font-size: 20px;
+    width: 150px;
+    height: 50px;
+    color: $white;
+    background-color: $purpel;
+    font-family: $font;
+    font-weight: bold;
+    border: none;
+    border-radius: 43.9955px
+   }
+   .left{
+     margin-right: 4vw;
+   }
+ }
+}
+@keyframes spin {
+  
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+  
 }

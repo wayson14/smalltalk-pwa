@@ -1,6 +1,7 @@
-import {React,useState} from 'react';
+import {React,useState,useContext} from 'react';
 import {Link } from "react-router-dom";
 import PopUp from './PopUp';
+import { UserContext } from '../services/UserContext';
 import userLogo from './loginIcon/Avatar.svg';
 import logo from './loginIcon/Warstwa 1.svg';
 import homeLogo from './loginIcon/homeLogo.svg';
@@ -9,6 +10,7 @@ import instLogo from './loginIcon/instagram.svg';
 
 const TopBar = (props) => {
     const [show, setShow] = useState(false);
+    const { user, setUser } = useContext(UserContext);
     return <div onClick={(e) => {e.target.id === 'nieodda' && setShow(false)}}>
     <header className="App-header">
         <Link className="nav-item" to="/chat"><img src={homeLogo} alt="" className="homeLogo"/></Link>
@@ -17,7 +19,7 @@ const TopBar = (props) => {
         {/* <Link className="nav-item" to="/admin">admin</Link> */}
         {/* <span className="nav-item">{user.username}</span> */}
     </header>
-    {show && <PopUp show={show} setShow={setShow} avatar={userLogo} head1={"Szymon"} imagine3={fbLogo} imagine4={instLogo} instaInfo={"Szymon Kowal"} fbInfo={"Szymon Kowal"} bttn={"Wyloguj się"} clas={'profile contentt'}/>}
+    {show && <PopUp show={show} setShow={setShow} avatar={userLogo} head1={user.username} imagine3={fbLogo} imagine4={instLogo} instaInfo={"Szymon Kowal"} fbInfo={"Szymon Kowal"} bttn={"Wyloguj się"} clas={'profile contentt'}/>}
     </div>
 };
 
