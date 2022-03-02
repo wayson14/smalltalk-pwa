@@ -38,7 +38,7 @@ const Match = () => {
 
   return (
     <div>
-      <TopBar/>
+        <TopBar/>
       <div className='Scanner'>
         <div className='border'>
         <form className={`codeInput ${style}`}>

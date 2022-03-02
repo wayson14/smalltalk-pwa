@@ -1,9 +1,10 @@
-import {React, useState, useMemo, useEffect } from 'react';
+import { React, useState, useMemo, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Route,
   Routes,
-  Link } from "react-router-dom";
+  Link
+} from "react-router-dom";
 import { UserContext } from "./services/UserContext";
 import './App.scss';
 import { InfoContext } from './services/InfoContext';
@@ -17,23 +18,21 @@ import Searching from './views/Searching';
 
 // import OneSignal from 'react-onesignal';
 
-import {request} from './services/client';
+import { request } from './services/client';
 
 import Test from './views/Test.js'
 function App() {
 
   const [counter, setCounter] = useState(0);
-
-
-
+  const [notificationButton, setNotificationButton] = useState(false);
   const [user, setUser] = useState();
   const [info, setInfo] = useState('info');
 
-  
+
 
   const userValue = useMemo(() => ({ user, setUser }), [user, setUser]);
-  const infoValue = useMemo(() => ({ info, setInfo}), [info, setInfo]);
-  
+  const infoValue = useMemo(() => ({ info, setInfo }), [info, setInfo]);
+
 
   // useEffect(() => {
   //   OneSignal.init({
@@ -43,9 +42,49 @@ function App() {
 
   // request('http://localhost:7000','/user')
   //   .then(res => {console.log(res);})
+  // function askNotificationPermission() {
+  //   // function to actually ask the permissions
+  //   function handlePermission(permission) {
+  //     // set the button to shown or hidden, depending on what the user answers
+  //     if(Notification.permission === 'denied' || Notification.permission === 'default') {
+  //       setNotificationButton(true);
+  //     } else {
+  //       setNotificationButton(false);
+  //     }
+  //   }
+  // }
+  function checkNotificationPromise() {
+    try {
+      Notification.requestPermission().then();
+    } catch(e) {
+      return false;
+    }
+
+    return true;
+  }
+  
+    // Let's check if the browser supports notifications
+    useEffect(() => { 
+      if (!('Notification' in window)) {
+        console.log("This browser does not support notifications.");
+      } else {
+        if(checkNotificationPromise()) {
+          Notification.requestPermission()
+          // .then((permission) => {
+          //   handlePermission(permission);
+          // })
+        } else {
+          Notification.requestPermission(function(permission) {
+            // handlePermission(permission);
+          });
+        }
+      }
+    }, [])
+    
   return (
+    
     <div className="App">
-      
+      {/* <button className="notification-btn" onClick={() => askNotificationPermission()}>zezwol</button> */}
       <UserContext.Provider value={userValue}>
       <InfoContext.Provider value={infoValue}>
         <Router>
@@ -63,12 +102,13 @@ function App() {
                 <Route path="/test" element={<Test/>}/>
               </Routes>
             </div>
-          </div>
-        </Router>
+            </div>
+          </Router>
         </InfoContext.Provider>
-        </UserContext.Provider>
+      </UserContext.Provider>
     </div>
   );
 }
+
 
 export default App;

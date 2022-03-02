@@ -5,6 +5,8 @@
 
 # Czego nie mamy?
 - [ ] złożonej szaty z logiką
+- [ ] przechowywanie sesji użytkownika żeby się nie logował ciągle
+(sprawdzanie cookies)
 - [ ] powiadomienia
 - [ ] kręgi i administracji nimi
 - [ ] reporty

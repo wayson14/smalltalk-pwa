@@ -61,6 +61,8 @@ $red: #FC7171;
 }
 
 .App-header {
+  z-index: 99;
+  position: fixed;
   display: flex;
   background-color: $white;
   align-items: center;

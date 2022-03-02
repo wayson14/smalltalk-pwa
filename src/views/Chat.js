@@ -96,6 +96,8 @@ const Chat = () => {
           setIfRejected(true);
         }
       }
+      // var img = '../../public';
+      const notification = new Notification(`${mes.username} napisał: `, { body: `${mes.message}`});
       setMessagesArray(messagesArray => [...messagesArray, mes]);
       setCount(count => count + 1);
     }

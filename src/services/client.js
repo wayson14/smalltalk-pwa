@@ -20,7 +20,7 @@ export const request = ({
         const requestConfig = {
             
             method, 
-            credentials: 'include', //wystarczyło dopisać jedną linię
+            credentials: 'include', //wystarczyło dopisać jedną linię CORS SPRAWKA
             headers: {
                 'Content-Type': 'application/json',
                 ...headers,
