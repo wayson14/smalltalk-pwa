@@ -24,6 +24,17 @@ const Match = () => {
     const path = `/searching`; 
     navigate(path);
   }
+  const FindMatch = () => {
+    getRoomID()
+      //zmienić w przyszłości tak aby cały proces modyfikacji usera dział się na serwerze
+      .then(res => {
+        if (isNaN(res.message)){
+          throw new Error (res.message)
+        }
+        setUser(user => ({...user, roomID : res.message}))})
+      .then(() => console.log(`User id: ${user.id} has been given a new room ID: ${user.roomID}`))
+      .catch(err => console.error(err))
+  }
 
   return (
     <div>
@@ -76,7 +87,7 @@ const Match = () => {
         </div>
       {/* {matching && 
       <>
-        <button onClick={() => findMatch()}>odśwież</button>
+        <button onClick={() => FindMatch()}>odśwież</button>
         <button onClick={() => leaveWaitingroom().then(
           () => setMatching(false)
         )}>wyjdź z poczekalni</button>

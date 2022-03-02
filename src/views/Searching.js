@@ -5,22 +5,10 @@ import {useNavigate} from "react-router-dom";
 import { getRoomID, joinWaitingroom, leaveWaitingroom } from "../services/api_methods";
 
 
-const FindMatch = () => {
-  const { user, setUser } = useContext(UserContext);
-  getRoomID()
-    //zmienić w przyszłości tak aby cały proces modyfikacji usera dział się na serwerze
-    .then(res => {
-      if (isNaN(res.message)){
-        throw new Error (res.message)
-      }
-      setUser(user => ({...user, roomID : res.message}))})
-    .then(() => console.log(`User id: ${user.id} has been given a new room ID: ${user.roomID}`))
-    .catch(err => console.error(err))
-}
-
-
 const Searching = () => {
-  const navigate = useNavigate(); 
+  const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
+   
   const chat = () => {
     const path = `/chat`; 
     navigate(path);
@@ -32,6 +20,17 @@ const Searching = () => {
   const leaveFromSearching=()=>{
     leaveWaitingroom()
     chat()
+  }
+  const FindMatch = () => {
+    getRoomID()
+      //zmienić w przyszłości tak aby cały proces modyfikacji usera dział się na serwerze
+      .then(res => {
+        if (isNaN(res.message)){
+          throw new Error (res.message)
+        }
+        setUser(user => ({...user, roomID : res.message}))})
+      .then(() => console.log(`User id: ${user.id} has been given a new room ID: ${user.roomID}`))
+      .catch(err => console.error(err))
   }
   return (
   <div className="Searching">

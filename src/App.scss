@@ -705,3 +705,77 @@ input:checked + .Bottom-header{
   }
   
 }
+//Chat
+.Chat{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  .reavel{
+    position: fixed;
+    display: flex;
+    width: 100vw;
+    height: 85px;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
+    button{
+      font-size: 24px;
+      width: 210px;
+      height: 32px;
+      color: $white;
+      background-color: $red;
+      font-family: $font;
+      font-weight: bold;
+      border: none;
+      border-radius: 16px;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    }
+  }
+  .input-chat{
+    display: flex;
+    width: 100vw;
+    height: 58px;
+    position: fixed;
+    justify-content:space-around;
+    align-items: center;
+    bottom: 0px;
+    box-shadow: 0px -1px 8px 5px rgba(0, 0, 0, 0.25);
+    border-radius: 20px 20px 0 0;
+    background-color: $purpel;
+    .xLogo{
+      margin-left: 2px;
+      margin-right: -2px;
+      border-radius: 46px 46px 0 0;
+      background-color: $purpel;
+      height: 35px;
+    }
+    .iceBraker{
+      margin-left: -2px;
+      margin-right: 2px;
+      background-color: $purpel;
+    }
+  }
+  .send{
+    align-items: center;
+    display: flex;
+    width: 280px;
+    height: 40px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+    input{
+      width: 53em;
+      border-radius: 15px;
+      font-family: $font;
+      font-weight: 900;
+      border: none;
+      padding-left: 10px;
+    }
+    button{
+      box-shadow: none;
+      background-color: $white;
+      border-radius: 15px;
+      border: none;
+      width: 40%;
+    }
+  }
+}

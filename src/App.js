@@ -52,7 +52,7 @@ function App() {
           <div className='wrapper'>
             <div className='main'>
               <Routes>
-                <Route path="/" element={user ? <Profile/> : <Login info={info}/>}/>
+                <Route path="/" element={user ? <Match/> : <Login info={info}/>}/>
                 <Route path="/counter" element={<Test counter={counter} setCounter={setCounter}/>}/>
                 <Route path="/chat" element={user ? (user.roomID ? <Chat/> : <Match/>) : <Login info="Musisz się najpierw zalogować!"/>}/>
                 <Route path="/profile" element={user ? <Profile/> : <Login info="Musisz się najpierw zalogować!"/>}/>

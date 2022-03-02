@@ -19,7 +19,7 @@ const TopBar = (props) => {
         {/* <Link className="nav-item" to="/admin">admin</Link> */}
         {/* <span className="nav-item">{user.username}</span> */}
     </header>
-    {show && <PopUp show={show} setShow={setShow} avatar={userLogo} head1={user.username} imagine3={fbLogo} imagine4={instLogo} instaInfo={"Szymon Kowal"} fbInfo={"Szymon Kowal"} bttn={"Wyloguj się"} clas={'profile contentt'}/>}
+    {show && <PopUp show={show} setShow={setShow} avatar={userLogo} head1={`${user.username}#${user.id}`} imagine3={fbLogo} imagine4={instLogo} instaInfo={"Szymon Kowal"} fbInfo={"Szymon Kowal"} bttn={"Wyloguj się"} clas={'profile contentt'}/>}
     </div>
 };
 

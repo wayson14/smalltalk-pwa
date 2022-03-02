@@ -5,6 +5,15 @@ import { getRoomMessages, closeSession, leaveWaitingroom } from '../services/api
 import { UserContext } from '../services/UserContext';
 import useAsyncState from '../services/useAsyncState';
 import ChatEndView from './ChatEndView';
+import PopUp from './PopUp';
+import iceLogo from './loginIcon/Ice.svg';
+import sendLogo from './loginIcon/sendArrow.svg';
+import XLogo from './loginIcon/X.svg';
+import X2Logo from './loginIcon/X 2.svg';
+import checkLogo from './loginIcon/check.svg';
+import fbLogo from './loginIcon/fb.svg';
+import instLogo from './loginIcon/instagram.svg';
+import userLogo from './loginIcon/Avatar.svg';
 
 const Chat = () => {
 
@@ -21,6 +30,9 @@ const Chat = () => {
   const [ifRevealed, setIfRevealed] = useAsyncState(false);
   const [ifRejected, setIfRejected] = useAsyncState(false);
 
+  const [show, setShow] = useState(false);
+  const [show1, setShow1] = useState(false);
+  const [show3, setShow3] = useState(false);
 
   const [messagesArray, setMessagesArray] = useState([{
     username: "Bóg",
@@ -214,15 +226,18 @@ const rejectUser = () => {
 
 
   return (
+    <div onClick={(e) => {e.target.id === 'nieodda'  && setShow3(false)}}>
+    <div onClick={(e) => {e.target.id === 'ree'  && setShow3(true)}}>
+    <div onClick={(e) => {e.target.id === 'odda'  && setShow1(false)}}>
     <div className="Chat" onKeyUp={e => (e.key === 'Enter' && sendMessage(e, message))}>
       {/* {messagesArray.map(message => {
             <span>{message.message}: </span>
         })} */}
       {ifRevealed && <ChatEndView contactUser={contactUser} type='reveal'></ChatEndView>}
       {ifRejected && <ChatEndView type='reject'></ChatEndView>}
-      <h2>chat nr {user.roomID}</h2>
-      {{ debug } && <div>
-        <button onClick={() => sendRevealSignal()}>send reveal signal</button>
+      {/* <h2>chat nr {user.roomID}</h2> */}
+      {{ debug } && <div className='reavel'>
+        <button onClick={() => sendRevealSignal()}>ODKRYJ</button>
       </div>}
       <button onClick={() => revealUser()}>reveal</button>
       <button onClick={() => rejectUser()}>reject</button>
@@ -240,13 +255,23 @@ const rejectUser = () => {
         </div>
       })
       }</div>
-      <div className="input-section">
-        <input className="input-chat" value={message} type="text" onChange={e => setMessage(e.target.value)}></input>
-        <button onClick={e => {
-          setMessage('');
-          sendMessage(e, message);
-        }}>send</button>
+      <div className="input-chat">
+        <img className='xLogo' src={XLogo} alt=""  onClick={() => setShow(true)}/>
+        <div className='send'>
+          <input placeholder='Napisz coś...' value={message} type="text" onChange={e => setMessage(e.target.value)}></input>
+          <button onClick={e => {
+            setMessage('');
+            sendMessage(e, message);
+          }}><img src={sendLogo}/></button>
+        </div>
+        <img className='iceBraker' src={iceLogo} alt="" />
       </div>
+      {show && <PopUp show={show} setShow={setShow} head={"Czy na pewno chcesz porzucić tę konwersację?"} clas={'chatPopUp contentt'} imagine={X2Logo} imagine2={checkLogo}/>}
+      {show1 && <PopUp show={show1} setShow={setShow1} head2={"Druga osoba chcę cię poznać"} clas={'chatBttns'}/>}
+      {show3 && <PopUp show3={show3} setShow3={setShow3} avatar={userLogo} head1={"Szymon"} imagine3={fbLogo} imagine4={instLogo} instaInfo={"Szymon Kowal"} fbInfo={"Szymon Kowal"} clas={'profile contentt'}/>}
+    </div>
+    </div>
+    </div>
     </div>)
 };
 
