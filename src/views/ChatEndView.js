@@ -11,7 +11,7 @@ const ChatEndView = ({type, contactUser}) => {
         <a href={contactUser}>
             Kontakt do użytkownika
         </a>
-        <a href="/">menu główne</a>
+        <a href="/chat">Menu główne</a>
         </div>
       </div>
       :
@@ -19,7 +19,7 @@ const ChatEndView = ({type, contactUser}) => {
         <h1>
             Spróbuj jeszcze raz!
         </h1>
-        <a href="/">menu główne</a>
+        <a href="/chat">Menu główne</a>
     </>
     }
     </div> 

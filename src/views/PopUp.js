@@ -22,6 +22,8 @@ const imagine2 = props.imagine2;
 const imagine3 = props.imagine3;
 const imagine4 = props.imagine4;
 const bttn = props.bttn;
+const funCtion = props.funCtion;
+const funCtion1 = props.funCtion1;
 
 const logout = () => {
     authUserLogout()
@@ -44,7 +46,7 @@ return <div>
                 <div className='chatBttns' id='odda'>
                     <h1>{head2}</h1>
                     <div className='bttnsColor'>
-                    <button id='ree' className='reaveael'>ODKRYJ</button>
+                    <button onClick={()=> funCtion1()} id='ree' className='reaveael'>ODKRYJ</button>
                     <button id='odda'>KONTYNUUJ</button>
                     </div>
                 </div>
@@ -62,7 +64,7 @@ return <div>
                     <img src={imagine4} alt=""/>
                     <p>{instaInfo}</p>
                     <img src={imagine} id="nieodda" alt=""/>
-                    <img onClick={()=>chatExit()} src={imagine2} alt=""  className='better'/>
+                    <img onClick={()=> funCtion()} src={imagine2} alt=""  className='better'/>
                 </div>
                 <div className='logOut'>
                     <button onClick={()=> logout()} >{bttn}</button>

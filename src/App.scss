@@ -154,14 +154,6 @@ button {
 }
 
 /* messages and chat */
-.Chat {
-  display: flex;
-  flex-direction: column; 
-  height: 70vh;
-}
-.message-body {
-  display: flex;
-}
 // .messages-array {
 //   margin-top: 20%;
 //   padding-left: 10%;
@@ -189,12 +181,28 @@ button {
 
 }
 .modal {
-  z-index: 5;
-  height: 100vh;
+  z-index: 101;
+  height: 130vh;
   width: 100%;
-  position: absolute;
+  position: fixed;
+  margin-top: -40vw;
   top: 0;
   left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  a{
+    color: $white;
+    padding: 8px;
+    background-color: $purpel;
+    width: 50%;
+    margin-top: 20vw;
+    font-size: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 20px;
+  }
 }
 .Login{
   color: $black;
@@ -576,9 +584,51 @@ input:checked + .Bottom-header{
     display: none;
   }
 }
+.chatBttns{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0,0,0, 0.01);
+  box-shadow: none;
+  border: none;
+  width: 100%;
+  margin-top: 30vw;
+  h1{
+    font-size: 36px;
+    color: $white;
+    background-color:rgba(0,0,0, 0.01) ;
+  }
+  .bttnsColor{
+    background-color:rgba(0,0,0, 0.01) ;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50vw;
+    .reaveael{
+      background-color: $red;
+      margin-bottom: 10vw;
+    }
+    button{
+      color: $white;
+      background-color: $grey;
+      border: none;
+      font: $font;
+      font-size: 24px;
+      width: 210px;
+      height: 32px;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      border-radius: 16px;
+    }
+  }
+  .insta{
+    display: none;
+  }
+}
 
 //Match QrScanner
 .Scanner{
+  margin-top: 16vw;
   position: relative;
   width: 100vw;
   height: 74vh;
@@ -709,10 +759,11 @@ input:checked + .Bottom-header{
 }
 //Chat
 .Chat{
-  height: 100vh;
+  height: 90vh;
   display: flex;
   flex-direction: column;
   .reavel{
+    z-index: 99;
     position: fixed;
     display: flex;
     width: 100vw;
@@ -734,10 +785,11 @@ input:checked + .Bottom-header{
     }
   }
   .input-chat{
+    z-index: 99;
     display: flex;
     width: 100vw;
     height: 58px;
-    position: fixed;
+    position:fixed;
     justify-content:space-around;
     align-items: center;
     bottom: 0px;
@@ -779,5 +831,62 @@ input:checked + .Bottom-header{
       border: none;
       width: 40%;
     }
+  }
+  .chatFlip{
+    transform: rotateX(180deg);
+    height: 95vh;
+    width: 100vw;
+    overflow:auto;
+    overflow-x:hidden;
+    overflow-y:scroll;
+    .messages-array{
+      transform: rotateX(-180deg);
+      display: flex;
+      flex-direction:column;
+      margin: 0vh 3vw 0 3vw;
+      overflow:auto;
+      overflow-x:hidden;
+      overflow-y:scroll;
+      .message-body{
+        display: flex;
+        width: 90vw;
+        margin-bottom: 5vw;
+      }
+    }
+    .messages-array>*:last-child{
+      margin-bottom: 0vw;
+    }
+  }
+}
+.myMessage{
+  transform: rotatey(180deg);
+  width: 93vw;
+  .blue{
+    word-wrap: break-word;
+    transform: rotatey(-180deg);
+    max-width: 55%;
+    width: fit-content;
+    background-color: #8C00FF;
+    border-radius: 12px 0px 12px 12px;
+    padding: 10px 16px;
+    color: $white;
+    font-weight: 400;
+    width: fit-content;
+    height: fit-content;
+    width: fit-content;
+    height: fit-content;
+  }
+}
+.enemyMessage{
+  width: 93vw;
+  float: left;
+  .white{
+    word-wrap: break-word;
+    font-weight: 400;
+    padding: 10px 16px;
+    background-color: #E5E5E5;
+    border-radius: 0px 12px 12px 12px;
+    max-width: 55%;
+    width: fit-content;
   }
 }

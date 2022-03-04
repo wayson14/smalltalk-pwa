@@ -3,6 +3,7 @@ import { w3cwebsocket as W3CWebSocket } from 'websocket';
 import { request, chatApiUrl } from '../services/client'
 import { getRoomMessages, closeSession, leaveWaitingroom } from '../services/api_methods'
 import { UserContext } from '../services/UserContext';
+import ScrollToBottom, {useAtBottom} from 'react-scroll-to-bottom';
 import useAsyncState from '../services/useAsyncState';
 import ChatEndView from './ChatEndView';
 import PopUp from './PopUp';
@@ -14,8 +15,14 @@ import checkLogo from './loginIcon/check.svg';
 import fbLogo from './loginIcon/fb.svg';
 import instLogo from './loginIcon/instagram.svg';
 import userLogo from './loginIcon/Avatar.svg';
+import useScrollToEnd from 'react-scroll-to-bottom/lib/hooks/useScrollToEnd';
 
 const Chat = () => {
+
+  const el = document.getElementById('messages-array');
+  if (el) {
+    el.scrollTop = el.scrollHeight;
+  }
 
   const { user, setUser } = useContext(UserContext);
   const [contactUser, setContactUser] = useAsyncState(null);
@@ -156,6 +163,7 @@ const Chat = () => {
 
   
 const rejectUser = () => {
+  setShow(false)
   setIfWantToReject(ifWantToReject => !ifWantToReject)
     .then(currentState => {
       console.log(currentState)
@@ -197,6 +205,7 @@ const rejectUser = () => {
   // }
 
   const sendRevealSignal = () => {
+    setShow1(true)
     client.current.send(JSON.stringify({
       type: "message",
       message: `#002 https://wp.pl`,
@@ -226,16 +235,25 @@ const rejectUser = () => {
   //   console.log(user);
   // }, [moreInfoTrigger])
 
+  const [ style, setStyle ] = useState('blue');
+  const giveColor = (messagess,etc)=>{
+    if(messagess == user.username){
+     return <div className='myMessage'><div className={`${style}`}>{etc?.message}</div></div>
+    }
+    else{
+      return <div className='enemyMessage'><div className={`white`}>{etc?.message}</div></div>
+    }
+  }
 
   return (
     <div onClick={(e) => {e.target.id === 'nieodda'  && setShow3(false)}}>
     <div onClick={(e) => {e.target.id === 'ree'  && setShow3(true)}}>
     <div onClick={(e) => {e.target.id === 'odda'  && setShow1(false)}}>
-    <div className="Chat" onKeyUp={e => (e.key === 'Enter' && sendMessage(e, message))}>
+    <div className="Chat"  onClick={(e) => {e.target.id === 'nieodda'  && setShow(false)}} onKeyUp={e => (e.key === 'Enter' && sendMessage(e, message))}>
       {/* {messagesArray.map(message => {
             <span>{message.message}: </span>
         })} */}
-      {ifRevealed && <ChatEndView contactUser={contactUser} type='reveal'></ChatEndView>}
+      {ifRevealed && <ChatEndView contactUser={contactUser} type='ODKRYJ'></ChatEndView>}
       {ifRejected && <ChatEndView type='reject'></ChatEndView>}
       {/* <h2>chat nr {user.roomID}</h2> */}
       {{ debug } && <div className='reavel'>
@@ -243,20 +261,20 @@ const rejectUser = () => {
       </div>}
       <button onClick={() => revealUser()}>reveal</button>
       <button onClick={() => rejectUser()}>reject</button>
-      <div className="messages-array">{messagesArray.map(mes => {
-        return <div className="message-body" onClick={(e) => {
-          setMoreInfoTrigger(!moreInfoTrigger);
-        }}>
-          <div className="message-sender">
-            {mes?.username + ": "}
-          </div>
-          <div className="message-content">
-            {mes?.message}
-          </div>
+      <div className='chatFlip'>
+        <div  id='messages-array' className="messages-array">{messagesArray.map(mes => {
+          return <div className="message-body" onClick={(e) => {
+            setMoreInfoTrigger(!moreInfoTrigger);
+          }}>
+            <div className="message-sender">
+              {giveColor(mes?.username,mes)}
+            </div>
+            {giveColor}
 
+          </div>
+        })
+        }</div>
         </div>
-      })
-      }</div>
       <div className="input-chat">
         <img className='xLogo' src={XLogo} alt=""  onClick={() => setShow(true)}/>
         <div className='send'>
@@ -268,8 +286,8 @@ const rejectUser = () => {
         </div>
         <img className='iceBraker' src={iceLogo} alt="" />
       </div>
-      {show && <PopUp show={show} setShow={setShow} head={"Czy na pewno chcesz porzucić tę konwersację?"} clas={'chatPopUp contentt'} imagine={X2Logo} imagine2={checkLogo}/>}
-      {show1 && <PopUp show={show1} setShow={setShow1} head2={"Druga osoba chcę cię poznać"} clas={'chatBttns'}/>}
+      {show && <PopUp show={show} setShow={setShow} head={"Czy na pewno chcesz porzucić tę konwersację?"} clas={'chatPopUp contentt'} funCtion={rejectUser} imagine={X2Logo} imagine2={checkLogo}/>}
+      {show1 && <PopUp show={show1} setShow={setShow1} head2={"Druga osoba chcę cię poznać"} clas={'chatBttns'} funCtion1={revealUser} />}
       {show3 && <PopUp show3={show3} setShow3={setShow3} avatar={userLogo} head1={"Szymon"} imagine3={fbLogo} imagine4={instLogo} instaInfo={"Szymon Kowal"} fbInfo={"Szymon Kowal"} clas={'profile contentt'}/>}
     </div>
     </div>
