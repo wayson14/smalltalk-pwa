@@ -15,6 +15,8 @@ import Admin from './views/Admin.js'
 import Circles from './views/Circles.js'
 import Match from './views/Match.js'
 import Searching from './views/Searching';
+import Friends from './views/Friends';
+import CreateCircle from './views/CreateCircle';
 
 // import OneSignal from 'react-onesignal';
 
@@ -100,6 +102,8 @@ function App() {
                 <Route path="/admin" element={<Admin/>}/>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/test" element={<Test/>}/>
+                <Route path="/friends" element={<Friends/>}/>
+                <Route path="/createCircle" element={<CreateCircle/>}/>
               </Routes>
             </div>
             </div>

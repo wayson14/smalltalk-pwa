@@ -625,6 +625,15 @@ input:checked + .Bottom-header{
     display: none;
   }
 }
+.maybeLater{
+  h1{
+    width: 80%;
+    margin-top: -40vw;
+  }
+  button{
+    display: none;
+  }
+}
 
 //Match QrScanner
 .Scanner{
@@ -888,5 +897,81 @@ input:checked + .Bottom-header{
     border-radius: 0px 12px 12px 12px;
     max-width: 55%;
     width: fit-content;
+  }
+}
+
+//Create circle
+.Cricles{
+  height: 150vw;
+  width: 100vw;
+  display: flex;
+  position: relative;
+  z-index: 3;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: -8vw;
+  input{
+    text-align: center;
+    font-family: $font;
+    font-weight: bold;
+    font-size: 12px;
+    border: none;
+    box-shadow: 0px 0px 4.80357px rgba(0, 0, 0, 0.45);
+    border-radius: 18.0134px;
+    width: 269px;
+    height: 36.03px;
+  }
+  ::-webkit-input-placeholder {
+    text-align: center;
+ }
+  .desciption{
+    font-family: $font;
+    display: flex;
+    text-align: left;
+    align-items: flex-start;
+    margin-top: 10vw;
+    margin-bottom: 10vw;
+    width: 269px;
+    height: 153.71px;
+    font-size:14px;
+    font-weight: bold;
+    box-shadow: 0px 0px 4.80357px rgba(0, 0, 0, 0.45);
+    border-radius: 18.0134px;
+    border: none;
+    resize: none;
+  }
+  .descc{
+    height: 85%;
+    margin-left: 3vw;
+    margin-right: 3vw;
+    margin-top: 2vw;
+    box-shadow: none;
+    border-radius: 0;
+  }
+  .time{
+    width: 70vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 16vw;
+    input{
+      width: 120px;
+      height: 36.03px;
+      font-size: 12px;
+    }
+  }
+  button{
+    z-index: 1;
+    padding: 10px 35px;
+    font-size: 20px;
+    width: 150px;
+    height: 38,57px;
+    color: $white;
+    background-color: $purpel;
+    font-family: $font;
+    font-weight: bold;
+    border: none;
+    border-radius: 43.9955px;
   }
 }
