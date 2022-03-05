@@ -44,6 +44,9 @@ export const getUser = (token) => {
     })
 }
 
+
+
+
 export const createUser = (username, email, password) => {
     return request({
         path: '/models/users/',
@@ -163,11 +166,21 @@ export const joinCircle = (code) => {
     // })
 }
 
-export const getCircle = (id) => {
-    return request({
-        path: '/models/circles/'+id,
-    });
-    // return request({
+export const getUserCirclesIDs = () => {
+    return request({ 
+        path: '/get_user_circles_ids/',
+        address: chatApiUrl 
+    })
+}
 
-    // })
+export const getCircle = (id) => {
+    return request({ 
+        path: '/models/circles/'+id+'/',
+    })
+}
+export const leaveCircle = (id) => {
+    return request({ 
+        path: '/leave_circle/'+id+'/',
+        address: chatApiUrl 
+    })
 }

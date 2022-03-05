@@ -2,12 +2,26 @@ import { React, useState, useContext, useEffect } from 'react';
 import TopBar from './TopBar';
 import BottomBar from './BottomBar';
 import { UserContext } from '../services/UserContext';
-import { joinCircle, getCircle } from '../services/api_methods'
+import { joinCircle, leaveCircle, getCircle, getUserCirclesIDs } from '../services/api_methods'
 import { request } from 'websocket';
+import useAsyncState from '../services/useAsyncState';
 
 const Circles = () => {
-  const [ circles, setCircles ] = useState([])
-
+  const [ circles, setCircles ] = useAsyncState([])
+  let reload = 1
+  useEffect(() => {
+    getUserCirclesIDs()
+    // .then(data => setCircles(data))
+    // .then(data => console.log(data))
+    .then(data => {
+      data.message.map((id => {
+        getCircle(id)
+        .then(fetchedCircle => setCircles(circles => [...circles, fetchedCircle]))
+      }))
+    })
+    .catch(err => console.error(err))
+    // pobieranie informacji o kręgach użytkownika
+  }, [reload])
 
   // const circles = [
   //   {
@@ -48,19 +62,34 @@ const Circles = () => {
       })}
     </pre> */}
     <pre>
-      {circles.map(circle => {
+
+      {circles.length > 0 ? circles.map(circle => {
         return (
             <div key={circle.circle_ID} className="container vertical">
               <h2>{circle.name}</h2>
+              
               <ol>
                 <li>{circle.localization}</li>
                 <li>{circle.description}</li>
                 <li>{circle.expire_date}</li>
               </ol>
+              <button onClick={() => leaveCircle(circle.circle_ID)
+                .then(res => {
+                  console.log(res)
+                  return setCircles([])
+                })
+                .then(res => {
+                  reload *= -1
+                  })}>opuść krąg</button>
             </div>
         )
       }
+      
       )
+      : 
+      <div>
+        <h1> Jeszcze nie jesteś w żadnym kręgu! </h1>
+      </div>
       }
       
     </pre>
