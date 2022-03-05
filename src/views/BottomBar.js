@@ -8,11 +8,12 @@ const BottomBar = (props) => {
     const isLoggedin = props.isLoggedin
         return <div>
         <OutsideClickHandler
+            
           onOutsideClick={() => {
            setChecked(false);
           }}
         >
-            <input id="bttn" type="checkbox" className="burger" checked={checked}/>
+            <input readOnly id="bttn" type="checkbox" className="burger" checked={checked}/>
             <div className="Bottom-header App-header">
                 <label htmlFor="bttn" id="expand-btn" onClick={() => checked?setChecked(false):setChecked(true)}><img src={arrowLogo} alt="" className="image"/></label>
                 <Link className="nav-item" to="/circles">Moje Kręgi</Link>
