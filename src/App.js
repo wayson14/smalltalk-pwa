@@ -76,8 +76,8 @@ function App() {
         {token.message !== '' ? (
           setIsSession(true)
           .then((isSession) => {
-            console.log("isSession: ", isSession)
-            console.log("TOKEN: ",token.message)
+            // console.log("isSession: ", isSession)
+            // console.log("TOKEN: ",token.message)
             return getUser(token.message)
           })
           .then(userResponse => {
@@ -135,11 +135,11 @@ function App() {
           <div className='wrapper'>
             <div className='main'>
               <Routes>
-                <Route path="/" element={isSession ? <Match/> : <Login info={info}/>}/>
+                <Route path="/" element={user ? <Match/> : <Login info={info}/>}/>
                 <Route path="/counter" element={<Test counter={counter} setCounter={setCounter}/>}/>
-                <Route path="/chat" element={isSession ? (user?.roomID ? <Chat/> : <Match/>) : <Login info="Musisz się najpierw zalogować!"/>}/>
-                <Route path="/profile" element={isSession ? <Profile/> : <Login info="Musisz się najpierw zalogować!"/>}/>
-                <Route path="/circles" element={isSession ? <Circles/> : <Login info="Musisz się najpierw zalogować!"/>}/>
+                <Route path="/chat" element={user ? (user?.roomID ? <Chat/> : <Match/>) : <Login info="Musisz się najpierw zalogować!"/>}/>
+                <Route path="/profile" element={user ? <Profile/> : <Login info="Musisz się najpierw zalogować!"/>}/>
+                <Route path="/circles" element={user ? <Circles/> : <Login info="Musisz się najpierw zalogować!"/>}/>
                 <Route path="/searching" element={<Searching/>}/>
                 {/* <Route path="/match" element={<Match/>}/> */}
                 <Route path="/admin" element={<Admin/>}/>
