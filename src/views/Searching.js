@@ -29,7 +29,8 @@ const Searching = () => {
           throw new Error (res.message)
         }
         setUser(user => ({...user, roomID : res.message}))})
-      .then(() => console.log(`User id: ${user.id} has been given a new room ID: ${user.roomID}`))
+      .then(() => {console.log(`User id: ${user.id} has been given a new room ID: ${user.roomID}`)
+    navigate('/chat')})
       .catch(err => console.error(err))
   }
   return (

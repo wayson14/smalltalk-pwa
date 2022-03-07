@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
-  Link
+  Link,
 } from "react-router-dom";
 import { UserContext } from "./services/UserContext";
 import './App.scss';
@@ -23,6 +23,8 @@ import CreateCircle from './views/CreateCircle';
 import { request } from './services/client';
 
 import Test from './views/Test.js'
+import { getUser, checkSession, parseUserObject } from './services/api_methods';
+import useAsyncState from './services/useAsyncState';
 function App() {
 
   const [counter, setCounter] = useState(0);
@@ -30,11 +32,11 @@ function App() {
   const [user, setUser] = useState();
   const [info, setInfo] = useState('info');
 
+  const [isSession, setIsSession] = useAsyncState(false);
 
 
   const userValue = useMemo(() => ({ user, setUser }), [user, setUser]);
   const infoValue = useMemo(() => ({ info, setInfo }), [info, setInfo]);
-
 
   // useEffect(() => {
   //   OneSignal.init({
@@ -66,7 +68,31 @@ function App() {
   }
   
     // Let's check if the browser supports notifications
+
+    //cheks if session is valid and if is, fetches the user
     useEffect(() => { 
+      checkSession().then(token => {
+        console.log(token)
+        {token.message !== '' ? (
+          setIsSession(true)
+          .then((isSession) => {
+            console.log("isSession: ", isSession)
+            console.log("TOKEN: ",token.message)
+            return getUser(token.message)
+          })
+          .then(userResponse => {
+            console.log(userResponse)
+            setUser(parseUserObject(userResponse, token.message))
+            
+          })
+          .catch(err => console.log(err))
+        ) : (
+          setIsSession(false).then(console.log('is session: ',isSession))
+          )}
+        // console.log(res)
+      })
+      
+      // getUser(user.token).then(res => console.log(res)).catch(err => console.error(err))
       if (!('Notification' in window)) {
         console.log("This browser does not support notifications.");
       } else {
@@ -82,23 +108,40 @@ function App() {
         }
       }
     }, [])
-    
+
+    useEffect(() => {
+      console.log('from app: ',user)
+      if (user === ''){
+        // navigate('/login')
+        setIsSession(false)
+      }
+      // else{
+      //   setIsSession(true)
+      // }
+    }, [user])
+    // useEffect(() => {
+    //   getUser().then(res => {
+    //     console.log(res)
+    //   })
+    // }, isSession)
   return (
     
     <div className="App">
       {/* <button className="notification-btn" onClick={() => askNotificationPermission()}>zezwol</button> */}
       <UserContext.Provider value={userValue}>
       <InfoContext.Provider value={infoValue}>
+
         <Router>
           <div className='wrapper'>
             <div className='main'>
               <Routes>
-                <Route path="/" element={user ? <Match/> : <Login info={info}/>}/>
+                <Route path="/" element={isSession ? <Match/> : <Login info={info}/>}/>
                 <Route path="/counter" element={<Test counter={counter} setCounter={setCounter}/>}/>
-                <Route path="/chat" element={user ? (user.roomID ? <Chat/> : <Match/>) : <Login info="Musisz się najpierw zalogować!"/>}/>
-                <Route path="/profile" element={user ? <Profile/> : <Login info="Musisz się najpierw zalogować!"/>}/>
-                <Route path="/circles" element={user ? <Circles/> : <Login info="Musisz się najpierw zalogować!"/>}/>
+                <Route path="/chat" element={isSession ? (user?.roomID ? <Chat/> : <Match/>) : <Login info="Musisz się najpierw zalogować!"/>}/>
+                <Route path="/profile" element={isSession ? <Profile/> : <Login info="Musisz się najpierw zalogować!"/>}/>
+                <Route path="/circles" element={isSession ? <Circles/> : <Login info="Musisz się najpierw zalogować!"/>}/>
                 <Route path="/searching" element={<Searching/>}/>
+                {/* <Route path="/match" element={<Match/>}/> */}
                 <Route path="/admin" element={<Admin/>}/>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/test" element={<Test/>}/>

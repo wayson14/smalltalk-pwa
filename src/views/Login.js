@@ -2,12 +2,13 @@ import { React, useState, useContext, useEffect } from 'react';
 import { UserContext } from '../services/UserContext';
 import { InfoContext } from '../services/InfoContext';
 
+import {useNavigate} from "react-router-dom";
 import userLogo from './loginIcon/user.svg';
 import passwordLogo from './loginIcon/Group 2.svg';
 import arrowLogo from './loginIcon/Arrow 2.svg';
 
 import ArrayList from '../components/ArrayList';
-import { authUserLogin, authUserLogout, authUserRegister, getUser } from '../services/api_methods';
+import { authUserLogin, authUserLogout, authUserRegister, getUser, parseUserObject } from '../services/api_methods';
 import useAsyncState from '../services/useAsyncState';
 
 // import coreapi from 'coreapi' 
@@ -21,13 +22,13 @@ const Login = ({info}) => {
   const [ confirmPassword, setConfirmPassword ] = useState('');
   const [ socialContact, setSocialContact ] = useState('');
 
-  const [ token, setToken ] = useAsyncState('');
+  const [ gottenToken, setGottenToken ] = useAsyncState('');
 
   const [ formType, setFormType ] = useState('login');
   const [ loginInfo, setLoginInfo ] = useState([]);
   const [ submitted, setSubmitted ] = useState(false);
 
-
+  const navigate = useNavigate(); 
   // let client  = new coreapi.Client()
 
   useEffect(() => {
@@ -56,7 +57,7 @@ const Login = ({info}) => {
   }
   const logout = () => {
     authUserLogout()
-      .then(user => setUser(user))
+      .then(user => setUser(''))
       .catch(err => setLoginInfo(err))
     console.log('logout');
   }
@@ -83,20 +84,16 @@ const Login = ({info}) => {
         //   token: token
         // })
         // client = window.coreapi.Client({auth: auth})
-
-        return getUser(token) //gdzieś by można przechowywać ten token,
+        return setGottenToken(token).then(() => getUser(token))
+        // return getUser(token) //gdzieś by można przechowywać ten token,
         // jeszcze nie wiem gdzie 
       })
       .then(user => {
-        setUser({
-          id: user.pk,
-          username: user.username,
-          email: user.email,
-          roomID: user?.room_id,
-          // first_name: user.first_name,
-          // last_name: user.last_name
-        });
+        // console.log(user)
+        setUser(parseUserObject(user,gottenToken));
         console.log('login');
+        navigate('/')
+        
       })
       .catch(err => setLoginInfo(loginInfo => {
         console.log(err)
@@ -130,7 +127,7 @@ const Login = ({info}) => {
        e.key === 'Enter' & formType === 'login' && login()
        e.key === 'Enter' & formType === 'register' && register()
       }}>
-    {!user ? (formType === 'login' ? 
+     {formType === 'login' ? 
     <div className='input-section vertical'>
       {/* <ArrayList array={loginInfo}></ArrayList> */}
       <h1>Logowanie</h1>
@@ -183,8 +180,11 @@ const Login = ({info}) => {
         <p>Masz już konto?</p>
       <button className="option-button" onClick={() => setFormType('login')}>Zaloguj się</button>
     </div>
-    </div> ): 
-    <button onClick={() => logout()}>Wyloguj</button>}
+    </div> }
+    {/* : 
+    navigate("/")
+    // <button onClick={() => logout()}>Wyloguj</button>
+    } */}
   </div>;
 };
 

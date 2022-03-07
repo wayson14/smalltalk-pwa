@@ -37,11 +37,33 @@ const placeholderPromise = (promisedReturnType) => {
     )
 }
 
+//sprawdzanie, czy sesja jest git
+export const checkSession = () => {
+    return request({
+        path: '/check_session',
+        address: chatApiUrl
+    })
+}
 export const getUser = (token) => {
     return request({ 
         path: '/auth/user/',
         token: token,
     })
+}
+export const parseUserObject = (user, token) => {
+    if (user === '' & null & undefined){
+        console.log('user is null')
+        return ''
+    }
+    else return {
+        id: user.pk,
+        username: user.username,
+        email: user.email,
+        token: token,
+        roomID: user?.room_id,
+        // first_name: user.first_name,
+        // last_name: user.last_name
+      }
 }
 
 
@@ -134,11 +156,14 @@ export const authUserLogin = (email, password) => {
 export const authUserLogout = () => {
     //połączenie z bazą danych i wylogowanie użytkownika
     //placeholder
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve('')
-        }, 1000)
+    return request({
+        address: '/auth/logout/'
     })
+    // return new Promise((resolve, reject) => {
+    //     setTimeout(() => {
+    //         resolve('')
+    //     }, 1000)
+    // })
 
 };
 

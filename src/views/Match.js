@@ -54,7 +54,7 @@ const Match = () => {
             
       
             joinCircle(circleCode)
-              .then(circleID => {
+              .then(res => {
                 // if (user.circlesIDs){
                 //   if(user.circlesIDs.indexOf(circleID) > -1){
                 //     // alert('Dołączono już do tego kręgu!')
@@ -73,7 +73,8 @@ const Match = () => {
                 //   ...user,
                 //   circlesIDs : IDs, 
                 // }))
-                console.log(circleID)
+                console.log(res)
+                navigate('/circles')
               })
               .catch(err => console.log(err)) }
         }>

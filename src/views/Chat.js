@@ -287,7 +287,7 @@ const rejectUser = () => {
         <img className='iceBraker' src={iceLogo} alt="" />
       </div>
       {show && <PopUp show={show} setShow={setShow} head={"Czy na pewno chcesz porzucić tę konwersację?"} clas={'chatPopUp contentt'} funCtion={rejectUser} imagine={X2Logo} imagine2={checkLogo}/>}
-      {show1 && <PopUp show={show1} setShow={setShow1} head2={"Druga osoba chcę cię poznać"} clas={'chatBttns'} funCtion1={revealUser} />}
+      {ifRevealed && <PopUp show={show1} setShow={setShow1} head2={"Druga osoba chcę cię poznać"} clas={'chatBttns'} funCtion1={revealUser} />}
       {show3 && <PopUp show3={show3} setShow3={setShow3} avatar={userLogo} head1={"Szymon"} imagine3={fbLogo} imagine4={instLogo} instaInfo={"Szymon Kowal"} fbInfo={"Szymon Kowal"} clas={'profile contentt'}/>}
     </div>
     </div>

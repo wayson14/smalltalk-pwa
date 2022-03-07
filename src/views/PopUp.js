@@ -27,7 +27,7 @@ const funCtion1 = props.funCtion1;
 
 const logout = () => {
     authUserLogout()
-        .then(user => setUser(user))
+        .then(() => setUser(''))
     console.log('logout');
 }
 const navigate = useNavigate(); 
