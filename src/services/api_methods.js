@@ -160,7 +160,10 @@ export const authUserRegister = (email, password, username, socialContact) => {
 
 // circles
 export const joinCircle = (code) => {
-    return placeholderPromise('number');
+    return request({
+        path: `/join_circle/${code}`,
+        address: chatApiUrl
+    })
     // return request({
 
     // })

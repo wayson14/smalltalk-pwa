@@ -55,24 +55,25 @@ const Match = () => {
       
             joinCircle(circleCode)
               .then(circleID => {
-                if (user.circlesIDs){
-                  if(user.circlesIDs.indexOf(circleID) > -1){
-                    // alert('Dołączono już do tego kręgu!')
-                    loginError()
-                    return
-                  }
+                // if (user.circlesIDs){
+                //   if(user.circlesIDs.indexOf(circleID) > -1){
+                //     // alert('Dołączono już do tego kręgu!')
+                //     loginError()
+                //     return
+                //   }
                     
-                }
+                // }
                 let IDs = [];
-                {Array.isArray(user.circlesIDs) ?
-                  IDs = [...user.circlesIDs, circleID]
-                  :
-                  IDs = [circleID]
-                }
-                setUser(user => ({
-                  ...user,
-                  circlesIDs : IDs, 
-                }))
+                // {Array.isArray(user.circlesIDs) ?
+                //   IDs = [...user.circlesIDs, circleID]
+                //   :
+                //   IDs = [circleID]
+                // }
+                // setUser(user => ({
+                //   ...user,
+                //   circlesIDs : IDs, 
+                // }))
+                console.log(circleID)
               })
               .catch(err => console.log(err)) }
         }>

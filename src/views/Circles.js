@@ -69,9 +69,9 @@ const Circles = () => {
               <h2>{circle.name}</h2>
               
               <ol>
-                <li>{circle.localization}</li>
-                <li>{circle.description}</li>
-                <li>{circle.expire_date}</li>
+                <li>{circle?.localization}</li>
+                <li>{circle?.description}</li>
+                <li>{circle?.expire_date}</li>
               </ol>
               <button onClick={() => leaveCircle(circle.circle_ID)
                 .then(res => {
