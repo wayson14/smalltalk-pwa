@@ -1,0 +1,263 @@
+/* =================
+VARIABLES
+==================*/
+$font:'Lato', sans-serif;
+$grey:#A5A5A5;
+$white:#FFFFFF;
+$action-color:#8C00FF;
+$black: #000000;
+$red: #FC7171;
+
+$top-bar-height: 75px;
+$bottom-bar-height: 50px;
+
+/* =================
+TYPOGRAPHY
+==================*/
+$secondaryText: 12px;
+.view-header {
+    align-self: flex-start;
+    margin: 10px;
+    // margin: clamp(25px, 1.2em, 60px);
+}
+/* =================
+GLOBALS & UTILITIES
+(ie. centering a div)
+==================*/
+
+@mixin flexCenter($direction) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: $direction;
+
+}
+@mixin genericShadow() {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+}
+@mixin actionTheme() {
+    color: $white;
+    background-color: $action-color;
+}
+.main {
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    color: $black;
+    background-color: $white;
+  }
+.wrapper {
+    @include flexCenter(column);
+}
+
+@mixin fitInput {
+    width: 80%;
+    
+}
+
+
+
+/* =================
+VIEWS
+==================*/
+@mixin view {
+    @include flexCenter(column);
+}
+.Login-view {
+    @include view;
+    height: 100vh;
+}
+.Match-view {
+    @include view;
+    height: calc(100vh - $top-bar-height);
+}
+.scanner {
+    background-color: $grey;
+    
+}
+.footer {
+    
+    @include flexCenter(row);
+    width: 170px;
+    font-size: $secondaryText;
+    justify-self: flex-end;
+    justify-content: space-between
+    // bottom: 0px;
+}
+/* =================
+TOP BAR & BOTTOM BAR
+==================*/
+.top-bar {
+    @include flexCenter(row);
+    justify-content: space-between;
+    width: 100%;
+    height: $top-bar-height;
+    padding-left: 1em;
+    padding-right: 1em;
+
+}
+.bottom-bar {
+    @include flexCenter(column);
+    @include genericShadow();
+    min-height: $bottom-bar-height;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    justify-content: space-between;
+    width: 100%;
+    padding-left: 1em;
+    padding-right: 1em;
+    position: absolute;
+    z-index: 3;
+    bottom: 0px;
+    left: 0px;
+
+}
+.bottom-bar-list {
+    @include flexCenter(column);
+
+}
+/* =================
+BOXES & CONTAINERS
+==================*/
+.content-container {
+    @include flexCenter(column);
+    width: clamp(120px, 60vw, 350px);
+    // border: 1px solid black;
+    @include genericShadow();
+    border-radius: 20px;
+    padding: 1em;
+}
+
+/* =================
+FORMS
+==================*/
+.input-form {
+    @include flexCenter(column);
+    
+}
+.input-form-line {
+    padding-top: 1rem;
+    @include flexCenter(row);
+    // justify-content: space-;
+    width: 100%;
+
+    input {
+        @include fitInput();
+        margin-left: clamp(0.2rem, 0.5rem, 0.5rem);
+        
+    }
+    .loginError{
+        animation: color-change 1.5s,shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+        img{
+          animation: color-change 1.5s;
+        }
+        input{
+          color: #FFFFFF;
+          animation: color-change 1.5s;
+        }
+        ::placeholder{
+          color: $white;
+        }
+      }
+      @keyframes color-change {
+        0% { background-color: $white;}
+        50% { background-color: $red;}
+        100% { background-color: $white;}
+      }
+      @keyframes shake {
+        10%, 90% {
+          transform: translate3d(-1px, 0, 0);
+        }
+        
+        20%, 80% {
+          transform: translate3d(2px, 0, 0);
+        }
+      
+        30%, 50%, 70% {
+          transform: translate3d(-4px, 0, 0);
+        }
+      
+        40%, 60% {
+          transform: translate3d(4px, 0, 0);
+        }
+      }
+      
+
+}
+.join-circle-input-form-line{
+    // width: 80%;
+    @include flexCenter(row);
+    margin-bottom: 1em;
+    border: none;
+}
+.join-circle-input{
+        border-bottom-left-radius: 0.5em;
+        border-top-left-radius: 0.5em;
+        width: 60%;
+        
+    }
+
+
+/* =================
+BUTTONS
+==================*/
+@mixin action-button {
+    
+    @include genericShadow();
+    @include actionTheme();
+    margin-top: 1rem;
+    padding: 0.6em;
+    border: none;
+    border-radius: 30px;
+}
+.login-action-button {
+    @include action-button();
+    align-self: flex-end;
+}
+.chat-action-button {
+    @include action-button();
+    padding: 1.2rem;
+    // align-self: flex-end;
+}
+.join-circle-button {
+    border-top-right-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
+    background-color: $action-color;
+}
+.show-bottombar-button {
+    @include action-button();
+    border-radius: 30px;
+}
+/* =================
+POP-UPS & INFO CLOUDS
+==================*/
+.info-cloud {
+    @include flexCenter(column);
+    padding: 1em;
+    width: calc(100% - 1em);
+    position: absolute;
+    top: 0.5em;
+    left: 0.5em;
+    z-index: 2;
+    border-radius: 5px;
+    
+    background-color: lightgreen;
+    opacity: 70%;
+}
+/* =================
+ICONS & IMAGES
+==================*/
+@mixin flippedImage{
+    transform: rotateX(180deg);
+}
+@mixin panelArrow {
+    margin-top: 0.7em;
+}
+.flipped-arrow{
+    @include flippedImage();
+    @include panelArrow();
+}
+.normal-arrow{
+    @include panelArrow();
+}

@@ -38,7 +38,7 @@ const Chat = () => {
   const [ifRejected, setIfRejected] = useAsyncState(false);
 
   const [show, setShow] = useState(false);
-  const [show1, setShow1] = useState(false);
+  const [showRevealPanel, setShowRevealPanel] = useState(false);
   const [show3, setShow3] = useState(false);
 
   const [messagesArray, setMessagesArray] = useState([{
@@ -205,7 +205,7 @@ const rejectUser = () => {
   // }
 
   const sendRevealSignal = () => {
-    setShow1(true)
+    setShowRevealPanel(true)
     client.current.send(JSON.stringify({
       type: "message",
       message: `#002 https://wp.pl`,
@@ -248,7 +248,7 @@ const rejectUser = () => {
   return (
     <div onClick={(e) => {e.target.id === 'nieodda'  && setShow3(false)}}>
     <div onClick={(e) => {e.target.id === 'ree'  && setShow3(true)}}>
-    <div onClick={(e) => {e.target.id === 'odda'  && setShow1(false)}}>
+    <div onClick={(e) => {e.target.id === 'odda'  && setShowRevealPanel(false)}}>
     <div className="Chat"  onClick={(e) => {e.target.id === 'nieodda'  && setShow(false)}} onKeyUp={e => (e.key === 'Enter' && sendMessage(e, message))}>
       {/* {messagesArray.map(message => {
             <span>{message.message}: </span>
@@ -256,11 +256,11 @@ const rejectUser = () => {
       {ifRevealed && <ChatEndView contactUser={contactUser} type='ODKRYJ'></ChatEndView>}
       {ifRejected && <ChatEndView type='reject'></ChatEndView>}
       {/* <h2>chat nr {user.roomID}</h2> */}
-      {{ debug } && <div className='reavel'>
-        <button onClick={() => sendRevealSignal()}>ODKRYJ</button>
-      </div>}
-      <button onClick={() => revealUser()}>reveal</button>
-      <button onClick={() => rejectUser()}>reject</button>
+      <div className='reavel'>
+        <button onClick={() => setShowRevealPanel(true)}>ODKRYJ</button>
+      </div>
+      {/* <button onClick={() => revealUser()}>reveal</button>
+      <button onClick={() => rejectUser()}>reject</button> */}
       <div className='chatFlip'>
         <div  id='messages-array' className="messages-array">{messagesArray.map(mes => {
           return <div className="message-body" onClick={(e) => {
@@ -287,7 +287,7 @@ const rejectUser = () => {
         <img className='iceBraker' src={iceLogo} alt="" />
       </div>
       {show && <PopUp show={show} setShow={setShow} head={"Czy na pewno chcesz porzucić tę konwersację?"} clas={'chatPopUp contentt'} funCtion={rejectUser} imagine={X2Logo} imagine2={checkLogo}/>}
-      {ifRevealed && <PopUp show={show1} setShow={setShow1} head2={"Druga osoba chcę cię poznać"} clas={'chatBttns'} funCtion1={revealUser} />}
+      {showRevealPanel && <PopUp show={showRevealPanel} setShow={setShowRevealPanel} head2={"Druga osoba chce cię poznać"} clas={'chatBttns'} funCtion1={revealUser} />}
       {show3 && <PopUp show3={show3} setShow3={setShow3} avatar={userLogo} head1={"Szymon"} imagine3={fbLogo} imagine4={instLogo} instaInfo={"Szymon Kowal"} fbInfo={"Szymon Kowal"} clas={'profile contentt'}/>}
     </div>
     </div>

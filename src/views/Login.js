@@ -2,7 +2,7 @@ import { React, useState, useContext, useEffect } from 'react';
 import { UserContext } from '../services/UserContext';
 import { InfoContext } from '../services/InfoContext';
 
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import userLogo from './loginIcon/user.svg';
 import passwordLogo from './loginIcon/Group 2.svg';
 import arrowLogo from './loginIcon/Arrow 2.svg';
@@ -12,36 +12,38 @@ import { authUserLogin, authUserLogout, authUserRegister, getUser, parseUserObje
 import useAsyncState from '../services/useAsyncState';
 
 // import coreapi from 'coreapi' 
-const Login = ({info}) => {
-  
+const Login = ({ passedInfo }) => {
+
   const { user, setUser } = useContext(UserContext);
-  const [ style, setStyle ] = useState('');
-  const [ email, setEmail ] = useState('');
-  const [ password, setPassword ] = useState('');
-  const [ username, setUsername ] = useState('');
-  const [ confirmPassword, setConfirmPassword ] = useState('');
-  const [ socialContact, setSocialContact ] = useState('');
+  const { info, setInfo } = useContext(InfoContext);
 
-  const [ gottenToken, setGottenToken ] = useAsyncState('');
+  const [style, setStyle] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [socialContact, setSocialContact] = useState('');
 
-  const [ formType, setFormType ] = useState('login');
-  const [ loginInfo, setLoginInfo ] = useState([]);
-  const [ submitted, setSubmitted ] = useState(false);
+  const [gottenToken, setGottenToken] = useAsyncState('');
 
-  const navigate = useNavigate(); 
+  const [formType, setFormType] = useState('login');
+  const [loginInfo, setLoginInfo] = useState([]);
+  const [submitted, setSubmitted] = useState(false);
+
+  const navigate = useNavigate();
   // let client  = new coreapi.Client()
 
   useEffect(() => {
-    setLoginInfo(info);
+    setInfo(info);
   }, [info])
 
   useEffect(() => {
-        let wrongs = [];
-        setLoginInfo(loginInfo => []);
-        {password !== confirmPassword & formType === 'register' && wrongs.push('Passwords dont match!')}
-        {!validateEmail(email) & formType === 'register' && wrongs.push("Błędny email!")};
-        setLoginInfo(wrongs);
-      
+    let wrongs = [];
+    setLoginInfo(loginInfo => []);
+    { password !== confirmPassword & formType === 'register' && wrongs.push('Passwords dont match!') }
+    { !validateEmail(email) & formType === 'register' && wrongs.push("Błędny email!") };
+    setLoginInfo(wrongs);
+
   }, [password, confirmPassword, socialContact, email])
 
   const checkCredentials = () => {
@@ -50,9 +52,9 @@ const Login = ({info}) => {
   const validateEmail = (emailAdress) => {
     let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w+)+$/;
     if (emailAdress.match(regexEmail)) {
-      return true; 
+      return true;
     } else {
-      return false; 
+      return false;
     }
   }
   const logout = () => {
@@ -63,17 +65,22 @@ const Login = ({info}) => {
   }
 
 
-  const loginError = ()=>{
-    setTimeout(function(){setStyle('loginError')},100)
-    setTimeout(function(){setStyle('')},1300)
+  const loginError = () => {
+    setTimeout(function () { setStyle('loginError') }, 100)
+    setTimeout(function () { setStyle('') }, 1300)
   }
 
-  const login = () => {
+  const login = (e) => {
+    e.preventDefault()
     authUserLogin(email, password)
       .then(res => {
-        if (res === null){
+        if (res === null) {
           // throw new Error('Złe dane logowania!');
-          loginError()
+          // loginError()
+          setInfo({
+            type: 'error',
+            text: 'Złe dane logowania!'
+          })
         }
         // setToken(token)
         return res.key;
@@ -90,101 +97,174 @@ const Login = ({info}) => {
       })
       .then(user => {
         // console.log(user)
-        setUser(parseUserObject(user,gottenToken));
+        setUser(parseUserObject(user, gottenToken));
+        setInfo({
+          type: 'success',
+          text: 'Pomyślnie zalogowano!'
+        })
         console.log('login');
         navigate('/')
-        
+
       })
-      .catch(err => setLoginInfo(loginInfo => {
-        console.log(err)
-          return [...loginInfo, err.message]}
-        ))
+      .catch(err => {
+        setInfo({
+          type: 'error',
+          text: err
+        })
+      }
+      )
   }
 
-  const register = () => {
-    console.log(email, password, username, socialContact);
-    if(checkCredentials()){
+  const register = (e) => {
+    e.preventDefault()
+    // console.log(email, password, username, socialContact);
+    if (checkCredentials()) {
       authUserRegister(email, password, username, socialContact)
-        .then(res => console.log(res))
-        .catch(err => setLoginInfo(err));
+        .then(token => {
+          if(token !== null){
+            return setUser(parseUserObject(getUser(token)))
+          } 
+          else{
+            throw 'Złe dane przy tworzeniu użytkownika!'
+          }
+        
+        })
+        .catch(err => {
+          console.log('blad')
+          setInfo({
+          type: 'error',
+          text: err
+        })
+      return }
+        );
 
-      setUser({
-        username : email,
-        password : password
-      })
-      console.log('registered');
+      // setInfo({
+      //   type: 'success',
+      //   text: 'Pomyślnie zarejestrowano!'
+      // })
+      // console.log('registered');
     }
   }
-  
 
-  return <div className="Login" 
-  // onLoad={
-  //   ()=>authUserLogin('asdf@asdf.com', 'password')
-  //   .then(user => setUser(user))
-  //   .catch(err => setLoginInfo(err))
-  //   }
-     onKeyUp={e => {
-       e.key === 'Enter' & formType === 'login' && login()
-       e.key === 'Enter' & formType === 'register' && register()
-      }}>
-     {formType === 'login' ? 
-    <div className='input-section vertical'>
-      {/* <ArrayList array={loginInfo}></ArrayList> */}
-      <h1>Logowanie</h1>
-      <div className={`inputLogin`}>
-        <div className={`loginInput ${style}`}>
-          <input type="text" placeholder='Login' onChange={(e) => setEmail(e.target.value)}></input>
-          <img src={userLogo} alt="" />
-        </div>
-        <div className={`passwordInput ${style}`}>
-          <input type="password" placeholder='Hasło' onChange={(e) => setPassword(e.target.value)}></input>
-          <img src={passwordLogo} alt="" />
-        </div>
-        <div className='bttn'>
-          <button onClick={() => login()}>Zaloguj ➜</button>
-        </div>
-      </div>
-      <div className="footer">
-        <p>Nie masz konta?</p>
-      <button className="option-button" onClick={() => setFormType('register')}>Zarejestruj się</button>
-    </div>
-    </div> : 
-    <div className="Register vertical">
-      <ArrayList array={loginInfo}></ArrayList>
-      <button className="option" onClick={() => setFormType('login') }> <img src={arrowLogo} alt="" /> </button>
-      <h1 className='hh1'>Rejestracja</h1>
-      <div className='inputLogin register'>
-        <div className={`loginInput`}>
-          <input type="text" placeholder='Email' onChange={(e) => setEmail(e.target.value)}></input>
-          <img src={userLogo} alt="" />
-        </div>
-        <div className='loginInput fb'>
-          <input type="text" placeholder='Nazwa użytkownika' onChange={(e) => setUsername(e.target.value)}></input>
-        </div>
-        <div className='loginInput fb'>
-          <input type="text" placeholder='Facebook/Telefon' onChange={(e) => setSocialContact(e.target.value)}></input>
-        </div>
-        <div className='passwordInput'>
-          <input type="password" placeholder='Hasło' onChange={(e) => setPassword(e.target.value)}></input>
-          <img src={passwordLogo} alt="" />
-        </div>
-        <div className='passwordInput pass2'>
-          <input type="password" placeholder='Powtórz Hasło' onChange={(e) => setConfirmPassword(e.target.value)}></input>
-          <img src={passwordLogo} alt="" />
-        </div>
-        <div className='bttn'>
-          <button onClick={() => register()}>Utwórz ➜</button>
-        </div>
-      </div>
-      <div className="footer">
-        <p>Masz już konto?</p>
-      <button className="option-button" onClick={() => setFormType('login')}>Zaloguj się</button>
-    </div>
-    </div> }
-    {/* : 
-    navigate("/")
-    // <button onClick={() => logout()}>Wyloguj</button>
-    } */}
+
+  return <div className="Login-view"
+    // onLoad={
+    //   ()=>authUserLogin('asdf@asdf.com', 'password')
+    //   .then(user => setUser(user))
+    //   .catch(err => setLoginInfo(err))
+    //   }
+    onKeyUp={e => {
+      e.key === 'Enter' & formType === 'login' && login()
+      e.key === 'Enter' & formType === 'register' && register()
+    }}>
+    {formType === 'login' ?<>
+    
+      <div className='content-container'>
+      <h2 className="view-header">Logowanie</h2>
+        <form className='input-form'>
+
+          <div className="input-form-line">
+            <img src={userLogo} alt="" />
+            <input type="text" placeholder='Login' onChange={(e) => setEmail(e.target.value)}></input>
+            
+          </div>
+
+          <div className="input-form-line">
+            <img src={passwordLogo} alt="" />
+            <input type="password" placeholder='Hasło' onChange={(e) => setPassword(e.target.value)}></input>
+            
+          </div>
+        
+          <button className='login-action-button' onClick={(e) => login(e)}>Zaloguj ➜</button>
+
+        </form>
+        
+      </div> 
+      </>
+      :
+      
+      <>
+      <div className='content-container'>
+      <h2 className="view-header">Rejestracja</h2>
+        <form className='input-form'>
+
+          <div className="input-form-line">
+            <img src={userLogo} alt="" />
+            <input type="text" placeholder='Email' onChange={(e) => setEmail(e.target.value)}></input>
+            
+          </div>
+          <div className="input-form-line">
+            <img src={userLogo} alt="" />
+            <input type="text" placeholder='Username' onChange={(e) => setUsername(e.target.value)}></input>
+            
+          </div>
+
+          <div className="input-form-line">
+            <img src={passwordLogo} alt="" />
+            <input type="text" placeholder='Facebook' onChange={(e) => setSocialContact(e.target.value)}></input>
+            
+          </div>
+
+          <div className="input-form-line">
+            <img src={passwordLogo} alt="" />
+            <input type="password" placeholder='Hasło' onChange={(e) => setPassword(e.target.value)}></input>
+            
+          </div>
+          <div className="input-form-line">
+            <img src={passwordLogo} alt="" />
+            <input type="password" placeholder='Powtórz Hasło' onChange={(e) => setConfirmPassword(e.target.value)}></input>
+            
+          </div>
+        
+          <button className='login-action-button' onClick={(e) => register(e)}>Zarejestruj ➜</button>
+
+        </form>
+        
+      </div> 
+      </>
+
+      // <div className="Register vertical">
+      //   <ArrayList array={loginInfo}></ArrayList>
+      //   <button className="option" onClick={() => setFormType('login')}> <img src={arrowLogo} alt="" /> </button>
+      //   <h1 className='hh1'>Rejestracja</h1>
+      //   <div className='inputLogin register'>
+      //     <div className={`loginInput`}>
+      //       <input type="text" placeholder='Email' onChange={(e) => setEmail(e.target.value)}></input>
+      //       <img src={userLogo} alt="" />
+      //     </div>
+      //     <div className='loginInput fb'>
+      //       <input type="text" placeholder='Nazwa użytkownika' onChange={(e) => setUsername(e.target.value)}></input>
+      //     </div>
+      //     <div className='loginInput fb'>
+      //       <input type="text" placeholder='Facebook/Telefon' onChange={(e) => setSocialContact(e.target.value)}></input>
+      //     </div>
+      //     <div className='passwordInput'>
+      //       <input type="password" placeholder='Hasło' onChange={(e) => setPassword(e.target.value)}></input>
+      //       <img src={passwordLogo} alt="" />
+      //     </div>
+      //     <div className='passwordInput pass2'>
+      //       <input type="password" placeholder='Powtórz Hasło' onChange={(e) => setConfirmPassword(e.target.value)}></input>
+      //       <img src={passwordLogo} alt="" />
+      //     </div>
+      //     <div className='bttn'>
+      //       <button onClick={() => register()}>Utwórz ➜</button>
+      //     </div>
+      //   </div>
+      //   <div className="footer">
+      //     <p>Masz już konto?</p>
+      //     <button className="option-button" onClick={() => setFormType('login')}>Zaloguj się</button>
+      //   </div>
+      // </div>}
+    /* : 
+    navigate("/") */}
+    <footer className="footer">
+      <p>{formType === 'login' ? 'Nie masz konta?' : 'Masz już konto?'}</p>
+      <p className="link-button" onClick={() => {formType === 'login' ? setFormType('register') : setFormType('login')}}>
+        {formType === 'login' ? 'Zarejestruj się' : 'Zaloguj się'}</p>
+  
+    </footer>
+    {/* <button onClick={() => logout()}>Wyloguj</button> */}
+
   </div>;
 };
 

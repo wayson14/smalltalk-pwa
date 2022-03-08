@@ -11,11 +11,11 @@ import instLogo from './loginIcon/instagram.svg';
 const TopBar = (props) => {
     const [show, setShow] = useState(false);
     const { user, setUser } = useContext(UserContext);
-    return <div onClick={(e) => {e.target.id === 'nieodda' && setShow(false)}}>
-    <header className="App-header">
-        <Link className="nav-item" to="/chat"><img src={homeLogo} alt="" className="homeLogo"/></Link>
+    return <div className = "top-bar-wrapper" onClick={(e) => {e.target.id === 'nieodda' && setShow(false)}}>
+    <header className="top-bar">
+        <Link className="nav-item" to="/" onClick={() => setShow(setShow(false))}><img src={homeLogo} alt="" className="homeLogo"/></Link>
         <h4 className='logo'><Link to="/chat" className='logo'><img src={logo} alt="" /></Link></h4>
-        <img src={userLogo} alt="" className="image" onClick={() => setShow(true)}/>
+        <img src={userLogo} alt="" className="image" onClick={() => setShow(show => setShow(!show))}/>
         {/* <Link className="nav-item" to="/admin">admin</Link> */}
         {/* <span className="nav-item">{user.username}</span> */}
     </header>
