@@ -72,3 +72,18 @@ function assertPath(path) {
       throw new TypeError(`The path should be a string, instead received a ${type}`);
     }
   }
+
+export const handleErrorResponse = (res, message) => {
+    return new Promise ((resolve, reject) => {
+        console.log(res)
+        if (res === null) {
+            reject(message)
+        }
+        else if (res.type === 'error') {
+            reject(res.message)
+        }
+        else{
+            resolve(res)
+        }
+    })
+}

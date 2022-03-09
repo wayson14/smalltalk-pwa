@@ -8,9 +8,11 @@ import { joinCircle, getCircle } from '../services/api_methods'
 import { getRoomID, joinWaitingroom, leaveWaitingroom } from "../services/api_methods";
 import arrowLogo from './loginIcon/Arrow 2.svg';
 import qrLogo from './loginIcon/QR.svg';
+import {handleErrorResponse} from '../services/client'
 
 const Match = () => {
   const { user, setUser } = useContext(UserContext);
+  const { info, setInfo } = useContext(InfoContext);
   const [matching, setMatching] = useState(false);
   const [showBottomBar, setShowBottomBar] = useState(false);
   const [circleCode, setCircleCode] = useState('')
@@ -30,12 +32,24 @@ const Match = () => {
       //zmienić w przyszłości tak aby cały proces modyfikacji usera dział się na serwerze
       .then(res => {
         if (isNaN(res.message)) {
+          setInfo({
+            text: res.message,
+            type: 'error'
+          })
           throw new Error(res.message)
         }
         setUser(user => ({ ...user, roomID: res.message }))
       })
-      .then(() => console.log(`User id: ${user.id} has been given a new room ID: ${user.roomID}`))
-      .catch(err => console.error(err))
+      .then(() => {console.log(`User id: ${user.id} has been given a new room ID: ${user.roomID}`)
+    setInfo({
+      text: "Pomyślnie dołączono do sesji!",
+      type: "success"
+    })})
+      .catch(err => {console.error(err)
+      setInfo({
+        text: err,
+        type: 'error'
+      })})
   }
 
   const enterChat = () => {
@@ -63,13 +77,25 @@ const Match = () => {
                 //to będzie robione w Django
                 e.preventDefault();
 
-                joinCircle(circleCode)
+                joinCircle(circleCode) //TODO: błędy powinny być przekazywane do popupu z requesta
+                  .then(res => handleErrorResponse(res, "Błąd przy dołączaniu do kręgu!"))
                   .then(res => {
+                    
                     let IDs = [];
                     console.log(res)
+                    setInfo({
+                      text: res.message,
+                      type: res.type
+                    })
                     navigate('/circles')
                   })
-                  .catch(err => console.log(err))
+                  .catch(err => {
+                    setInfo({
+                      text: err,
+                      type: 'error'
+                    })
+                    console.log(err)
+                  })
               }
             }>
               <img src={arrowLogo} alt="" />

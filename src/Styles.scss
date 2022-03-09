@@ -2,7 +2,7 @@
 VARIABLES
 ==================*/
 $font:'Lato', sans-serif;
-$grey:#A5A5A5;
+$grey:#FAFAFA;
 $white:#FFFFFF;
 $action-color:#8C00FF;
 $black: #000000;
@@ -56,6 +56,21 @@ GLOBALS & UTILITIES
     
 }
 
+.center-content {
+    @include flexCenter(column)
+
+}
+.viewport-center-content {
+    @include flexCenter(column);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    width: 100vw;
+    height: 100vh;
+    background-color: #424242b2;
+
+}
 
 
 /* =================
@@ -70,8 +85,14 @@ VIEWS
 }
 .Match-view {
     @include view;
+    
     height: calc(100vh - $top-bar-height);
 }
+.Searching-view {
+    @include view;
+    height: 100vh;
+}
+
 .scanner {
     background-color: $grey;
     
@@ -120,6 +141,7 @@ TOP BAR & BOTTOM BAR
 /* =================
 BOXES & CONTAINERS
 ==================*/
+
 .content-container {
     @include flexCenter(column);
     width: clamp(120px, 60vw, 350px);
@@ -129,6 +151,26 @@ BOXES & CONTAINERS
     padding: 1em;
 }
 
+.content-area {
+    @include flexCenter(column);
+    width: clamp(120px, 60vw, 350px);
+    // border: 1px solid black;
+    // @include genericShadow();
+    // border-radius: 20px;
+    text-align: center;
+    padding: 1em;
+}
+
+.searching-button-panel {
+    @include flexCenter(column);
+    width: clamp(120px, 60vw, 350px);
+}
+
+.circles-container {
+    @include flexCenter(column);
+    overflow: auto;
+    // width: clamp(120px, 60vw, 500px);
+}
 /* =================
 FORMS
 ==================*/
@@ -229,6 +271,17 @@ BUTTONS
     @include action-button();
     border-radius: 30px;
 }
+.searching-button {
+    @include action-button();
+    margin-top: 0.6rem;
+    border-radius: 30px;
+}
+.leave-circle-button {
+    @include action-button();
+}
+.action-button {
+    @include action-button();
+}
 /* =================
 POP-UPS & INFO CLOUDS
 ==================*/
@@ -243,7 +296,22 @@ POP-UPS & INFO CLOUDS
     border-radius: 5px;
     
     background-color: lightgreen;
-    opacity: 70%;
+    opacity: 60%;
+}
+.user-profile {
+    @include flexCenter(column);
+    // position: absolute;
+    // top: 0.5em;
+    // left: 0.5em;
+    // z-index: 3;
+    border-radius: 20px;
+    height: 80vh;
+    width: clamp(120px, 82vw, 500px);
+    background-color: $grey;
+    // opacity: 100%;
+    
+    // opacity: 60%;
+    
 }
 /* =================
 ICONS & IMAGES
@@ -260,4 +328,10 @@ ICONS & IMAGES
 }
 .normal-arrow{
     @include panelArrow();
+}
+.profile-avatar{
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+
 }
