@@ -21,7 +21,7 @@ const Searching = () => {
   // }
   const leaveFromSearching=()=>{
     leaveWaitingroom()
-    chat()
+    navigate('/')
   }
   const FindMatch = () => {
     getRoomID()
@@ -35,7 +35,7 @@ const Searching = () => {
       })
       .then(res => {
         setInfo({
-          text: 'Dołączono do nowego czatu.',
+          text: 'Dołączono do czatu.',
           type: 'success'
         })
         setUser(user => ({...user, roomID : res.message}))})
@@ -49,7 +49,7 @@ const Searching = () => {
       }))
   }
   return (
-  <div className="Searching-view">
+  <div className="Searching-view" onLoad={()=>FindMatch()}>
       <img className="elipse" src={ellipse} />
       <h1>Szukanie<span className='dot'>.</span><span className='dot'>.</span><span className='dot'>.</span></h1>
       <div className='searching-button-panel'>

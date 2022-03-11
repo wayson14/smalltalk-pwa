@@ -1,10 +1,15 @@
-import { React, useEffect, useState } from 'react';
+import { React, useEffect, useState, useContext } from 'react';
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router';
+import { authUserLogout } from '../services/api_methods';
+import { UserContext } from '../services/UserContext'
 import OutsideClickHandler from 'react-outside-click-handler';
 import Square from '../components/Square';
-
 const UserProfile = ({handleClose, userData}) => {
+
+    const navigate = useNavigate();
     const [checked, setChecked] = useState(true);
+    const { user, setUser } = useContext(UserContext)
     // const isLoggedin = props.isLoggedin
     // const [display, setDisplay] = useState(true);
 
@@ -26,11 +31,18 @@ const UserProfile = ({handleClose, userData}) => {
                 <h4 className="profile-username">
                     {userData.username}
                 </h4>
-                <div classname="profile-social">
+                <div className="profile-social">
                     </div>
-                <div classname="profile-about">
+                <div className="profile-about">
                     </div>
                 <button className="action-button">Edytuj</button>
+                <button className="action-button" 
+                    onClick={() => {
+                        authUserLogout().then(res => setUser(res))
+                        setChecked(false)
+                        navigate("/login")
+                    }
+                        }>Wyloguj</button>
                 {/* {Object.keys(userData).map((key, index) => {
                     return <span>{userData[key]}</span>
                 })} */}

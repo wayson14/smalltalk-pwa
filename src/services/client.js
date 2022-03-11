@@ -42,7 +42,9 @@ export const request = ({
 
         return fetch(`${host}${path}${queryString}`, requestConfig)
         .then(res => {
-            if (!res.ok) return null
+            if (!res.ok) {
+                console.log('RESPONSE ', res)
+                return null}
             return parseResponse(res);
         })
         

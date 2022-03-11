@@ -11,10 +11,12 @@ const InfoCloud = () => {
             backgroundColor: "lightblue"
         },
         success: {
-            backgroundColor: "lightgreen"
+            backgroundColor: "lightgreen",
+            color: "#002603",
         },
         error: {
-            backgroundColor: "red"
+            backgroundColor: "#ce634e",
+            color: "#260600"
         },
         display: {
             display: "block"

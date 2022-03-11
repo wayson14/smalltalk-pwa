@@ -157,8 +157,11 @@ export const authUserLogout = () => {
     //połączenie z bazą danych i wylogowanie użytkownika
     //placeholder
     return request({
-        address: '/auth/logout/',
-        method: 'POST'
+        
+        path: '/auth/logout/',
+        options: {
+            method: 'POST'
+        }
     })
     // return new Promise((resolve, reject) => {
     //     setTimeout(() => {

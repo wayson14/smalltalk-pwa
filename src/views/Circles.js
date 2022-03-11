@@ -66,11 +66,11 @@ const Circles = () => {
         return (
             <div key={circle.circle_ID} className="circles-container">
               <h2>{circle.name}</h2>
-              <ol>
-                <li>{circle?.localization}</li>
-                <li>{circle?.description}</li>
-                <li>{circle?.expire_date}</li>
-              </ol>
+              <div className="content-container">
+                <span>{`Lokalizacja: ${circle?.localization}`}</span>
+                <span>{`Opis: ${circle?.description}`}</span>
+                <span>{`Data wygaśnięcia kodu: ${circle?.expire_date}`}</span>
+              </div>
               <button className="leave-circle-button" onClick={() => leaveCircle(circle.circle_ID)
                 .then(res => {
                   console.log(res)

@@ -13,7 +13,33 @@ const Test = ({counter, setCounter}) => {
     };
     new Notification('test', options);
   }
+    const toParse = {'message': '#002 u1:{res[0].username} s1:{res[0].social_link} u2:{res[1].username} s2:{res[1].social_link}'}
+    const re = /#002 users reveal themselves\. user1:\{[^}]*\} social_link1:\{[^}]*\} user2:\{[^}]*\} social_link2:\{[^}]*\}/
+    
+    function parseRevealMessage(input){
+      //#TODO: to zrobić regexem, bo aż wstyd 
+      let revealObject = {}
+      let data = input.message
+      const words = data.split(' ').slice(0, data.length);
+      
+      let good_words = words.filter((w) => {
+        return w[0] === 'u' || 's' //username & social_link (database props)
+      }) 
+      let pairs =  good_words.map(p => {
+        return p.split(':').slice()
+      })
+      pairs.shift()
 
+      //#TODO: Zrobić to za pomocą array funcs
+      let obj = {
+        [pairs[0][0]]: pairs[0][1],
+        [pairs[1][0]]: pairs[1][1],
+        [pairs[2][0]]: pairs[2][1],
+        [pairs[3][0]]: pairs[3][1],
+        // [pairs[4][0]]: pairs[4][1],
+      }
+      return obj
+    }
   return (
       <>
     {/* <div>Test</div>
@@ -35,6 +61,8 @@ const Test = ({counter, setCounter}) => {
       }
     }>notyfikacja</button>
 
+    <button onClick={ () => console.log(parseRevealMessage(toParse))}>parse</button>
+    
 
     {/* const button = document.getElementById('notifications');
     button.addEventListener('click', () => {

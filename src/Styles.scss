@@ -1,5 +1,5 @@
 /* =================
-VARIABLES
+VARIABLES #TODO: odpowiednio przeskalować, tak aby nie wylewał się obraz poza ekran
 ==================*/
 $font:'Lato', sans-serif;
 $grey:#FAFAFA;
@@ -7,6 +7,7 @@ $white:#FFFFFF;
 $action-color:#8C00FF;
 $black: #000000;
 $red: #FC7171;
+$dark-grey: #cececeb2;
 
 $top-bar-height: 75px;
 $bottom-bar-height: 50px;
@@ -19,6 +20,11 @@ $secondaryText: 12px;
     align-self: flex-start;
     margin: 10px;
     // margin: clamp(25px, 1.2em, 60px);
+}
+.bold-header {
+    text-align: center;
+    padding-left: 1em;
+    padding-right: 1em;
 }
 /* =================
 GLOBALS & UTILITIES
@@ -92,7 +98,16 @@ VIEWS
     @include view;
     height: 100vh;
 }
-
+.Chat-view {
+    @include view;
+    justify-content: space-between;
+    height: 100vh;
+}
+.Chat-end-view {
+    @include view;
+    justify-content: space-between;
+    height: 100vh;
+}
 .scanner {
     background-color: $grey;
     
@@ -118,6 +133,15 @@ TOP BAR & BOTTOM BAR
     padding-right: 1em;
 
 }
+.top-chat-bar {
+    @include flexCenter(row);
+    justify-content: space-between;
+    width: 100%;
+    height: $top-bar-height;
+    padding-left: 1em;
+    padding-right: 1em;
+    background-color: $white;
+}
 .bottom-bar {
     @include flexCenter(column);
     @include genericShadow();
@@ -125,18 +149,23 @@ TOP BAR & BOTTOM BAR
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     justify-content: space-between;
-    width: 100%;
+    width: 100vw;
     padding-left: 1em;
     padding-right: 1em;
     position: absolute;
     z-index: 3;
     bottom: 0px;
     left: 0px;
+    text-decoration: none;
 
 }
 .bottom-bar-list {
     @include flexCenter(column);
-
+    gap: 0.2rem;
+    padding: 0.5rem;    
+}
+.nav-link {
+    text-decoration: none;
 }
 /* =================
 BOXES & CONTAINERS
@@ -165,18 +194,45 @@ BOXES & CONTAINERS
     @include flexCenter(column);
     width: clamp(120px, 60vw, 350px);
 }
+.choice-button-container {
+    @include flexCenter(row);
+    gap: 1em;
+    width: clamp(120px, 60vw, 350px);
+}
+
 
 .circles-container {
     @include flexCenter(column);
     overflow: auto;
     // width: clamp(120px, 60vw, 500px);
 }
+.chat-body {
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100% - $bottom-bar-height - $top-bar-height);
+    // position: absolute;
+    bottom: $bottom-bar-height;
+    overflow-y: auto;
+    margin-bottom: calc(0.8em + $bottom-bar-height);
+    width: clamp(120px, 90vw, 500px);
+}
 /* =================
 FORMS
 ==================*/
+.input-chat {
+    @include flexCenter(row);
+    background-color: $action-color;
+    input {
+        width: clamp(120px, 60vw, 500px);
+    }
+}
 .input-form {
     @include flexCenter(column);
     
+}
+.send-message {
+    width: 100%;
+    @include flexCenter(row)
 }
 .input-form-line {
     padding-top: 1rem;
@@ -296,7 +352,8 @@ POP-UPS & INFO CLOUDS
     border-radius: 5px;
     
     background-color: lightgreen;
-    opacity: 60%;
+    opacity: 95%;
+    font-size: 1.4em;
 }
 .user-profile {
     @include flexCenter(column);
@@ -312,6 +369,17 @@ POP-UPS & INFO CLOUDS
     
     // opacity: 60%;
     
+}
+.pop-up-base {
+    @include flexCenter(column);
+    border-radius: 20px;
+    background-color: $grey;
+    height: 80vh;
+    width: clamp(120px, 82vw, 500px);
+
+}
+.pop-up-container {
+    @include flexCenter(column);
 }
 /* =================
 ICONS & IMAGES
@@ -334,4 +402,71 @@ ICONS & IMAGES
     width: 100px;
     height: 100px;
 
+}
+.chat-icon {
+    // height: clamp(5vw, 20px, 40px);
+    // width: clamp(5vw, 20px, 40px);
+    max-height: 35px;
+    max-width: 35px;
+    max-height: 25px;
+    max-width: 25px;
+}
+/* =================
+MESSAGES 
+==================*/
+@mixin message {
+    font-weight: bold;
+    border-radius: 10px;
+    margin-top: 0.6em;
+    padding: 0.4em;
+    width: fit-content;
+    max-width: 70%;
+    
+}
+.message-body-my{
+    // @include message;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: flex-end
+}
+.message-body-enemy{
+    // @include message;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    
+}
+.enemy-message{
+    @include message;
+    background-color: $dark-grey;
+    border-top-left-radius: 0px;
+}
+.my-message{
+    @include message;
+    color: $white;
+    border-top-right-radius: 0px;
+    background-color: $action-color;
+    justify-self: flex-end;
+}
+/* =================
+ANIMATIONS
+==================*/
+@keyframes spin {
+  
+    0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+  
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+    
+  }
+.elipse {
+    animation-name: spin;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
 }

@@ -72,6 +72,7 @@ const Login = ({ passedInfo }) => {
 
   const login = (e) => {
     e.preventDefault()
+
     authUserLogin(email, password)
       .then(res => {
         if (res === null) {
@@ -120,15 +121,54 @@ const Login = ({ passedInfo }) => {
     // console.log(email, password, username, socialContact);
     if (checkCredentials()) {
       authUserRegister(email, password, username, socialContact)
-        .then(token => {
-          if(token !== null){
-            return setUser(parseUserObject(getUser(token)))
+        .then(res => {
+          console.log(res)
+          if(res !== null){
+            setInfo({
+              type: 'success',
+              text: 'Pomyślnie stworzono użytkownika!'
+            })
+            // navigate('/login')
+            return res.key
           } 
           else{
+            console.log(res)
             throw 'Złe dane przy tworzeniu użytkownika!'
           }
-        
         })
+
+        .then(token => {
+          // let auth = client.auth.TokenAuthentication({
+          //   token: token
+          // })
+          // client = window.coreapi.Client({auth: auth})
+          return setGottenToken(token).then(() => getUser(token))
+          // return getUser(token) //gdzieś by można przechowywać ten token,
+          // jeszcze nie wiem gdzie 
+        })
+        .then(user => {
+          // console.log(user)
+          setUser(parseUserObject(user, gottenToken));
+          setInfo({
+            type: 'success',
+            text: 'Pomyślnie zalogowano!'
+          })
+          console.log('login');
+          navigate('/')
+  
+        })
+        // .then(token => {
+        //   return setGottenToken(token).then(() => getUser(token))
+        // })
+        // .then(user => {
+        //   setUser(parseUserObject(user, gottenToken));
+        //   setInfo({
+        //   type: 'success',
+        //   text: 'Pomyślnie zalogowano!'
+        // })
+        // console.log('login');
+        
+        // })
         .catch(err => {
           console.log('blad')
           setInfo({
