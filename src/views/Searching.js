@@ -39,7 +39,7 @@ const Searching = () => {
       <h1>Szukanie<span className='dot'>.</span><span className='dot'>.</span><span className='dot'>.</span></h1>
       <div className='searchinBttn'>
         <button className='left' onClick={()=>FindMatch()}>Odśwież</button>
-        <button onClick={()=>leaveFromSearching()} >Opuść poczekalnie</button>
+        <button onClick={()=>leaveFromSearching()} >Opuść</button>
       </div>
   </div>
   )
