@@ -108,12 +108,12 @@ VIEWS
         margin-bottom: 6vh;
     }
     .content-container{
-        min-height: 75vw;
-        width: 70vw;
+        min-height: 30%;
+        min-width: 20em;
     }
     .input-form-line{
         @include genericShadow();
-        margin-bottom: 5vw;
+        margin-bottom: 2em;
         width: 60vw;
         display: inline-flex;
         input{
@@ -148,9 +148,10 @@ VIEWS
     height: 100vh;
 }
 .scanner {
+    padding-top: 0;
     background-color: $grey;
-    margin-top: -30vw;
-    height:85vw;
+    min-height: 22em;
+    min-width: 20em;
 }
 .footer {
     @include flexCenter(row);
@@ -159,11 +160,11 @@ VIEWS
     // bottom: 0px;
     p{
         font-size: 1.3em;
-        margin-right: 5vw;
+        margin-right: 1em;
     }
     .link-button{
         color: $action-color;
-        margin-right: 5vw;
+        margin-right: 1em;
     }
 }
 /* =================
@@ -177,7 +178,7 @@ TOP BAR & BOTTOM BAR
     padding-left: 1em;
     padding-right: 1em;
     .homeLogo{
-        width: 55%;
+        min-width: 1.8em;
         margin-left: 3vw;
     }
     img{
@@ -215,7 +216,8 @@ input:checked + .bottom-bar{
     border-top-right-radius: 20px;
     justify-content: space-between;
     width: 100vw;
-    height: 65vw;
+    min-height: 23em;
+    max-height: 23em;
     position: fixed;
     display: flex;
     z-index: 2;
@@ -223,10 +225,9 @@ input:checked + .bottom-bar{
     left: 0px;
     text-decoration: none;
     transition: 0.7s;
-    margin-bottom: -50vw;
+    margin-bottom: -20em;
     img{
         z-index: 99;
-        margin-bottom: 5vw;
         transition: .5s;
         transform: rotate(180deg);
       }
@@ -237,14 +238,15 @@ input:checked + .bottom-bar{
 .bottom-bar-list {
     @include flexCenter(column);
     gap: 0.2rem;
-    padding: 0.5rem;    
+    padding: 0.5rem;
+    margin-bottom:3em;
 }
 .nav-item {
     text-align: center;
     @include genericShadow();
     border-radius: 23px;
-    width: 35vw;
-    margin-top: 2vw;
+    width: 12em;
+    margin-top: 1em;
     text-decoration: none;
     font-size: 20px;
     padding: 10px;
@@ -318,15 +320,15 @@ FORMS
     @include flexCenter(row)
 }
 .input-form-line {
-    padding-top: 1rem;
+    padding-top: 0.5rem;
     @include flexCenter(row);
     // justify-content: space-;
-    width: 100%;
-
+    max-height: 2em;
+    max-width: 18em;
+    min-width: 5em;
     input {
         @include fitInput();
         margin-left: clamp(0.2rem, 0.5rem, 0.5rem);
-        
     } 
 }
 .join-circle-input-form-line{
@@ -351,7 +353,6 @@ FORMS
 .codeInput{
     display: flex;
     justify-content: center;
-    margin-bottom: 5vw;
 }
 /* =================
 BUTTONS
@@ -368,14 +369,15 @@ BUTTONS
 .login-action-button {
     @include action-button();
     align-self: flex-end;
+    margin-top: -1em;
 }
 .chat-action-button {
     @include action-button();
     padding: 1.2rem;
     font-size: 30px;
-    width: 50vw;
-    margin-top: 8vw;
-    margin-bottom: -5vw;
+    max-width: 60em;
+    min-width: 6em;
+    max-height: 2.2em;
     // align-self: flex-end;
 }
 .join-circle-button {
@@ -396,7 +398,7 @@ BUTTONS
     @include action-button();
     margin-top: 0.6rem;
     border-radius: 30px;
-    width: 50vw;
+    min-width: 10em;
     font-size: 18px;
 }
 .leave-circle-button {
@@ -429,17 +431,17 @@ POP-UPS & INFO CLOUDS
     // left: 0.5em;
     // z-index: 3;
     border-radius: 20px;
-    height: 40vh;
+    height:23em;
     width: clamp(120px, 82vw, 500px);
     background-color: $grey;
     // opacity: 100%;
     // opacity: 60%;
     .profile-username{
-        font-size: 30px;
+        font-size: 25px;
     }
     button{
         font-size: 18px;
-        width: 50vw;
+        min-width: 10em;
     }
 }
 .pop-up-base {

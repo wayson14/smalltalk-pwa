@@ -315,7 +315,7 @@ const rejectUser = () => {
       <div className="input-chat bottom-bar">
         <img className='xLogo chat-icon' src={XLogo} alt=""  onClick={() => setShowRejectChoice(true)}/>
         <div className='send-message'>
-          <input placeholder='Napisz coś...' value={message} type="text" onChange={e => setMessage(e.target.value)}></input>
+          <input placeholder='Napisz coś...' value={message} maxlength="255" type="text" onChange={e => setMessage(e.target.value)}></input>
           <button onClick={e => {
             setMessage('');
             sendMessage(e, message);

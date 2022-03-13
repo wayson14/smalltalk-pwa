@@ -196,7 +196,7 @@ const Login = ({ passedInfo }) => {
 
           <div className={`input-form-line ${style}`}>
             <img src={userLogo} alt="" />
-            <input type="text" placeholder='Login' onChange={(e) => setEmail(e.target.value)}></input>
+            <input type="text" placeholder='E-mail' onChange={(e) => setEmail(e.target.value)}></input>
             
           </div>
 
