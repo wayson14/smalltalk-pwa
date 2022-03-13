@@ -20,7 +20,7 @@ const TopBar = (props) => {
     // onClick={(e) => {setShowProfile(false)}}
     >
     <header className="top-bar">
-        <Link className="nav-item" to="/" onClick={() => setShowProfile(setShowProfile(false))}><img src={homeLogo} alt="" className="homeLogo"/></Link>
+        <Link to="/" onClick={() => setShowProfile(setShowProfile(false))}><img src={homeLogo} alt="" className="homeLogo"/></Link>
         <h4 className='logo'><Link to="/chat" className='logo'><img src={logo} alt="" /></Link></h4>
         <img src={userLogo} alt="" className="image" onClick={() => setShowProfile(showProfile => setShowProfile(!showProfile))}/>
         {/* <Link className="nav-item" to="/admin">admin</Link> */}

@@ -149,11 +149,12 @@ VIEWS
 }
 .scanner {
     background-color: $grey;
-    
+    margin-top: -30vw;
+    height:85vw;
 }
 .footer {
     @include flexCenter(row);
-    width: 60vw;
+    width: 64vw;
     font-size: $secondaryText;
     // bottom: 0px;
     p{
@@ -175,6 +176,14 @@ TOP BAR & BOTTOM BAR
     height: $top-bar-height;
     padding-left: 1em;
     padding-right: 1em;
+    .homeLogo{
+        width: 55%;
+        margin-left: 3vw;
+    }
+    img{
+        margin-right: 3vw;
+        height: 40%;
+    }
 
 }
 .top-chat-bar {
@@ -186,30 +195,60 @@ TOP BAR & BOTTOM BAR
     padding-right: 1em;
     background-color: $white;
 }
+input:checked + .bottom-bar{
+    margin-bottom: 0 !important;
+    transition: .7s;
+    .flipped-arrow{
+      transform: rotate(360deg);
+      transition: .5s;
+    }
+}
+.burger{
+    display: none;
+  }
 .bottom-bar {
     @include flexCenter(column);
     @include genericShadow();
+    background-color: $white;
     min-height: $bottom-bar-height;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     justify-content: space-between;
     width: 100vw;
-    padding-left: 1em;
-    padding-right: 1em;
-    position: absolute;
-    z-index: 3;
+    height: 65vw;
+    position: fixed;
+    display: flex;
+    z-index: 2;
     bottom: 0px;
     left: 0px;
     text-decoration: none;
-
+    transition: 0.7s;
+    margin-bottom: -50vw;
+    img{
+        z-index: 99;
+        margin-bottom: 5vw;
+        transition: .5s;
+        transform: rotate(180deg);
+      }
+      input{
+        display: none;
+    }
 }
 .bottom-bar-list {
     @include flexCenter(column);
     gap: 0.2rem;
     padding: 0.5rem;    
 }
-.nav-link {
+.nav-item {
+    text-align: center;
+    @include genericShadow();
+    border-radius: 23px;
+    width: 35vw;
+    margin-top: 2vw;
     text-decoration: none;
+    font-size: 20px;
+    padding: 10px;
+    margin-bottom: 3vw;
 }
 /* =================
 BOXES & CONTAINERS
@@ -288,59 +327,32 @@ FORMS
         @include fitInput();
         margin-left: clamp(0.2rem, 0.5rem, 0.5rem);
         
-    }
-    .loginError{
-        animation: color-change 1.5s,shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
-        img{
-          animation: color-change 1.5s;
-        }
-        input{
-          color: #FFFFFF;
-          animation: color-change 1.5s;
-        }
-        ::placeholder{
-          color: $white;
-        }
-      }
-      @keyframes color-change {
-        0% { background-color: $white;}
-        50% { background-color: $red;}
-        100% { background-color: $white;}
-      }
-      @keyframes shake {
-        10%, 90% {
-          transform: translate3d(-1px, 0, 0);
-        }
-        
-        20%, 80% {
-          transform: translate3d(2px, 0, 0);
-        }
-      
-        30%, 50%, 70% {
-          transform: translate3d(-4px, 0, 0);
-        }
-      
-        40%, 60% {
-          transform: translate3d(4px, 0, 0);
-        }
-      }
-      
-
+    } 
 }
 .join-circle-input-form-line{
-    // width: 80%;
+    width: 80%;
+    justify-content: center;
     @include flexCenter(row);
+    @include genericShadow();
     margin-bottom: 1em;
     border: none;
+    border-radius: 40px;
 }
 .join-circle-input{
+        font-family: $font;
+        font-size: 17px;
         border-bottom-left-radius: 0.5em;
         border-top-left-radius: 0.5em;
-        width: 60%;
-        
+        width: 74%;
+        border: none;
+        margin-left: 2vw;
     }
 
-
+.codeInput{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5vw;
+}
 /* =================
 BUTTONS
 ==================*/
@@ -360,12 +372,21 @@ BUTTONS
 .chat-action-button {
     @include action-button();
     padding: 1.2rem;
+    font-size: 30px;
+    width: 50vw;
+    margin-top: 8vw;
+    margin-bottom: -5vw;
     // align-self: flex-end;
 }
 .join-circle-button {
     border-top-right-radius: 0.5em;
     border-bottom-right-radius: 0.5em;
-    background-color: $action-color;
+    transform: rotate(180deg);
+    border: none;
+    height: 110%;
+    img{
+        width: 80%;
+    }
 }
 .show-bottombar-button {
     @include action-button();
@@ -514,6 +535,21 @@ ANIMATIONS
     animation-duration: 2s;
     animation-iteration-count: infinite;
 }
+
+//Login error anmation
+.loginError{
+    animation: color-change 1.5s,shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    img{
+      animation: color-change 1.5s;
+    }
+    input{
+      color: #FFFFFF;
+      animation: color-change 1.5s;
+    }
+    ::placeholder{
+      color: $white;
+    }
+  }
 
 @keyframes color-change {
     0% { background-color: $white;}

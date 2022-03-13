@@ -18,16 +18,16 @@ const BottomBar = () => {
             }}
             >
                 {/* {showBottomBar && <div onClick={() => setShowBottomBar(false)}>"JESTEM"</div>} */}
-                {/* <input readOnly id="bttn" type="checkbox" className="burger" checked={checked}/> */}
+                <input readOnly id="bttn" type="checkbox" className="burger" checked={checked}/>
                 <div className="bottom-bar">
 
                     <label htmlFor="bttn" 
                     id="expand-btn" 
                     onClick={() => setChecked(checked => !checked)}><img src={arrowLogo} alt="" 
-                    className={checked ?  "normal-arrow" : "flipped-arrow"}/>
+                    className="flipped-arrow"/>
                     </label>
 
-                    <div className="bottom-bar-list" style={checked ?  {display: 'flex'} : {display: 'none'}}>
+                    <div className="bottom-bar-list">
                         <Link className="nav-item" to="/circles">Moje Kręgi</Link>
                         <Link className="nav-item" to="/createCircle">Stwórz krąg</Link>
                         <Link className="nav-item" to="/friends">Znajomi</Link>

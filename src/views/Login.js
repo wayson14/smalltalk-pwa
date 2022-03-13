@@ -77,10 +77,8 @@ const Login = ({ passedInfo }) => {
       .then(res => {
         if (res === null) {
           // throw new Error('Złe dane logowania!');
-          // loginError()
+          loginError()
           setInfo({
-            type: 'error',
-            text: 'Złe dane logowania!'
           })
         }
         // setToken(token)
@@ -100,8 +98,6 @@ const Login = ({ passedInfo }) => {
         // console.log(user)
         setUser(parseUserObject(user, gottenToken));
         setInfo({
-          type: 'success',
-          text: 'Pomyślnie zalogowano!'
         })
         console.log('login');
         navigate('/')
@@ -125,14 +121,13 @@ const Login = ({ passedInfo }) => {
           console.log(res)
           if(res !== null){
             setInfo({
-              type: 'success',
-              text: 'Pomyślnie stworzono użytkownika!'
             })
             // navigate('/login')
             return res.key
           } 
           else{
             console.log(res)
+            loginError()
             throw 'Złe dane przy tworzeniu użytkownika!'
           }
         })
@@ -150,8 +145,6 @@ const Login = ({ passedInfo }) => {
           // console.log(user)
           setUser(parseUserObject(user, gottenToken));
           setInfo({
-            type: 'success',
-            text: 'Pomyślnie zalogowano!'
           })
           console.log('login');
           navigate('/')
@@ -172,8 +165,6 @@ const Login = ({ passedInfo }) => {
         .catch(err => {
           console.log('blad')
           setInfo({
-          type: 'error',
-          text: err
         })
       return }
         );
@@ -203,13 +194,13 @@ const Login = ({ passedInfo }) => {
       <h2 className="view-header">Logowanie</h2>
         <form className='input-form'>
 
-          <div className="input-form-line">
+          <div className={`input-form-line ${style}`}>
             <img src={userLogo} alt="" />
             <input type="text" placeholder='Login' onChange={(e) => setEmail(e.target.value)}></input>
             
           </div>
 
-          <div className="input-form-line">
+          <div className={`input-form-line ${style}`}>
             <img src={passwordLogo} alt="" />
             <input type="password" placeholder='Hasło' onChange={(e) => setPassword(e.target.value)}></input>
             
@@ -228,29 +219,29 @@ const Login = ({ passedInfo }) => {
       <h2 className="view-header">Rejestracja</h2>
         <form className='input-form'>
 
-          <div className="input-form-line">
+          <div className={`input-form-line ${style}`}>
             <img src={userLogo} alt="" />
             <input type="text" placeholder='Email' onChange={(e) => setEmail(e.target.value)}></input>
             
           </div>
-          <div className="input-form-line">
+          <div className={`input-form-line ${style}`}>
             <img src={userLogo} alt="" />
             <input type="text" placeholder='Username' onChange={(e) => setUsername(e.target.value)}></input>
             
           </div>
 
-          <div className="input-form-line">
+          <div className={`input-form-line ${style}`}>
             <img className='fbLogo' src={fbLogo} alt="" />
             <input type="text" placeholder='Facebook' onChange={(e) => setSocialContact(e.target.value)}></input>
             
           </div>
 
-          <div className="input-form-line">
+          <div className={`input-form-line ${style}`}>
             <img src={passwordLogo} alt="" />
             <input type="password" placeholder='Hasło' onChange={(e) => setPassword(e.target.value)}></input>
             
           </div>
-          <div className="input-form-line">
+          <div className={`input-form-line ${style}`}>
             <img src={passwordLogo} alt="" />
             <input type="password" placeholder='Powtórz Hasło' onChange={(e) => setConfirmPassword(e.target.value)}></input>
             
