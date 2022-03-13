@@ -6,7 +6,8 @@ import {
   Link,
 } from "react-router-dom";
 import { UserContext } from "./services/UserContext";
-import './App.scss';
+// import './App.scss';
+import './Styles.scss';
 import { InfoContext } from './services/InfoContext';
 import Chat from './views/Chat.js'
 import Profile from './views/Profile.js'
@@ -17,20 +18,24 @@ import Match from './views/Match.js'
 import Searching from './views/Searching';
 import Friends from './views/Friends';
 import CreateCircle from './views/CreateCircle';
-
+import InfoCloud  from './components/InfoCloud';
 // import OneSignal from 'react-onesignal';
-
+import NIY from './views/NIY';
 import { request } from './services/client';
 
 import Test from './views/Test.js'
 import { getUser, checkSession, parseUserObject } from './services/api_methods';
 import useAsyncState from './services/useAsyncState';
+import TopBar from './views/TopBar';
 function App() {
 
   const [counter, setCounter] = useState(0);
   const [notificationButton, setNotificationButton] = useState(false);
   const [user, setUser] = useState();
-  const [info, setInfo] = useState('info');
+  const [info, setInfo] = useState({
+    text: '',
+    type: 'info'
+  });
 
   const [isSession, setIsSession] = useAsyncState(false);
 
@@ -130,10 +135,12 @@ function App() {
       {/* <button className="notification-btn" onClick={() => askNotificationPermission()}>zezwol</button> */}
       <UserContext.Provider value={userValue}>
       <InfoContext.Provider value={infoValue}>
-
+        <InfoCloud/>
+        {/* <TopBar/> */}
         <Router>
           <div className='wrapper'>
             <div className='main'>
+              {/* ustawić prywatne routy */}
               <Routes>
                 <Route path="/" element={user ? <Match/> : <Login info={info}/>}/>
                 <Route path="/counter" element={<Test counter={counter} setCounter={setCounter}/>}/>
@@ -144,9 +151,9 @@ function App() {
                 {/* <Route path="/match" element={<Match/>}/> */}
                 <Route path="/admin" element={<Admin/>}/>
                 <Route path="/login" element={<Login/>}/>
-                <Route path="/test" element={<Test/>}/>
-                <Route path="/friends" element={<Friends/>}/>
-                <Route path="/createCircle" element={<CreateCircle/>}/>
+                <Route path="/test" element={!true ? <NIY/> : <Test/>}/>
+                <Route path="/friends" element={true ? <NIY/> : <Friends/>}/>
+                <Route path="/createCircle" element={true ? <NIY/> : <CreateCircle/>}/>
               </Routes>
             </div>
             </div>

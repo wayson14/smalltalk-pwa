@@ -3,7 +3,7 @@ import { UserContext } from '../services/UserContext';
 import useAsyncState from '../services/useAsyncState';
 
 const ChatEndView = ({type, contactUser}) => {
-  return <div className="reveal modal">
+  return <div className="Chat-end-view">
       {type === 'reveal' ? 
       <div>
         <div className="container vertical">

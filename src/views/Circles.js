@@ -46,8 +46,9 @@ const Circles = () => {
 
 
 
-  return <div>
+  return <>
     <TopBar/>
+    <div className="circles-container">
     {/* <pre>
       {circles.map((circle) => {
         return(
@@ -61,19 +62,16 @@ const Circles = () => {
         )
       })}
     </pre> */}
-    <pre>
-
       {circles.length > 0 ? circles.map(circle => {
         return (
-            <div key={circle.circle_ID} className="container vertical">
+            <div key={circle.circle_ID} className="circles-container">
               <h2>{circle.name}</h2>
-              
-              <ol>
-                <li>{circle?.localization}</li>
-                <li>{circle?.description}</li>
-                <li>{circle?.expire_date}</li>
-              </ol>
-              <button onClick={() => leaveCircle(circle.circle_ID)
+              <div className="content-container">
+                <span>{`Lokalizacja: ${circle?.localization}`}</span>
+                <span>{`Opis: ${circle?.description}`}</span>
+                <span>{`Data wygaśnięcia kodu: ${circle?.expire_date}`}</span>
+              </div>
+              <button className="leave-circle-button" onClick={() => leaveCircle(circle.circle_ID)
                 .then(res => {
                   console.log(res)
                   return setCircles([])
@@ -87,14 +85,14 @@ const Circles = () => {
       
       )
       : 
-      <div>
+      <div className="content-area">
         <h1> Jeszcze nie jesteś w żadnym kręgu! </h1>
       </div>
       }
       
-    </pre>
     <BottomBar/>
   </div>;
+  </>
 };
 
 export default Circles;

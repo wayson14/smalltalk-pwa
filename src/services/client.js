@@ -42,7 +42,9 @@ export const request = ({
 
         return fetch(`${host}${path}${queryString}`, requestConfig)
         .then(res => {
-            if (!res.ok) return null
+            if (!res.ok) {
+                console.log('RESPONSE ', res)
+                return null}
             return parseResponse(res);
         })
         
@@ -72,3 +74,18 @@ function assertPath(path) {
       throw new TypeError(`The path should be a string, instead received a ${type}`);
     }
   }
+
+export const handleErrorResponse = (res, message) => {
+    return new Promise ((resolve, reject) => {
+        console.log(res)
+        if (res === null) {
+            reject(message)
+        }
+        else if (res.type === 'error') {
+            reject(res.message)
+        }
+        else{
+            resolve(res)
+        }
+    })
+}

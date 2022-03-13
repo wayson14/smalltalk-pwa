@@ -5,6 +5,7 @@ import { UserContext } from '../services/UserContext';
 
 const PopUp = (props) => {
 const { user, setUser } = useContext(UserContext);
+const setShow = props.setShow;
 const head = props.head;
 const head1 = props.head1;
 const head2 = props.head2;
@@ -46,7 +47,9 @@ return <div>
                 <div className='chatBttns' id='odda'>
                     <h1>{head2}</h1>
                     <div className='bttnsColor'>
-                    <button onClick={()=> funCtion1()} id='ree' className='reaveael'>ODKRYJ</button>
+                    <button onClick={()=> {
+                        funCtion1()
+                        setShow(false)}} id='ree' className='reaveael'>ODKRYJ</button>
                     <button id='odda'>KONTYNUUJ</button>
                     </div>
                 </div>
