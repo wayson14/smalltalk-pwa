@@ -396,6 +396,8 @@ BUTTONS
     @include action-button();
     margin-top: 0.6rem;
     border-radius: 30px;
+    width: 50vw;
+    font-size: 18px;
 }
 .leave-circle-button {
     @include action-button();
@@ -427,13 +429,18 @@ POP-UPS & INFO CLOUDS
     // left: 0.5em;
     // z-index: 3;
     border-radius: 20px;
-    height: 80vh;
+    height: 40vh;
     width: clamp(120px, 82vw, 500px);
     background-color: $grey;
     // opacity: 100%;
-    
     // opacity: 60%;
-    
+    .profile-username{
+        font-size: 30px;
+    }
+    button{
+        font-size: 18px;
+        width: 50vw;
+    }
 }
 .pop-up-base {
     @include flexCenter(column);

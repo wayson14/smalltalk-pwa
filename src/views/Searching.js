@@ -35,8 +35,6 @@ const Searching = () => {
       })
       .then(res => {
         setInfo({
-          text: 'Dołączono do czatu.',
-          type: 'success'
         })
         setUser(user => ({...user, roomID : res.message}))})
       .then(() => {
@@ -44,8 +42,6 @@ const Searching = () => {
         console.log(`User id: ${user.id} has been given a new room ID: ${user.roomID}`)
         navigate('/chat')})
       .catch(err => setInfo({
-        text: err.message,
-        type: 'error'
       }))
   }
   return (
