@@ -51,6 +51,7 @@ export const getUser = (token) => {
     })
 }
 export const parseUserObject = (user, token) => {
+    console.log(user)
     if (user === '' & null & undefined){
         console.log('user is null')
         return ''
@@ -60,7 +61,7 @@ export const parseUserObject = (user, token) => {
         username: user.username,
         email: user.email,
         token: token,
-        roomID: user?.room_id,
+        roomID: (user ? user?.room_id : null ),
         // first_name: user.first_name,
         // last_name: user.last_name
       }

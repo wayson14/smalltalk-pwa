@@ -6,7 +6,8 @@ import { w3cwebsocket as W3CWebSocket } from 'websocket';
 import { request, chatApiUrl } from '../services/client'
 import { getRoomMessages, closeSession, leaveWaitingroom } from '../services/api_methods'
 import { UserContext } from '../services/UserContext';
-import ScrollToBottom, {useAtBottom} from 'react-scroll-to-bottom';
+import { InfoContext } from '../services/InfoContext';
+import ScrollToBottom, { useAtBottom } from 'react-scroll-to-bottom';
 import useAsyncState from '../services/useAsyncState';
 import ChatEndView from './ChatEndView';
 import PopUp from './PopUp';
@@ -28,8 +29,8 @@ const Chat = () => {
   }
 
   const { user, setUser } = useContext(UserContext);
-  const [contactUser, setContactUser] = useAsyncState(null);
-  const [ revealObject, setRevealObject ] = useState({});
+  const { info, setInfo } = useContext(InfoContext);
+
 
   const client = useRef();
   const [message, setMessage] = useState('');
@@ -43,9 +44,13 @@ const Chat = () => {
 
   const [showRevealPanel, setShowRevealPanel] = useState(false);
 
-
   const [showRejectChoice, setShowRejectChoice] = useState(false);
   const [showRevealChoice, setShowRevealChoice] = useState(false);
+
+  const [contactUser, setContactUser] = useAsyncState(null);
+  const [revealObject, setRevealObject] = useState({});
+
+  const [connectionAttempts, setConnectionAttempts] = useState(0);
 
 
   const [messagesArray, setMessagesArray] = useState([{
@@ -71,16 +76,16 @@ const Chat = () => {
     return
   }
 
-  function parseRevealMessage(input){
+  function parseRevealMessage(input) {
     //#TODO: to zrobić regexem, bo aż wstyd 
     // let revealObject = {}
     let data = input
     const words = data.split(' ').slice(0, data.length);
-    
+
     let good_words = words.filter((w) => {
       return w[0] === 'u' || 's' //username & social_link (database props)
-    }) 
-    let pairs =  good_words.map(p => {
+    })
+    let pairs = good_words.map(p => {
       return p.split(':').slice()
     })
     pairs.shift()
@@ -98,8 +103,12 @@ const Chat = () => {
 
   useEffect(() => {
     getRoomMessages()
-    .then(data => setMessagesArray(data?.content))
-    .catch(err => console.error(err))
+
+      .then(data => {
+        console.log(data)
+        setMessagesArray(data.content)
+      })
+      .catch(err => console.error(err))
     client.current = new WebSocket(url)
 
     client.current.onopen = () => {
@@ -139,17 +148,33 @@ const Chat = () => {
         }
       }
       // var img = '../../public';
-      const notification = new Notification(`${mes.username} napisał: `, { body: `${mes.message}`});
+      const notification = new Notification(`Nowa wiadomość!: `, { body: `${mes.message}` });
       setMessagesArray(messagesArray => [...messagesArray, mes]);
     }
+
 
     client.current.onclose = () => {
       console.log('WebSocket Client Disconnected');
       setConnectionStatus(false);
+      navigate('/')
     }
 
     client.current.onerror = (e) => {
-      console.log('Error' + e.code);
+      // console.log(e)
+      console.log('Występił błąd, próba ponownego połączenia...');
+      client.current.close()
+      // setConnectionAttempts(connectionAttempts++)
+      // if (connectionAttempts < 3){
+      //   client.current = new WebSocket(url)
+      // }
+      // else{
+      //   setInfo({
+      //     type: 'error',
+      //     text: 'Błąd przy połączeniu'
+      //   })
+      //   navigate('')
+      // }
+      
     }
 
     // w przyszłości
@@ -163,81 +188,67 @@ const Chat = () => {
     setIfWanting(ifWantint => !ifWanting)
       .then(currentState => {
         console.log(currentState)
-        return new Promise ((resolve, reject) => {
-          let messageInfo =  `${(currentState ? '#001' : '#005')} user of id: ${user.username} ${(currentState ? 'wants' : 'doesn\'t want to')} to reveal`
-          try{
+        return new Promise((resolve, reject) => {
+          let messageInfo = `${(currentState ? '#001' : '#005')} user of id: ${user.username} ${(currentState ? 'wants' : 'doesn\'t want to')} to reveal`
+          try {
             client.current.send(JSON.stringify({
               type: "message",
               message: messageInfo,
               username: user.username,
               sendTime: new Date()
-          })
-          )
-        } catch (error) {
-          reject(error)
-        }
+            })
+            )
+          } catch (error) {
+            reject(error)
+          }
           resolve(messageInfo)
+        })
       })
-    })
-    // .then(data => {
-    //   console.log(data)
-    // })
-    // })
-    // .then(res => {
-    //   console.log(res)
-    //   return leaveWaitingroom()
-    // })
-    // .then(res => {
-    //   console.log(res)
-    //   setIfRevealed(true)
-    //   return
-    // })
-    .catch(err => console.error(err))
-}
+      // .then(data => {
+      //   console.log(data)
+      // })
+      // })
+      // .then(res => {
+      //   console.log(res)
+      //   return leaveWaitingroom()
+      // })
+      // .then(res => {
+      //   console.log(res)
+      //   setIfRevealed(true)
+      //   return
+      // })
+      .catch(err => console.error(err))
+  }
 
 
-const rejectUser = () => {
-  // setShow(false)
+  const rejectUser = () => {
+    // setShow(false)
 
-  setIfWantToReject(ifWantToReject => !ifWantToReject)
-    .then(currentState => {
-      console.log(currentState)
-      return new Promise((resolve, reject) => {
-        let messageInfo = `#003 user of id: ${user.id} ${(currentState ? 'wants' : 'doesn\'t want to')} to reject`
-        try {
-          client.current.send(JSON.stringify({
-            type: "message",
-            message: messageInfo,
-            username: user.username,
-            sendTime: new Date()
-          })
-          )
-        } catch (error) {
-          reject(error)
-        }
-        resolve(messageInfo)
+    setIfWantToReject(ifWantToReject => !ifWantToReject)
+      .then(currentState => {
+        console.log(currentState)
+        return new Promise((resolve, reject) => {
+          let messageInfo = `#003 user of id: ${user.id} ${(currentState ? 'wants' : 'doesn\'t want to')} to reject`
+          try {
+            client.current.send(JSON.stringify({
+              type: "message",
+              message: messageInfo,
+              username: user.username,
+              sendTime: new Date()
+            })
+            )
+          } catch (error) {
+            reject(error)
+          }
+          resolve(messageInfo)
+        })
       })
-    })
-    // .then(data => {
-    //   console.log(data)
-    //   return closeSession()
-    // })
-    // .then(res => {
-    //   console.log(res)
-    //   return leaveWaitingroom()
-    // })
-    // .then(res => {
-    //   console.log(res)
-    //   setIfRejected(true)
-    //   return
-    // })
-    .catch(err => console.error(err))
-}
+
+      .catch(err => console.error(err))
+  }
 
 
-  //
 
-  // }
 
   const sendRevealSignal = () => {
     setShowRevealPanel(true)
@@ -252,9 +263,16 @@ const rejectUser = () => {
 
   const sendMessage = (e, mes) => {
     // console.log(mes, user.username);
+    if (mes == ''){
+      setInfo({
+        text: 'Wiadomość nie może być pusta!',
+        type: 'info'
+      })
+      return 
+    }
     client.current.send(JSON.stringify({
       // type: "message",
-      message: message,
+      message: mes,
       username: user.username,
       // sendTime: new Date()
     }));
@@ -268,34 +286,27 @@ const rejectUser = () => {
   }, [messagesArray])
 
 
-  const [ style, setStyle ] = useState('blue');
-  const giveColor = (messagess,etc)=>{
-    if(messagess == user.username){
-     return <div className="message-body-my"><div className='my-message'>{etc?.message}</div></div>
+  const [style, setStyle] = useState('blue');
+  const giveColor = (messagess, etc) => {
+    if (messagess == user.username) {
+      return <div className="message-body-my"><div className='my-message'>{etc?.message}</div></div>
     }
-    else{
+    else {
       return <div className="message-body-enemy"><div className='enemy-message'>{etc?.message}</div></div>
     }
   }
 
   return (
-    // <div onClick={(e) => {e.target.id === 'nieodda'  && setShow3(false)}}>
-    // <div onClick={(e) => {e.target.id === 'ree'  && setShow3(true)}}>
-    // <div onClick={(e) => {e.target.id === 'odda'  && setShowRevealPanel(false)}}>
-    <div className="Chat-view"  onKeyUp={e => (e.key === 'Enter' && sendMessage(e, message))}>
-      {/* {messagesArray.map(message => {
-            <span>{message.message}: </span>
-        })} */}
 
-      {/* <h2>chat nr {user.roomID}</h2> */}
+    <div className="Chat-view" onKeyUp={e => (e.key === 'Enter' && sendMessage(e, message))}>
+
       {/* #TODO: dodać topbar taki jak w figmie */}
       <div className="top-chat-bar">
         <button className="action-button" onClick={() => setShowRevealChoice(true)}>{ifWanting ? "Zrezygnuj" : "Odkryj"}</button>
         <h4>{enemyUsername}</h4>
         <button className="action-button" onClick={() => navigate("/")}>Menu</button>
       </div>
-      {/* <button onClick={() => revealUser()}>reveal</button>
-      <button onClick={() => rejectUser()}>reject</button> */}
+
       <div className='chatFlip chat-body'>
         {/* <div   */}
         {/* // id='messages-array' className="messages-array"> */}
@@ -305,21 +316,24 @@ const rejectUser = () => {
             setMoreInfoTrigger(!moreInfoTrigger);
           }}>
 
-              {giveColor(mes?.username,mes)}
+            {giveColor(mes?.username, mes)}
 
 
           </div>
         })
         }
-        </div>
-      <div className="input-chat bottom-bar">
-        <img className='xLogo chat-icon' src={XLogo} alt=""  onClick={() => setShowRejectChoice(true)}/>
+      </div>
+      {/* <div className="input-chat bottom-bar"> zamienione*/} 
+      <div className="input-chat">
+        <img className='xLogo chat-icon' src={XLogo} alt="" onClick={() => setShowRejectChoice(true)} />
         <div className='send-message'>
           <input placeholder='Napisz coś...' value={message} maxlength="255" type="text" onChange={e => setMessage(e.target.value)}></input>
           <button onClick={e => {
-            setMessage('');
+            // setMessage('');
+
+
             sendMessage(e, message);
-          }}><img src={sendLogo}/></button>
+          }}><img src={sendLogo} /></button>
         </div>
         <img className='iceBraker chat-icon' src={iceLogo} alt="" />
       </div>
@@ -331,20 +345,16 @@ const rejectUser = () => {
       </PopUpBase>}
 
       {showRejectChoice && <PopUpBase type="choice" prompt="Czy na pewno chcesz się rozłączyć?" onNo={() => setShowRejectChoice(false)} onYes={rejectUser} handleClose={() => setShowRejectChoice(false)}>
-          <div>reject?</div>
-        </PopUpBase>}
+        <div>reject?</div>
+      </PopUpBase>}
 
-      {/* {ifRevealed && <ChatEndView contactUser={contactUser} type='reveal'></ChatEndView>} */}
 
-      {/* {ifRejected && <ChatEndView type='reject'></ChatEndView>} */}
-      {ifRejected && <PopUpBase type='rejected-view'/>}
-      {ifRevealed && <PopUpBase type='revealed-view' revealObject={revealObject}/>}
-      {/* {show3 && <PopUp show3={show3} setShow3={setShow3} avatar={userLogo} head1={"Szymon"} imagine3={fbLogo} imagine4={instLogo} instaInfo={"Szymon Kowal"} fbInfo={"Szymon Kowal"} clas={'profile contentt'}/>} */}
+      {ifRejected && <PopUpBase type='rejected-view' />}
+      {ifRevealed && <PopUpBase type='revealed-view' revealObject={revealObject} />}
+
     </div>
-    // </div>
-    // </div>
-    // </div>
-    )
+
+  )
 };
 
 export default Chat;

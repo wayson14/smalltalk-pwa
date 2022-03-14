@@ -1,11 +1,11 @@
-import { React, useState, useContext } from 'react';
+import { React, useState, useContext, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import TopBar from './TopBar';
 import BottomBar from './BottomBar';
 import { UserContext } from "../services/UserContext";
 import { InfoContext } from '../services/InfoContext';
 import { joinCircle, getCircle } from '../services/api_methods'
-import { getRoomID, joinWaitingroom, leaveWaitingroom } from "../services/api_methods";
+import { getRoomID, joinWaitingroom, leaveWaitingroom, getUser, parseUserObject } from "../services/api_methods";
 import arrowLogo from './loginIcon/Arrow 2.svg';
 import qrLogo from './loginIcon/QR.svg';
 import {handleErrorResponse} from '../services/client'
@@ -18,6 +18,11 @@ const Match = () => {
   const [circleCode, setCircleCode] = useState('')
   const [style, setStyle] = useState('');
 
+  useEffect(() => {
+    getUser(user.token)
+    .then(gottenUser => {setUser(parseUserObject(gottenUser, user.token))
+    })
+  }, [])
   const loginError = () => {
     setTimeout(function () { setStyle('codeCircleError') }, 100)
     setTimeout(function () { setStyle('') }, 1300)

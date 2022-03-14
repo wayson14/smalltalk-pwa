@@ -33,6 +33,15 @@ const UserProfile = ({handleClose, userData}) => {
                 </h4>
                 <div className="profile-social">
                     </div>
+                <div className="profile-social">
+                    <span>ID użytkownika: </span>
+                    {userData.id}
+                </div>
+                <div className="profile-social">
+                    <span>Aktywna sesja: </span>
+                    {userData.roomID}
+                    </div>
+             
                 <div className="profile-about">
                     </div>
                 <button className="action-button">Edytuj</button>

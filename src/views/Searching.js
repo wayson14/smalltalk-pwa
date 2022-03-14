@@ -36,20 +36,25 @@ const Searching = () => {
       .then(res => {
         setInfo({
         })
-        setUser(user => ({...user, roomID : res.message}))})
+        setUser(user => ({...user, roomID : res.message}))
+        // console.log("POKOJ: ", res.message)
+      }
+        )
       .then(() => {
         
         console.log(`User id: ${user.id} has been given a new room ID: ${user.roomID}`)
         navigate('/chat')})
       .catch(err => setInfo({
+        text: err.message,
+        type: 'error'
       }))
   }
   return (
   <div className="Searching-view" onLoad={()=>FindMatch()}>
       <img className="elipse" src={ellipse} />
-      <h1>Szukanie<span className='dot'>.</span><span className='dot'>.</span><span className='dot'>.</span></h1>
+      <h1>Oczekiwanie na przydzielenie do sesji<span className='dot'>.</span><span className='dot'>.</span><span className='dot'>.</span></h1>
       <div className='searching-button-panel'>
-        <button className='searching-button' onClick={()=>FindMatch()}>Odśwież</button>
+        <button className='searching-button' onClick={()=>FindMatch()}>Dołącz</button>
         <button className='searching-button' onClick={()=>leaveFromSearching()} >Opuść poczekalnie</button>
       </div>
   </div>
