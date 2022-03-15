@@ -141,6 +141,7 @@ VIEWS
     @include view;
     justify-content: space-between;
     height: 100vh;
+    width: 100%;
 }
 .Chat-end-view {
     @include view;
@@ -574,18 +575,28 @@ MESSAGES
     max-width: 70%;
     
 }
+
+.message-body{
+    // @include message;
+    display: flex;
+    // min-width: 23em;
+    flex-direction: row;
+    justify-content: flex-end
+}
 .message-body-my{
     // @include message;
     display: flex;
-    min-width: 23em;
+    width: 100%;
+    // min-width: 23em;
     flex-direction: row;
     justify-content: flex-end
 }
 .message-body-enemy{
+    width: 100%;
     // @include message;
     display: flex;
-    bottom: 100;
-    min-width: 21em;
+    // bottom: 100;
+    // min-width: 21em;
     flex-direction: row;
     
 }
