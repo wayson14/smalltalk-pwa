@@ -4,11 +4,11 @@ import TopBar from './TopBar';
 import BottomBar from './BottomBar';
 import { UserContext } from "../services/UserContext";
 import { InfoContext } from '../services/InfoContext';
-import { joinCircle, getCircle } from '../services/api_methods'
+import { joinCircle, getUserCirclesIDs } from '../services/api_methods'
 import { getRoomID, joinWaitingroom, leaveWaitingroom, getUser, parseUserObject } from "../services/api_methods";
 import arrowLogo from './loginIcon/Arrow 2.svg';
 import qrLogo from './loginIcon/QR.svg';
-import {handleErrorResponse} from '../services/client'
+import { handleErrorResponse } from '../services/client'
 
 const Match = () => {
   const { user, setUser } = useContext(UserContext);
@@ -20,8 +20,9 @@ const Match = () => {
 
   useEffect(() => {
     getUser(user.token)
-    .then(gottenUser => {setUser(parseUserObject(gottenUser, user.token))
-    })
+      .then(gottenUser => {
+        setUser(parseUserObject(gottenUser, user.token))
+      })
   }, [])
   const loginError = () => {
     setTimeout(function () { setStyle('codeCircleError') }, 100)
@@ -33,35 +34,41 @@ const Match = () => {
     navigate(path);
   }
   const FindMatch = () => {
-    getRoomID()
+    getUserCirclesIDs()
+      .then(res => (res.type === 'error' ? Error(res.message) : getRoomID()))
       //zmienić w przyszłości tak aby cały proces modyfikacji usera dział się na serwerze
       .then(res => {
         if (isNaN(res.message)) {
           setInfo({
             text: res.message,
-            type: 'error'
+            type: res.type
           })
-          throw new Error(res.message)
+          // throw new Error(res.message)
         }
         setUser(user => ({ ...user, roomID: res.message }))
       })
-      .then(() => {console.log(`User id: ${user.id} has been given a new room ID: ${user.roomID}`)
-    setInfo({
-      text: "Pomyślnie dołączono do sesji!",
-      type: "success"
-    })})
-      .catch(err => {console.error(err)
-      setInfo({
-        text: err,
-        type: 'error'
-      })})
+      .then(() => {
+        console.log(`User id: ${user.id} has been given a new room ID: ${user.roomID}`)
+        setInfo({
+          text: "Pomyślnie dołączono do sesji!",
+          type: "success"
+        })
+      })
+      .catch(err => {
+        console.error(err)
+        setInfo({
+          text: err,
+          type: 'error'
+        })
+      })
   }
 
   const enterChat = () => {
     joinWaitingroom().then(
       (res) => {
         // res.type === 'error'
-        searching()}
+        searching()
+      }
     )
   }
 
@@ -74,39 +81,39 @@ const Match = () => {
         <div className='scanner content-container'>
           <form className={`codeInput ${style}`}>
             <div className="join-circle-input-form-line">
-            <input className="join-circle-input" type="text" placeholder="Wpisz kod" onChange={
-              (e) => {
-                setCircleCode(() => e.target.value)
-              }
-            }></input>
-            <button className="join-circle-button" onClick={
-              (e) => {
-                //to będzie robione w Django
-                e.preventDefault();
+              <input className="join-circle-input" type="text" placeholder="Wpisz kod" onChange={
+                (e) => {
+                  setCircleCode(() => e.target.value)
+                }
+              }></input>
+              <button className="join-circle-button" onClick={
+                (e) => {
+                  //to będzie robione w Django
+                  e.preventDefault();
 
-                joinCircle(circleCode) //TODO: błędy powinny być przekazywane do popupu z requesta
-                  .then(res => handleErrorResponse(res, "Błąd przy dołączaniu do kręgu!"))
-                  .then(res => {
-                    
-                    let IDs = [];
-                    console.log(res)
-                    setInfo({
-                      text: res.message,
-                      type: res.type
+                  joinCircle(circleCode) //TODO: błędy powinny być przekazywane do popupu z requesta
+                    .then(res => handleErrorResponse(res, "Błąd przy dołączaniu do kręgu!"))
+                    .then(res => {
+
+                      let IDs = [];
+                      console.log(res)
+                      setInfo({
+                        text: res.message,
+                        type: res.type
+                      })
+                      navigate('/circles')
                     })
-                    navigate('/circles')
-                  })
-                  .catch(err => {
-                    setInfo({
-                      text: err,
-                      type: 'error'
+                    .catch(err => {
+                      setInfo({
+                        text: err,
+                        type: 'error'
+                      })
+                      console.log(err)
                     })
-                    console.log(err)
-                  })
-              }
-            }>
-              <img src={arrowLogo} alt="" />
-            </button>
+                }
+              }>
+                <img src={arrowLogo} alt="" />
+              </button>
             </div>
           </form>
           <img src={qrLogo} className='qr' />
@@ -121,7 +128,7 @@ const Match = () => {
           () => setMatching(false)
         )}>wyjdź z poczekalni</button>
       </>} */}
-      
+
     </div>
 
   )

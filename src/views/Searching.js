@@ -46,7 +46,7 @@ const Searching = () => {
         navigate('/chat')})
       .catch(err => setInfo({
         text: err.message,
-        type: 'error'
+        type: err.type
       }))
   }
   return (

@@ -25,17 +25,25 @@ const InfoCloud = () => {
             display: "none"
         }
     }
-
+    
     useEffect(() => {
         console.log(hover)
+        // changeHover().then(()=>setHover(hover => !hover))
         if (!hover){
             info.type = 'info';
             info.text = '';
-            setHover(hover => !hover)
+            changeHover().then(()=>setHover(hover => !hover))
+            // setHover(hover => !hover)
                 
         }
     }, [hover])
-
+    const changeHover = () => {
+        return new Promise(resolve => {
+            setTimeout(()=>{
+                resolve(true)
+            }, 500)
+        })
+    }
   return (
     <div 
     onClick ={() => setHover(hover => !hover)}
