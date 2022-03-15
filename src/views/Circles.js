@@ -86,8 +86,17 @@ const Circles = () => {
       )
       : 
       <div className="content-area">
-        <h1> Jeszcze nie jesteś w żadnym kręgu! </h1>
-      </div>
+        {/* <h1> Jeszcze nie jesteś w żadnym kręgu! </h1> */}
+        <div className="circles-container">
+              <div className="content-container">
+              <h2>{"testing"}</h2>
+                <span>{`Lokalizacja: Warszawa`}</span>
+                <span>{`Opis:opis opis opis opis opis opis opis`}</span>
+                <span>{`Data wygaśnięcia:12.12.2020`}</span>
+                <button className="leave-circle-button">Opuść krąg</button>
+              </div>
+            </div>
+      </div> 
       }
       
     <BottomBar/>

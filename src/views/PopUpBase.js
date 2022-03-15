@@ -64,7 +64,7 @@ const UserProfile = ({ handleClose,
                     </div>
                     <div className="profile-about">
                     </div>
-                    <button className="action-button" onClick={() => navigate("/")}>Powrót do menu głównego</button>
+                    <button className="action-button reavel" onClick={() => navigate("/")}>Powrót</button>
               
                 </div>}
             </div>

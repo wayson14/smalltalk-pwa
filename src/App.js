@@ -19,6 +19,7 @@ import Searching from './views/Searching';
 import Friends from './views/Friends';
 import CreateCircle from './views/CreateCircle';
 import InfoCloud  from './components/InfoCloud';
+import Chattt from './views/Chattt';
 // import OneSignal from 'react-onesignal';
 import NIY from './views/NIY';
 import { request } from './services/client';
@@ -151,6 +152,7 @@ function App() {
                 {/* <Route path="/match" element={<Match/>}/> */}
                 <Route path="/admin" element={<Admin/>}/>
                 <Route path="/login" element={<Login/>}/>
+                <Route path="/chattt" element={<Chattt/>}/>
                 <Route path="/test" element={!true ? <NIY/> : <Test/>}/>
                 <Route path="/friends" element={true ? <NIY/> : <Friends/>}/>
                 <Route path="/createCircle" element={true ? <NIY/> : <CreateCircle/>}/>
