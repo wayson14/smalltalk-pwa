@@ -79,9 +79,11 @@ const Match = () => {
       <TopBar />
       <div className='Match-view'>
         <div className='scanner content-container'>
+        <h4>Dodaj się do kręgu</h4>
           <form className={`codeInput ${style}`}>
             <div className="join-circle-input-form-line">
-              <input className="join-circle-input" type="text" placeholder="Wpisz kod" onChange={
+              
+              <input className="join-circle-input" type="text" placeholder="Wpisz kod kręgu" onChange={
                 (e) => {
                   setCircleCode(() => e.target.value)
                 }
@@ -99,7 +101,7 @@ const Match = () => {
                       console.log(res)
                       setInfo({
                         text: res.message,
-                        type: res.type
+                        type: res.typeoin
                       })
                       navigate('/circles')
                     })

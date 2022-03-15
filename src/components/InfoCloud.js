@@ -27,7 +27,7 @@ const InfoCloud = () => {
     }
     
     useEffect(() => {
-        console.log(hover)
+        // console.log(hover)
         // changeHover().then(()=>setHover(hover => !hover))
         if (!hover){
             info.type = 'info';

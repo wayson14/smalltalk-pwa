@@ -51,13 +51,13 @@ export const getUser = (token) => {
     })
 }
 export const parseUserObject = (user, token) => {
-    console.log(user)
+    // console.log(user)
     if (user === '' & null & undefined){
-        console.log('user is null')
+        // console.log('user is null')
         return ''
     }
     else return {
-        id: user.pk,
+        id: user?.pk,
         username: user.username,
         email: user.email,
         token: token,

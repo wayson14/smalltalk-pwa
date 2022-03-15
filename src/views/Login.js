@@ -23,12 +23,13 @@ const Login = ({ passedInfo }) => {
   const [username, setUsername] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [socialContact, setSocialContact] = useState('');
+  const [privacyConsent, setPrivacyConsent] = useState();
 
   const [gottenToken, setGottenToken] = useAsyncState('');
 
   const [formType, setFormType] = useState('login');
   const [loginInfo, setLoginInfo] = useState([]);
-  const [submitted, setSubmitted] = useState(false);
+
 
   const navigate = useNavigate();
   // let client  = new coreapi.Client()
@@ -115,6 +116,13 @@ const Login = ({ passedInfo }) => {
   const register = (e) => {
     e.preventDefault()
     // console.log(email, password, username, socialContact);
+    if (!privacyConsent){
+      setInfo({
+        text: 'Musisz zgodzić się na warunki przetwarzania danych osobowych przed założeniem konta!',
+        type: 'info'
+      })
+      return
+    }
     if (checkCredentials()) {
       authUserRegister(email, password, username, socialContact)
         .then(res => {
@@ -226,13 +234,13 @@ const Login = ({ passedInfo }) => {
           </div>
           <div className={`input-form-line ${style}`}>
             <img src={userLogo} alt="" />
-            <input type="text" placeholder='Username' onChange={(e) => setUsername(e.target.value)}></input>
+            <input type="text" placeholder='Nazwa użytkownika' onChange={(e) => setUsername(e.target.value)}></input>
             
           </div>
 
           <div className={`input-form-line ${style}`}>
             <img className='fbLogo' src={fbLogo} alt="" />
-            <input type="text" placeholder='Facebook' onChange={(e) => setSocialContact(e.target.value)}></input>
+            <input type="text" placeholder='Link do Twojego FB' onChange={(e) => setSocialContact(e.target.value)}></input>
             
           </div>
 
@@ -244,9 +252,16 @@ const Login = ({ passedInfo }) => {
           <div className={`input-form-line ${style}`}>
             <img src={passwordLogo} alt="" />
             <input type="password" placeholder='Powtórz Hasło' onChange={(e) => setConfirmPassword(e.target.value)}></input>
-            
+
           </div>
-        
+          <div className="consent-container">
+            <div>
+              <label  className="consent-text" for="pivacyConsent">Wyrażam zgodę na przetwarzanie moich danych osobowyc</label>
+              <br/>
+              <a href="https://smalltalk.today/">Regulamin</a>
+            </div>
+            <input onChange={(e) => {setPrivacyConsent(e.target.checked)}} className="consent-checkbox" type="checkbox" id="privacyConsent"/>
+          </div>
           <button className='login-action-button' onClick={(e) => register(e)}>Zarejestruj ➜</button>
 
         </form>

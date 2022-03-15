@@ -189,12 +189,20 @@ TOP BAR & BOTTOM BAR
 }
 .top-chat-bar {
     @include flexCenter(row);
+    z-index: 0;
+    position: fixed;
     justify-content: space-between;
     width: 100%;
     height: $top-bar-height;
     padding-left: 1em;
     padding-right: 1em;
     background-color: $white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.55);
+    button{
+        text-align: center;
+        width: 8em;
+        margin-bottom: 1em;
+    }
 }
 input:checked + .bottom-bar{
     margin-bottom: 0 !important;
@@ -258,11 +266,14 @@ BOXES & CONTAINERS
 
 .content-container {
     @include flexCenter(column);
+    min-height: 10em;
     width: clamp(120px, 60vw, 350px);
     // border: 1px solid black;
-    @include genericShadow();
     border-radius: 20px;
     padding: 1em;
+    span{
+        margin: 0.5em 0;
+    }
 }
 
 .content-area {
@@ -272,7 +283,10 @@ BOXES & CONTAINERS
     // @include genericShadow();
     // border-radius: 20px;
     text-align: center;
-    padding: 1em;
+    padding: .5em;
+    margin: 1em 0;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
 }
 
 .searching-button-panel {
@@ -289,6 +303,7 @@ BOXES & CONTAINERS
 .circles-container {
     @include flexCenter(column);
     overflow: auto;
+    border-radius: 10px;
     // width: clamp(120px, 60vw, 500px);
 }
 .chat-body {
@@ -306,10 +321,51 @@ FORMS
 ==================*/
 .input-chat {
     @include flexCenter(row);
+    justify-content: space-between;
+    position: fixed;
+    bottom: 0;
+    left: 0;
     background-color: $action-color;
+    margin-bottom: 0em;
+    border-radius: 1em 1em 0 0;
+    height: 3em;
+    width: 100vw;
     input {
-        width: clamp(120px, 60vw, 500px);
+        border: none;
+        min-width: 19em;
+        height: 2em;
+        border-radius: 20px;
     }
+    button{
+        background: $white;
+        border: none;
+        height: 2em;
+        margin-left: -1.5em;
+        border-radius: 8px;
+        z-index: 3;
+    }
+    .send-message{
+        @include genericShadow();
+        width: 17em;
+        border-radius: 20px;
+        background-color:$white;
+    }
+    .iceBraker{
+        margin-top: 0.3em;
+        height: 3em;
+    }
+    .xLogo{
+        margin-top: 0.3em;
+        margin-left: 0.5em;
+    }
+}
+.messages-array{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow:auto;
+    overflow-x:hidden;
+    overflow-y:scroll;
 }
 .input-form {
     @include flexCenter(column);
@@ -348,12 +404,25 @@ FORMS
         width: 74%;
         border: none;
         margin-left: 2vw;
+        padding: 0.5em;
     }
 
 .codeInput{
     display: flex;
     justify-content: center;
 }
+
+.consent-container {
+    @include flexCenter(row);
+    gap: 1em;
+    max-width: 80%;
+}
+.consent-text {
+    text-align: center;
+}
+// .consent-checkbox {
+//     text-align: end;
+// }
 /* =================
 BUTTONS
 ==================*/
@@ -369,7 +438,8 @@ BUTTONS
 .login-action-button {
     @include action-button();
     align-self: flex-end;
-    margin-top: -1em;
+    margin: 1em;
+    // margin-top: -1em;
 }
 .chat-action-button {
     @include action-button();
@@ -403,6 +473,7 @@ BUTTONS
 }
 .leave-circle-button {
     @include action-button();
+    width: 10em;
 }
 .action-button {
     @include action-button();
@@ -445,12 +516,20 @@ POP-UPS & INFO CLOUDS
     }
 }
 .pop-up-base {
+    text-align: center;
     @include flexCenter(column);
     border-radius: 20px;
     background-color: $grey;
     height: 80vh;
-    width: clamp(120px, 82vw, 500px);
-
+    width: 15em;
+    min-height: 10em;
+    max-height: 20em;
+    button{
+        width: 8em;
+    }
+}
+.reavel{
+    margin-top: -3em;
 }
 .pop-up-container {
     @include flexCenter(column);
@@ -480,10 +559,8 @@ ICONS & IMAGES
 .chat-icon {
     // height: clamp(5vw, 20px, 40px);
     // width: clamp(5vw, 20px, 40px);
-    max-height: 35px;
-    max-width: 35px;
-    max-height: 25px;
-    max-width: 25px;
+    min-height: 1em;
+    max-height: 4em;
 }
 /* =================
 MESSAGES 
@@ -500,14 +577,15 @@ MESSAGES
 .message-body-my{
     // @include message;
     display: flex;
-    width: 100%;
+    min-width: 23em;
     flex-direction: row;
     justify-content: flex-end
 }
 .message-body-enemy{
     // @include message;
     display: flex;
-    width: 100%;
+    bottom: 100;
+    min-width: 21em;
     flex-direction: row;
     
 }
@@ -555,6 +633,7 @@ ANIMATIONS
       color: #FFFFFF;
       animation: color-change 1.5s;
     }
+    
     ::placeholder{
       color: $white;
     }

@@ -32,14 +32,14 @@ const UserProfile = ({handleClose, userData}) => {
                     {userData.username}
                 </h4>
                 <div className="profile-social">
+                    <span>{userData.socialLink && `Kontakt: ${userData.socialLink}`} </span>
                     </div>
                 <div className="profile-social">
-                    <span>ID użytkownika: </span>
-                    {userData.id}
+                    <span>{userData.id && `ID użytkownika: ${userData.id}`} </span>
+                    
                 </div>
                 <div className="profile-social">
-                    <span>Aktywna sesja: </span>
-                    {userData.roomID}
+                <span>{userData.roomID && `ID pokoju użytkownika: ${userData.roomID}`} </span>
                     </div>
              
                 <div className="profile-about">

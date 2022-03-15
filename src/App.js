@@ -19,6 +19,7 @@ import Searching from './views/Searching';
 import Friends from './views/Friends';
 import CreateCircle from './views/CreateCircle';
 import InfoCloud  from './components/InfoCloud';
+import Chattt from './views/Chattt';
 // import OneSignal from 'react-onesignal';
 import NIY from './views/NIY';
 import { request } from './services/client';
@@ -77,7 +78,8 @@ function App() {
     //cheks if session is valid and if is, fetches the user
     useEffect(() => { 
       checkSession().then(token => {
-        console.log(token)
+        // console.log(token)
+
         {token.message !== '' ? (
           setIsSession(true)
           .then((isSession) => {
@@ -86,13 +88,13 @@ function App() {
             return getUser(token.message)
           })
           .then(userResponse => {
-            console.log(userResponse)
+            // console.log(userResponse)
             setUser(parseUserObject(userResponse, token.message))
             
           })
-          .catch(err => console.log(err))
+          .catch(err => console.error(err))
         ) : (
-          setIsSession(false).then(console.log('is session: ',isSession))
+          setIsSession(false)
           )}
         // console.log(res)
       })
@@ -115,7 +117,7 @@ function App() {
     }, [])
 
     useEffect(() => {
-      console.log('from app: ',user)
+      // console.log('from app: ',user)
       if (user === ''){
         // navigate('/login')
         setIsSession(false)
@@ -151,6 +153,7 @@ function App() {
                 {/* <Route path="/match" element={<Match/>}/> */}
                 <Route path="/admin" element={<Admin/>}/>
                 <Route path="/login" element={<Login/>}/>
+                <Route path="/chattt" element={<Chattt/>}/>
                 <Route path="/test" element={!true ? <NIY/> : <Test/>}/>
                 <Route path="/friends" element={true ? <NIY/> : <Friends/>}/>
                 <Route path="/createCircle" element={true ? <NIY/> : <CreateCircle/>}/>

@@ -3,7 +3,6 @@ import TopBar from './TopBar';
 import BottomBar from './BottomBar';
 import { UserContext } from '../services/UserContext';
 import { joinCircle, leaveCircle, getCircle, getUserCirclesIDs } from '../services/api_methods'
-import { request } from 'websocket';
 import useAsyncState from '../services/useAsyncState';
 
 const Circles = () => {
@@ -85,9 +84,7 @@ const Circles = () => {
       
       )
       : 
-      <div className="content-area">
-        <h1> Jeszcze nie jesteś w żadnym kręgu! </h1>
-      </div>
+        <h1 className="bold-header"> Jeszcze nie jesteś w żadnym kręgu! </h1>
       }
       
     <BottomBar/>
