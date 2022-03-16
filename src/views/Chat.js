@@ -7,7 +7,6 @@ import { request, chatApiUrl } from '../services/client'
 import { getRoomMessages, closeSession, leaveWaitingroom } from '../services/api_methods'
 import { UserContext } from '../services/UserContext';
 import { InfoContext } from '../services/InfoContext';
-import ScrollToBottom, { useAtBottom } from 'react-scroll-to-bottom';
 import useAsyncState from '../services/useAsyncState';
 import ChatEndView from './ChatEndView';
 import PopUp from './PopUp';
@@ -19,20 +18,20 @@ import checkLogo from './loginIcon/check.svg';
 import fbLogo from './loginIcon/fb.svg';
 import instLogo from './loginIcon/instagram.svg';
 import userLogo from './loginIcon/Avatar.svg';
-import useScrollToEnd from 'react-scroll-to-bottom/lib/hooks/useScrollToEnd';
 import PopUpBase from './PopUpBase'
 const Chat = () => {
   const navigate = useNavigate();
   const el = document.getElementById('messages-array');
-  if (el) {
-    el.scrollTop = el.scrollHeight;
-  }
+  // if (el) {
+  //   el.scrollTop = el.scrollHeight;
+  // }
 
   const { user, setUser } = useContext(UserContext);
   const { info, setInfo } = useContext(InfoContext);
 
 
   const client = useRef();
+  const scrollBody = useRef();
   const [message, setMessage] = useState('');
 
   const [ifWanting, setIfWanting] = useAsyncState(false); //wanting to reveal #TODO: zrobić funkcję, która będzie pobierała stan reveal z servera
@@ -40,7 +39,7 @@ const Chat = () => {
   const [ifRevealed, setIfRevealed] = useAsyncState(false);
   const [ifRejected, setIfRejected] = useAsyncState(false);
 
-  const [enemyUsername, setEnemyUsername] = useState('someone');
+  const [enemyUsername, setEnemyUsername] = useState();
 
   const [showRevealPanel, setShowRevealPanel] = useState(false);
 
@@ -110,6 +109,8 @@ const Chat = () => {
         setMessagesArray(data.content)
       })
       .catch(err => console.error(err))
+    
+    
     client.current = new WebSocket(url)
 
     client.current.onopen = () => {
@@ -163,6 +164,7 @@ const Chat = () => {
 
     client.current.onclose = () => {
       console.log('WebSocket Client Disconnected');
+      
       setConnectionStatus(false);
       navigate('/')
     }
@@ -170,6 +172,10 @@ const Chat = () => {
     client.current.onerror = (e) => {
       // console.log(e)
       console.log('Występił błąd, próba ponownego połączenia...');
+      setInfo({
+        text: 'Problem z połączeniem WS',
+        type: 'error'
+      })
       client.current.close()
       // setConnectionAttempts(connectionAttempts++)
       // if (connectionAttempts < 3){
@@ -293,6 +299,14 @@ const Chat = () => {
     console.log(messagesArray);
   }, [messagesArray])
 
+  useEffect(() => {
+    if (scrollBody) {
+      scrollBody.current.addEventListener('DOMNodeInserted', event => {
+        const { currentTarget: target } = event;
+        target.scroll({ top: target.scrollHeight+50, behavior: 'smooth' });
+      });
+    }
+  }, [])
 
   const [style, setStyle] = useState('blue');
   const giveColor = (messagess, etc) => {
@@ -307,15 +321,19 @@ const Chat = () => {
   return (
 
     <div className="Chat-view" onKeyUp={e => (e.key === 'Enter' && sendMessage(e, message))}>
-
+      
       {/* #TODO: dodać topbar taki jak w figmie */}
       <div className="top-chat-bar">
         <button className="action-button" onClick={() => setShowRevealChoice(true)}>{ifWanting ? "Zrezygnuj" : "Odkryj"}</button>
         <h4>{enemyUsername}</h4>
+        {/* <button onClick={() => {
+          scrollBody.current.scrollTop = 0
+          //  scrollBody.current.scrollHeight
+        }}>do dołu</button> */}
         <button className="action-button" onClick={() => navigate("/")}>Menu</button>
       </div>
-
-      <div className='chatFlip chat-body'>
+      
+      <div className='chatFlip chat-body' id="chatBody" ref={scrollBody}>
         {/* <div   */}
         {/* // id='messages-array' className="messages-array"> */}
         {messagesArray.map(mes => {

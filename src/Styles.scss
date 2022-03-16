@@ -75,7 +75,7 @@ GLOBALS & UTILITIES
 
 @mixin fitInput {
     width: 80%;
-    
+
 }
 
 .center-content {
@@ -130,7 +130,7 @@ VIEWS
 }
 .Match-view {
     @include view;
-    
+
     height: calc(100vh - $top-bar-height);
 }
 .Searching-view {
@@ -310,11 +310,13 @@ BOXES & CONTAINERS
 .chat-body {
     display: flex;
     flex-direction: column;
-    max-height: calc(100% - $bottom-bar-height - $top-bar-height);
+    // max-height: calc(100vh - $bottom-bar-height - $top-bar-height);
     // position: absolute;
-    bottom: $bottom-bar-height;
+    // bottom: $bottom-bar-height;
+    // position: absolute;
+    // margin-bottom: calc($bottom-bar-height;
     overflow-y: auto;
-    margin-bottom: calc(0.8em + $bottom-bar-height);
+    margin-bottom: calc($bottom-bar-height);
     width: clamp(120px, 90vw, 500px);
 }
 /* =================
@@ -370,7 +372,7 @@ FORMS
 }
 .input-form {
     @include flexCenter(column);
-    
+
 }
 .send-message {
     width: 100%;
@@ -386,7 +388,7 @@ FORMS
     input {
         @include fitInput();
         margin-left: clamp(0.2rem, 0.5rem, 0.5rem);
-    } 
+    }
 }
 .join-circle-input-form-line{
     width: 80%;
@@ -428,7 +430,7 @@ FORMS
 BUTTONS
 ==================*/
 @mixin action-button {
-    
+
     @include genericShadow();
     @include actionTheme();
     margin-top: 1rem;
@@ -491,7 +493,7 @@ POP-UPS & INFO CLOUDS
     left: 0.5em;
     z-index: 2;
     border-radius: 5px;
-    
+
     background-color: lightgreen;
     opacity: 95%;
     font-size: 1.4em;
@@ -528,6 +530,7 @@ POP-UPS & INFO CLOUDS
     button{
         width: 8em;
     }
+    padding: 2em;
 }
 .reavel{
     margin-top: -3em;
@@ -564,7 +567,7 @@ ICONS & IMAGES
     max-height: 4em;
 }
 /* =================
-MESSAGES 
+MESSAGES
 ==================*/
 @mixin message {
     font-weight: bold;
@@ -573,7 +576,7 @@ MESSAGES
     padding: 0.4em;
     width: fit-content;
     max-width: 70%;
-    
+
 }
 
 .message-body{
@@ -598,7 +601,7 @@ MESSAGES
     // bottom: 100;
     // min-width: 21em;
     flex-direction: row;
-    
+
 }
 .enemy-message{
     @include message;
@@ -616,17 +619,17 @@ MESSAGES
 ANIMATIONS
 ==================*/
 @keyframes spin {
-  
+
     0% {
       -webkit-transform: rotate(0deg);
       transform: rotate(0deg);
     }
-  
+
     100% {
       -webkit-transform: rotate(360deg);
       transform: rotate(360deg);
     }
-    
+
   }
 .elipse {
     animation-name: spin;
@@ -644,7 +647,7 @@ ANIMATIONS
       color: #FFFFFF;
       animation: color-change 1.5s;
     }
-    
+
     ::placeholder{
       color: $white;
     }
@@ -659,15 +662,15 @@ ANIMATIONS
     10%, 90% {
       transform: translate3d(-1px, 0, 0);
     }
-    
+
     20%, 80% {
       transform: translate3d(2px, 0, 0);
     }
-  
+
     30%, 50%, 70% {
       transform: translate3d(-4px, 0, 0);
     }
-  
+
     40%, 60% {
       transform: translate3d(4px, 0, 0);
     }
