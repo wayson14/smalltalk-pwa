@@ -2,6 +2,7 @@ import { React, useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router';
 import OutsideClickHandler from 'react-outside-click-handler';
+import { generateNewCircleCode } from '../services/api_methods';
 
 
 const UserProfile = ({ handleClose,
@@ -9,7 +10,8 @@ const UserProfile = ({ handleClose,
     onNo,
     type,
     prompt,
-    revealObject
+    revealObject,
+    props
 }) => {
 
     const navigate = useNavigate();
@@ -34,6 +36,19 @@ const UserProfile = ({ handleClose,
 
                     </div>
                 </>}
+                
+                {type === 'change-expire-date' && <div className="">
+                    <form>
+                        <input type="datetime-local"></input>
+                        <button onClick={(e) => {
+                            e.preventDefault()
+                            let date = e.target.parentElement[0].value
+                            date = date.replace('T', '-').replace(':', '-') + '-00'
+                            generateNewCircleCode(props.circleID, date)
+                            
+                        console.log(date)}}>Zatwierdź</button>
+                    </form>
+                </div>}
 
                 {type === 'rejected-view' && <div className="">
                     <h2>Nie tym razem... Spróbuj jeszcze raz!</h2>

@@ -23,6 +23,8 @@ const Match = () => {
       .then(gottenUser => {
         setUser(parseUserObject(gottenUser, user.token))
       })
+      .catch(err => {console.log(err)
+      })
   }, [])
   const loginError = () => {
     setTimeout(function () { setStyle('codeCircleError') }, 100)

@@ -92,12 +92,18 @@ function App() {
             setUser(parseUserObject(userResponse, token.message))
             
           })
-          .catch(err => console.error(err))
+          .catch(err => console.log(err))
         ) : (
           setIsSession(false)
           )}
         // console.log(res)
       })
+      .catch(err => {
+        setInfo({
+          text: 'Brak połączenia z serwerem. Spróbuj ponownie później.',
+          type: 'error'
+        })
+        console.log(err)})
       
       // getUser(user.token).then(res => console.log(res)).catch(err => console.error(err))
       if (!('Notification' in window)) {
@@ -156,7 +162,7 @@ function App() {
                 <Route path="/chattt" element={<Chattt/>}/>
                 <Route path="/test" element={!true ? <NIY/> : <Test/>}/>
                 <Route path="/friends" element={true ? <NIY/> : <Friends/>}/>
-                <Route path="/createCircle" element={true ? <NIY/> : <CreateCircle/>}/>
+                <Route path="/createCircle" element={!true ? <NIY/> : <CreateCircle/>}/>
               </Routes>
             </div>
             </div>

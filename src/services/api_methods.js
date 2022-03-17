@@ -43,6 +43,7 @@ export const checkSession = () => {
         path: '/check_session',
         address: chatApiUrl
     })
+    // .catch(err => console.log(err))
 }
 export const getUser = (token) => {
     return request({ 
@@ -140,6 +141,7 @@ export const authRoom = () => {
 export const authUserLogin = (email, password) => {
     //zwraca token autentykacyjny
     return request({
+        verbose: true,
         path: '/auth/login/',
         options: {
             method: 'POST',
@@ -174,6 +176,7 @@ export const authUserLogout = () => {
 
 export const authUserRegister = (email, password, username, socialContact) => {
     return request({
+        verbose: true,
         path: '/auth/register/',
         options: {
             method: 'POST',
@@ -199,6 +202,21 @@ export const joinCircle = (code) => {
     // })
 }
 
+export const createCircle = (circleBody) => {
+    return request({
+        verbose: true,
+        path: `/models/circles/`,
+        address: apiUrl,
+        options: {
+            method: 'POST',
+            body: circleBody
+        }
+    })
+    // return request({
+
+    // })
+}
+
 export const getUserCirclesIDs = () => {
     return request({ 
         path: '/get_user_circles_ids/',
@@ -216,4 +234,50 @@ export const leaveCircle = (id) => {
         path: '/leave_circle/'+id+'/',
         address: chatApiUrl 
     })
+}
+
+export const generateNewCircleCode = (id, date) => {
+    return request({
+        path: '/refresh_expire_date/'+id+'/'+date+'/',
+        address: chatApiUrl
+    })
+}
+
+export const removeCircle = (id) => {
+    return request({
+        path: '/models/circles/'+id+'/',
+        address: apiUrl,
+        options: {
+            method: 'DELETE'
+        }
+    })
+}
+
+export const parseResponseToInfo = (res) => {
+    console.log(res)
+    return JSON.stringify(res)
+}
+export const parseErrorToInfo = (err) => {
+    // console.log(err.message)
+    let message = ''
+    if (err.message === 'Failed to fetch'){
+        message = "Błąd podczas pobierania danych."
+    }
+
+    else if (typeof(err) === 'object'){
+        return err.then(err => {
+            Object.keys(err).map(key => {
+            message+=`${key}: ${err[key]}\n`
+        })
+        return message
+        console.log(message)
+        }
+        )
+    }
+    
+    else {
+        return err.then(res => message = JSON.stringify(res)).then(x =>  message)
+    }
+    // return `${err.name}: ${err.message}`
+    return message
 }

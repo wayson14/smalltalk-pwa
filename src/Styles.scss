@@ -137,6 +137,14 @@ VIEWS
     @include view;
     height: 100vh;
 }
+.Create-circle-view {
+    // @include flexCenter(column);
+    .form{
+        @include flexCenter(column);
+    }
+    @include view;
+    height: 100vh;
+}
 .Chat-view {
     @include view;
     justify-content: space-between;
@@ -458,7 +466,8 @@ BUTTONS
     border-bottom-right-radius: 0.5em;
     transform: rotate(180deg);
     border: none;
-    height: 110%;
+    height: 100%;
+    padding-left: 17px;
     img{
         width: 80%;
     }

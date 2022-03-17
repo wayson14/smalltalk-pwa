@@ -4,6 +4,7 @@ export const request = ({
     token = '',
     address = process.env.REACT_APP_API_URL,
     path = "/",
+    verbose = false,
     options = {} }) => {
         const {
             headers,
@@ -42,11 +43,20 @@ export const request = ({
 
         return fetch(`${host}${path}${queryString}`, requestConfig)
         .then(res => {
-            if (!res.ok) {
-                console.log('RESPONSE ', res)
+            // if (!res.ok) {
+            //     console.log('RESPONSE ', res)
+            //     return null}
+            if (!res.ok && !verbose) {
+                // console.log('RESPONSE ', res)
                 return null}
+            if (!res.ok && verbose) {
+                // console.log('RESPONSE ', res)
+                throw parseResponse(res)}
             return parseResponse(res);
         })
+        // .catch(err => {
+        //     console.log(err)
+        // })
         
     // host = host || process.env.REACT_APP_API_URL;
     // path  = path || "/";
@@ -89,3 +99,4 @@ export const handleErrorResponse = (res, message) => {
         }
     })
 }
+

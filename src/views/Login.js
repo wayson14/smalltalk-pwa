@@ -8,7 +8,7 @@ import passwordLogo from './loginIcon/Group 2.svg';
 import fbLogo from './loginIcon/icons8-facebook.svg';
 
 import ArrayList from '../components/ArrayList';
-import { authUserLogin, authUserLogout, authUserRegister, getUser, parseUserObject } from '../services/api_methods';
+import { authUserLogin, authUserLogout, authUserRegister, getUser, parseResponseToInfo, parseErrorToInfo, parseUserObject } from '../services/api_methods';
 import useAsyncState from '../services/useAsyncState';
 
 // import coreapi from 'coreapi' 
@@ -34,9 +34,9 @@ const Login = ({ passedInfo }) => {
   const navigate = useNavigate();
   // let client  = new coreapi.Client()
 
-  useEffect(() => {
-    setInfo(info);
-  }, [info])
+  // useEffect(() => {
+  //   setInfo(info);
+  // }, [info])
 
   useEffect(() => {
     let wrongs = [];
@@ -82,6 +82,7 @@ const Login = ({ passedInfo }) => {
           setInfo({
           })
         }
+        // console.log(res)
         // setToken(token)
         return res.key;
         // setUser(user);
@@ -105,10 +106,13 @@ const Login = ({ passedInfo }) => {
 
       })
       .catch(err => {
+        parseErrorToInfo(err).then(res => {
         setInfo({
           type: 'error',
-          text: err
+          text: res
         })
+      }
+      )
       }
       )
   }
@@ -171,11 +175,15 @@ const Login = ({ passedInfo }) => {
         
         // })
         .catch(err => {
-          console.log('blad')
+          parseErrorToInfo(err).then(res => {
           setInfo({
-        })
-      return }
-        );
+            type: 'error',
+            text: res
+          })
+        }
+        )
+        }
+        )
 
       // setInfo({
       //   type: 'success',
