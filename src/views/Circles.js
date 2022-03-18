@@ -54,7 +54,7 @@ const Circles = () => {
 
   return <>
     <TopBar />
-    <div className="circles-container">
+    <div className="Circles-view">
       {/* <pre>
       {circles.map((circle) => {
         return(
@@ -80,7 +80,10 @@ const Circles = () => {
               {/* <span>{`ID: ${circle?.circle_ID}`}</span> */}
               {/* <span>{`Admini: ${circle?.admin_users_IDs}`}</span> */}
               {circle.admin_users_IDs.indexOf(user.id) > -1 && (
+                <>
+                <h4>Jesteś administratorem tego kręgu.</h4>
                 <div className="circle-admin-section">
+                  
                   <button className="action-button" onClick={() => {
                     
                     removeCircle(circle.circle_ID)
@@ -96,6 +99,7 @@ const Circles = () => {
                   }
                   }>Nowy kod</button>
                 </div>
+                </>
               )}
             </div>
             <button className="leave-circle-button" onClick={() => leaveCircle(circle.circle_ID)

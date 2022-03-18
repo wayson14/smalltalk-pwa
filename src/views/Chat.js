@@ -105,7 +105,7 @@ const Chat = () => {
     getRoomMessages()
 
       .then(data => {
-        console.log(data)
+        // console.log(data)
         setMessagesArray(data.content)
       })
       .catch(err => console.error(err))
@@ -125,17 +125,17 @@ const Chat = () => {
         const code = mes.message.slice(1, 4);
 
         setContactUser(mes.message.slice(4, mes.message.length))
-        console.log(code);
+        // console.log(code);
 
         if (code === '000') {
-          console.log(`Normal text message.`)
+          // console.log(`Normal text message.`)
         }
         else if (code === '001') {
           // console.log(`${mes.username} wants to reveal.`)
         }
         else if (code === '002') {
           // console.log(`${mes}`)
-          console.log('message: ', mes.message)
+          // console.log('message: ', mes.message)
           setRevealObject(parseRevealMessage(mes.message))
           // console.log("CONTENT:", revealObject)
           setIfRevealed(true)
@@ -201,7 +201,7 @@ const Chat = () => {
   const revealUser = () => {
     setIfWanting(ifWantint => !ifWanting)
       .then(currentState => {
-        console.log(currentState)
+        // console.log(currentState)
         return new Promise((resolve, reject) => {
           let messageInfo = `${(currentState ? '#001' : '#005')} user of id: ${user.username} ${(currentState ? 'wants' : 'doesn\'t want to')} to reveal`
           try {
@@ -240,7 +240,7 @@ const Chat = () => {
 
     setIfWantToReject(ifWantToReject => !ifWantToReject)
       .then(currentState => {
-        console.log(currentState)
+        // console.log(currentState)
         return new Promise((resolve, reject) => {
           let messageInfo = `#003 user of id: ${user.id} ${(currentState ? 'wants' : 'doesn\'t want to')} to reject`
           try {
@@ -295,9 +295,9 @@ const Chat = () => {
 
 
 
-  useEffect(() => {
-    console.log(messagesArray);
-  }, [messagesArray])
+  // useEffect(() => {
+  //   console.log(messagesArray);
+  // }, [messagesArray])
 
   useEffect(() => {
     if (scrollBody) {
@@ -338,7 +338,7 @@ const Chat = () => {
         {/* // id='messages-array' className="messages-array"> */}
         {messagesArray.map(mes => {
           return <div className="message-body" onClick={(e) => {
-            console.log(mes)
+            // console.log(mes)
             setMoreInfoTrigger(!moreInfoTrigger);
           }}>
 

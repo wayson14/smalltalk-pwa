@@ -136,6 +136,8 @@ VIEWS
 .Searching-view {
     @include view;
     height: 100vh;
+    text-align: center;
+    padding: 1rem;
 }
 .Create-circle-view {
     // @include flexCenter(column);
@@ -144,6 +146,12 @@ VIEWS
     }
     @include view;
     height: 100vh;
+}
+.Circles-view {
+    // @include flexCenter(column);
+    @include flexCenter(column);
+    @include view;
+    margin-bottom: $bottom-bar-height;
 }
 .Chat-view {
     @include view;
@@ -315,6 +323,10 @@ BOXES & CONTAINERS
     border-radius: 10px;
     // width: clamp(120px, 60vw, 500px);
 }
+.circle-admin-section {
+    @include flexCenter(row);
+    gap: 10px;
+}
 .chat-body {
     display: flex;
     flex-direction: column;
@@ -324,7 +336,10 @@ BOXES & CONTAINERS
     // position: absolute;
     // margin-bottom: calc($bottom-bar-height;
     overflow-y: auto;
-    margin-bottom: calc($bottom-bar-height);
+    height: calc(100vh - $top-bar-height - $bottom-bar-height);
+    justify-content: flex-end;
+    margin-top: $top-bar-height;
+    margin-bottom: calc($bottom-bar-height + 5px);
     width: clamp(120px, 90vw, 500px);
 }
 /* =================
@@ -486,6 +501,8 @@ BUTTONS
 .leave-circle-button {
     @include action-button();
     width: 10em;
+    margin-top: 0;
+    background-color: red;
 }
 .action-button {
     @include action-button();
@@ -610,6 +627,7 @@ MESSAGES
     // bottom: 100;
     // min-width: 21em;
     flex-direction: row;
+    justify-content: flex-start;
 
 }
 .enemy-message{
