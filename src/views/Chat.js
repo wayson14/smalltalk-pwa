@@ -123,7 +123,7 @@ const Chat = () => {
       const mes = JSON.parse(message.data);
       if (mes?.message.indexOf('#') === 0) {
         const code = mes.message.slice(1, 4);
-
+        const content = mes.message.slice(4, mes.message.length)
         setContactUser(mes.message.slice(4, mes.message.length))
         // console.log(code);
 
@@ -147,6 +147,11 @@ const Chat = () => {
         else if (code === '006') {
           // console.log(`${mes.username} rejects relationship.`);
           setIfRejected(true);
+        }
+
+        else if (code === '007') {
+          mes.message = content
+          // console.log(`${mes.username} rejects relationship.`);
         }
       }
       // var img = '../../public';
@@ -203,7 +208,7 @@ const Chat = () => {
       .then(currentState => {
         // console.log(currentState)
         return new Promise((resolve, reject) => {
-          let messageInfo = `${(currentState ? '#001' : '#005')} user of id: ${user.username} ${(currentState ? 'wants' : 'doesn\'t want to')} to reveal`
+          let messageInfo = `${(currentState ? '#001' : '#005')} Ktoś ${(currentState ? 'chce' : 'nie chce')} się ujawnić`
           try {
             client.current.send(JSON.stringify({
               type: "message",
@@ -242,7 +247,7 @@ const Chat = () => {
       .then(currentState => {
         // console.log(currentState)
         return new Promise((resolve, reject) => {
-          let messageInfo = `#003 user of id: ${user.id} ${(currentState ? 'wants' : 'doesn\'t want to')} to reject`
+          let messageInfo = `#003 Ktoś ${(currentState ? 'chce' : 'nie chce')} odrzucenia`
           try {
             client.current.send(JSON.stringify({
               type: "message",
@@ -333,7 +338,8 @@ const Chat = () => {
         <button className="action-button" onClick={() => navigate("/")}>Menu</button>
       </div>
       
-      <div className='chatFlip chat-body' id="chatBody" ref={scrollBody}>
+      <div className='chatFlip chat-body ' id="chatBody" ref={scrollBody}>
+        <span className="greeting-span">To jest początek Waszej znajomości. Zapytajcie się co u Was słychać, czy ananas może legalnie znajdować się na pizzy czy lubicie Bounty...</span>
         {/* <div   */}
         {/* // id='messages-array' className="messages-array"> */}
         {messagesArray.map(mes => {

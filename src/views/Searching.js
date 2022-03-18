@@ -42,7 +42,7 @@ const Searching = () => {
         )
       .then(() => {
         
-        console.log(`User id: ${user.id} has been given a new room ID: ${user.roomID}`)
+        // console.log(`User id: ${user.id} has been given a new room ID: ${user.roomID}`)
         navigate('/chat')})
       .catch(err => setInfo({
         text: err.message,

@@ -32,6 +32,12 @@ $bottom-bar-height: 50px;
 TYPOGRAPHY
 ==================*/
 $secondaryText: 12px;
+.greeting-span {
+    font-size: 0.8rem;
+    color:rgba(0, 0, 0, 0.55);
+    text-align: center;
+    // max-width: 70%;
+}
 .view-header {
     align-self: flex-start;
     margin: 10px;
@@ -461,6 +467,16 @@ BUTTONS
     border: none;
     border-radius: 30px;
 }
+.continue-action-button {
+    @include action-button();
+    padding: 1.2rem;
+    font-size: 30px;
+    max-width: 60em;
+    min-width: 6em;
+    // max-height: 2.2em;
+    background-color: rgb(78, 146, 78);
+
+}
 .login-action-button {
     @include action-button();
     align-self: flex-end;
@@ -473,7 +489,7 @@ BUTTONS
     font-size: 30px;
     max-width: 60em;
     min-width: 6em;
-    max-height: 2.2em;
+    // max-height: 2.2em;
     // align-self: flex-end;
 }
 .join-circle-button {
