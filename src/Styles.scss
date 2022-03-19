@@ -46,6 +46,12 @@ $bottom-bar-height: 50px;
 TYPOGRAPHY
 ==================*/
 $secondaryText: 12px;
+.greeting-span {
+    font-size: 0.8rem;
+    color:rgba(0, 0, 0, 0.55);
+    text-align: center;
+    // max-width: 70%;
+}
 .view-header {
     align-self: flex-start;
     margin: 10px;
@@ -151,6 +157,8 @@ VIEWS
     text-align: center;
     @include view;
     height: 100vh;
+    text-align: center;
+    padding: 1rem;
 }
 .Create-circle-view {
     // @include flexCenter(column);
@@ -159,6 +167,12 @@ VIEWS
     }
     @include view;
     height: 100vh;
+}
+.Circles-view {
+    // @include flexCenter(column);
+    @include flexCenter(column);
+    @include view;
+    margin-bottom: $bottom-bar-height;
 }
 .Chat-view {
     @include view;
@@ -330,6 +344,10 @@ BOXES & CONTAINERS
     border-radius: 10px;
     // width: clamp(120px, 60vw, 500px);
 }
+.circle-admin-section {
+    @include flexCenter(row);
+    gap: 10px;
+}
 .chat-body {
     display: flex;
     flex-direction: column;
@@ -339,7 +357,10 @@ BOXES & CONTAINERS
     // position: absolute;
     // margin-bottom: calc($bottom-bar-height;
     overflow-y: auto;
-    margin-bottom: calc($bottom-bar-height);
+    height: calc(100vh - $top-bar-height - $bottom-bar-height);
+    justify-content: flex-end;
+    margin-top: $top-bar-height;
+    margin-bottom: calc($bottom-bar-height + 5px);
     width: clamp(120px, 90vw, 500px);
 }
 /* =================
@@ -464,6 +485,16 @@ BUTTONS
     color: $black;
     border: solid 1px $action-color;
 }
+.continue-action-button {
+    @include action-button();
+    padding: 1.2rem;
+    font-size: 30px;
+    max-width: 60em;
+    min-width: 6em;
+    // max-height: 2.2em;
+    background-color: rgb(78, 146, 78);
+
+}
 .login-action-button {
     @include action-button();
     align-self: flex-end;
@@ -505,6 +536,8 @@ BUTTONS
 .leave-circle-button {
     @include action-button();
     width: 10em;
+    margin-top: 0;
+    background-color: red;
 }
 .action-button {
     @include action-button();
@@ -629,6 +662,7 @@ MESSAGES
     // bottom: 100;
     // min-width: 21em;
     flex-direction: row;
+    justify-content: flex-start;
 
 }
 .enemy-message{

@@ -122,7 +122,9 @@ const Match = () => {
             </div>
           </form>
           <img src={qrLogo} className='qr' />
-          {!matching && <button className='chat-action-button' onClick={enterChat}>Chatuj</button>}
+          {undefined !== undefined? <button className='continue-action-button' onClick={enterChat}>Kontynuuj</button> 
+            : 
+          <button className='chat-action-button' onClick={enterChat}>Chatuj</button>}
         </div>
         <BottomBar />
       </div>
