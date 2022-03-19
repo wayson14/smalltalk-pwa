@@ -162,7 +162,7 @@ function App() {
                 <Route path="/chattt" element={<Chattt/>}/>
                 <Route path="/test" element={!true ? <NIY/> : <Test/>}/>
                 <Route path="/friends" element={true ? <NIY/> : <Friends/>}/>
-                <Route path="/createCircle" element={!true ? <NIY/> : <CreateCircle/>}/>
+                <Route path="/createCircle" element={user ? (!user.isStaff ? <NIY/> : <CreateCircle/>) : <Login info="Musisz się najpierw zalogować!"/>}/>
               </Routes>
             </div>
             </div>
