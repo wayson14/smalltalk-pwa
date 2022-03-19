@@ -282,6 +282,11 @@ const Chat = () => {
 
   const sendMessage = (e, mes) => {
     // console.log(mes, user.username);
+    if (mes[0] === '#'){
+      if (mes[1] !== ' '){
+        mes[1] = ' '
+      }
+    }
     if (mes == ''){
       setInfo({
         text: 'Wiadomość nie może być pusta!',
