@@ -26,15 +26,15 @@ $bottom-bar-height: 50px;
     button{
         background-position: center;
     }
-    button:hover {
+    a:hover {
         background: $white radial-gradient(circle, transparent 1%, $white 1%) center/15000%;
     }
-    button:active {
+    a:active {
         background-color: $action-color;
         background-size: 100%;
         transition: background 0s;
     }
-    button{
+    a{
         transition: background .6s;
     }
     textarea:focus{

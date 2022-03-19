@@ -66,6 +66,7 @@ const Match = () => {
   }
 
   const enterChat = () => {
+    
     joinWaitingroom().then(
       (res) => {
         // res.type === 'error'
