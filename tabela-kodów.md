@@ -11,3 +11,4 @@ Wiadomość może mieć tylko jeden kod lub żadnego.
 #005 - nadawca wiadomości nie chce ujawnienia
 #006 - sygnał wysyłany przez serwer dla klientów, że następuję odrzucenie (rozłączenie z czatu przez odrzucenie jednego z użytkowników)
 #007 - potwierdzenie od serwera przyjęcia wiadomości
+#008 - wiadomość z Icebreakerem

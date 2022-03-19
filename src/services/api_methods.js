@@ -288,3 +288,15 @@ export const parseErrorToInfo = (err) => {
     // return `${err.name}: ${err.message}`
     return message
 }
+
+export const getIcebreaker = () =>{
+    let icebreakers = [
+        'Lubisz Bounty?',
+        'Słuchasz Mandaryny?',
+        'Jesteś przyjacielem Piaska?'
+      ]
+    let chosen = Math.floor(icebreakers.length*Math.random())
+    console.log(chosen)
+    console.log(icebreakers[chosen])
+    return placeholderPromise('string').then(() => icebreakers[chosen])
+}

@@ -4,7 +4,7 @@ import { React, useState, useEffect, useRef, useContext } from 'react';
 import { useNavigate } from 'react-router';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 import { request, chatApiUrl } from '../services/client'
-import { getRoomMessages, closeSession, leaveWaitingroom } from '../services/api_methods'
+import { getRoomMessages, getIcebreaker, closeSession, leaveWaitingroom } from '../services/api_methods'
 import { UserContext } from '../services/UserContext';
 import { InfoContext } from '../services/InfoContext';
 import useAsyncState from '../services/useAsyncState';
@@ -63,6 +63,12 @@ const Chat = () => {
   },
   ]);
 
+  const [icebreakersArray, setIcebreakersArray] = useState([
+    'Lubisz Bounty?',
+    'Słuchasz Mandaryny?',
+    'Jesteś przyjacielem Piaska?'
+  ]);
+
 
   const [moreInfoTrigger, setMoreInfoTrigger] = useState(false);
 
@@ -72,9 +78,7 @@ const Chat = () => {
   const url = `${chatEndpoint}/${user.roomID}/`
   const [connectionStatus, setConnectionStatus] = useState(false);
 
-  const getMessageContent = (message) => {
-    return
-  }
+  
 
   function parseRevealMessage(input) {
     //#TODO: to zrobić regexem, bo aż wstyd 
@@ -154,6 +158,10 @@ const Chat = () => {
           // mes.message = content
           // console.log(`${mes.username} rejects relationship.`);
         }
+        else if (code === '008') {
+          // mes.message = content
+          // console.log(`${mes.username} rejects relationship.`);
+        }
       }
       // var img = '../../public';
       // ServiceWorkerRegistration.showNotification(`Nowa wiadomość!: `, { body: `${mes.message}` })
@@ -204,6 +212,16 @@ const Chat = () => {
     }
   }, [])
 
+  function sendIcebrear(){
+    getIcebreaker().then(icebreaker =>
+    client.current.send(JSON.stringify({
+      type: "message",
+      message: `#008 ${icebreaker}`,
+      username: user.username,
+      sendTime: new Date()
+    }))
+    )
+  }
   const revealUser = () => {
     setIfWanting(ifWantint => !ifWanting)
       .then(currentState => {
@@ -391,7 +409,7 @@ const Chat = () => {
             sendMessage(e, message);
           }}><img src={sendLogo} /></button>
         </div>
-        <img className='iceBraker chat-icon' src={iceLogo} alt="" />
+        <img className='iceBraker chat-icon' onClick={() => sendIcebrear()} src={iceLogo} alt="" />
       </div>
       {showRevealPanel && <PopUp show={showRevealPanel} setShow={setShowRevealPanel} head2={"Druga osoba chce cię poznać"} clas={'chatBttns'} funCtion1={revealUser} />}
 
