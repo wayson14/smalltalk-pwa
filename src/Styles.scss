@@ -26,15 +26,15 @@ $bottom-bar-height: 50px;
     button{
         background-position: center;
     }
-    a:hover {
+    button:hover {
         background: $white radial-gradient(circle, transparent 1%, $white 1%) center/15000%;
     }
-    a:active {
+    button:active {
         background-color: $action-color;
         background-size: 100%;
         transition: background 0s;
     }
-    a{
+    button{
         transition: background .6s;
     }
     textarea:focus{
@@ -172,7 +172,7 @@ VIEWS
     // @include flexCenter(column);
     @include flexCenter(column);
     @include view;
-    margin-bottom: $bottom-bar-height;
+    min-height: 85vh;
 }
 .Chat-view {
     @include view;
@@ -304,6 +304,7 @@ BOXES & CONTAINERS
 
 .content-container {
     @include flexCenter(column);
+    @include genericShadow();
     min-height: 10em;
     width: clamp(120px, 60vw, 350px);
     // border: 1px solid black;
@@ -339,6 +340,7 @@ BOXES & CONTAINERS
 
 
 .circles-container {
+    @include genericShadow();
     @include flexCenter(column);
     overflow: auto;
     border-radius: 10px;
