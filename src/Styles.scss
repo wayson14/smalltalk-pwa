@@ -46,7 +46,11 @@ $bottom-bar-height: 50px;
 TYPOGRAPHY
 ==================*/
 $secondaryText: 12px;
-.greeting-span {
+.greeting {
+    height: calc(100vh - $top-bar-height - $bottom-bar-height);
+    justify-content: flex-end;
+    display: flex;
+    flex-direction: column;
     font-size: 0.8rem;
     color:rgba(0, 0, 0, 0.55);
     text-align: center;
@@ -361,7 +365,7 @@ BOXES & CONTAINERS
     // margin-bottom: calc($bottom-bar-height;
     overflow-y: auto;
     height: calc(100vh - $top-bar-height - $bottom-bar-height);
-    justify-content: flex-end;
+    // justify-content: flex-end;
     margin-top: $top-bar-height;
     margin-bottom: calc($bottom-bar-height + 5px);
     width: clamp(120px, 90vw, 500px);

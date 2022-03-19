@@ -353,7 +353,9 @@ const Chat = () => {
       </div>
       
       <div className='chatFlip chat-body ' id="chatBody" ref={scrollBody}>
-        <span className="greeting-span">To jest początek Waszej znajomości. Zapytajcie się co u Was słychać, czy ananas może legalnie znajdować się na pizzy czy lubicie Bounty...</span>
+        <div className="greeting">
+          <span>To jest początek Waszej znajomości. Zapytajcie się co u Was słychać, czy ananas może legalnie znajdować się na pizzy czy lubicie Bounty...</span>
+        </div>
         {/* <div   */}
         {/* // id='messages-array' className="messages-array"> */}
         {messagesArray.map(mes => {
