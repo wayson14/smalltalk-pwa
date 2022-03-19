@@ -282,10 +282,19 @@ const Chat = () => {
 
   const sendMessage = (e, mes) => {
     // console.log(mes, user.username);
-    if (mes[0] === '#'){
-      if (mes[1] !== ' '){
-        mes[1] = ' '
-      }
+    // console.log(mes)
+    // if (mes[0] == '#'){
+    //   console.log('zmienione')
+    //   if (mes[1] !==' '){
+    //     mes = '#'+mes;
+    //   }
+    // }
+    if (mes[0] == '#'){
+      setInfo({
+        text: 'Wiadomość nie zaczynać się #!',
+        type: 'info'
+      })
+      return 
     }
     if (mes == ''){
       setInfo({
