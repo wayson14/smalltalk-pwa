@@ -136,6 +136,7 @@ const Chat = () => {
         else if (code === '002') {
           // console.log(`${mes}`)
           // console.log('message: ', mes.message)
+          
           setRevealObject(parseRevealMessage(mes.message))
           // console.log("CONTENT:", revealObject)
           setIfRevealed(true)
@@ -150,7 +151,7 @@ const Chat = () => {
         }
 
         else if (code === '007') {
-          mes.message = content
+          // mes.message = content
           // console.log(`${mes.username} rejects relationship.`);
         }
       }
@@ -281,6 +282,7 @@ const Chat = () => {
   }
 
   const sendMessage = (e, mes) => {
+    e.preventDefault()
     // console.log(mes, user.username);
     // console.log(mes)
     // if (mes[0] == '#'){
@@ -359,15 +361,21 @@ const Chat = () => {
         {/* <div   */}
         {/* // id='messages-array' className="messages-array"> */}
         {messagesArray.map(mes => {
-          return <div className="message-body" onClick={(e) => {
-            // console.log(mes)
-            setMoreInfoTrigger(!moreInfoTrigger);
-          }}>
+          return <>
+            {mes.message[0] != '#'  ? <div className="message-body" onClick={(e) => {
+              // console.log(mes)
+              setMoreInfoTrigger(!moreInfoTrigger);
+            }}>
 
-            {giveColor(mes?.username, mes)}
+              {giveColor(mes?.username, mes)}
 
 
-          </div>
+            </div>
+            :
+            <span className="chat-fancy">{mes.message.slice(4, mes.message.length)}</span>
+            }
+            
+        </>
         })
         }
       </div>
@@ -375,11 +383,11 @@ const Chat = () => {
       <div className="input-chat">
         <img className='xLogo chat-icon' src={XLogo} alt="" onClick={() => setShowRejectChoice(true)} />
         <div className='send-message'>
-          <input placeholder='Napisz coś...' value={message} maxlength="255" type="text" onChange={e => setMessage(e.target.value)}></input>
+          <input  placeholder='Napisz coś...' value={message} maxlength="255" type="text" onChange={e => setMessage(e.target.value)}></input>
           <button onClick={e => {
             // setMessage('');
-
-
+            e.preventDefault()
+            console.log(e.target.parentElement.parentElement.querySelector('input').focus())
             sendMessage(e, message);
           }}><img src={sendLogo} /></button>
         </div>
