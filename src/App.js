@@ -90,7 +90,7 @@ function App() {
           .then(userResponse => {
             // console.log(userResponse)
             setUser(parseUserObject(userResponse, token.message))
-            
+            // console.log('first')
           })
           .catch(err => console.log(err))
         ) : (
