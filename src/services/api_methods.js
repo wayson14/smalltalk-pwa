@@ -58,7 +58,7 @@ export const getWholeUser = (id) => {
 }
 export const parseUserObject = (user, token) => {
     // console.log(user)
-    console.log(user)
+    // console.log(user)
     if (user === '' & null & undefined){
         // console.log('user is null')
         return ''

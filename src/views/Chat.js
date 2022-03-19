@@ -311,7 +311,7 @@ const Chat = () => {
         target.scroll({ top: target.scrollHeight+50, behavior: 'smooth' });
       });
     }
-  }, [])
+  }, [messagesArray])
 
   const [style, setStyle] = useState('blue');
   const giveColor = (messagess, etc) => {
