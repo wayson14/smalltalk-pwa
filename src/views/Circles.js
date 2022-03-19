@@ -73,10 +73,10 @@ const Circles = () => {
           <div key={circle.circle_ID} className="circles-container">
             <h2>{circle.name}</h2>
             <div className="content-container">
-              <span>{`Lokalizacja: ${circle?.localization}`}</span>
-              <span>{`Opis: ${circle?.description}`}</span>
-              <span>{`Data wygaśnięcia kodu: ${circle?.expire_date}`}</span>
-              <span>{`Kod dołączeniowy: ${circle?.code}`}</span>
+              <span>{circle.localization &&`Lokalizacja: ${circle?.localization}`}</span>
+              <span>{circle.description && `Opis: ${circle?.description}`}</span>
+              <span>{circle.expire_date && `Data wygaśnięcia kodu: ${circle?.expire_date}`}</span>
+              <span>{circle.code && `Kod dołączeniowy: ${circle?.code}`}</span>
               {/* <span>{`ID: ${circle?.circle_ID}`}</span> */}
               {/* <span>{`Admini: ${circle?.admin_users_IDs}`}</span> */}
               {circle.admin_users_IDs.indexOf(user.id) > -1 && (
