@@ -54,7 +54,7 @@ const Chattt = () => {
   },
   {
     username: "Bóg",
-    message: "Święty Piotr wybrał losowo Twój numer Ja tu nic nie widzę z góry, bo mi zasłaniają chmury Widoczność licha, więc przestań pieprzyć, mów co słychać!"
+    message: "jghgbjyfjtyrvfytjdbytdtdbdtybdtyubdtybdtdbtdtbdtbybdtybdtydbtydbtydbtyudtbydbtydtbydbtydtydtbydbtyu"
   },
   {
     username: "Łona",

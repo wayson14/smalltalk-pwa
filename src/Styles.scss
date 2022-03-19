@@ -23,6 +23,20 @@ $bottom-bar-height: 50px;
     button:focus{
       outline: none;
     }
+    button{
+        background-position: center;
+    }
+    button:hover {
+        background: $white radial-gradient(circle, transparent 1%, $white 1%) center/15000%;
+    }
+    button:active {
+        background-color: $action-color;
+        background-size: 100%;
+        transition: background 0s;
+    }
+    button{
+        transition: background .6s;
+    }
     textarea:focus{
       outline: none;
     }
@@ -134,6 +148,7 @@ VIEWS
     height: calc(100vh - $top-bar-height);
 }
 .Searching-view {
+    text-align: center;
     @include view;
     height: 100vh;
 }
@@ -406,6 +421,7 @@ FORMS
     margin-bottom: 1em;
     border: none;
     border-radius: 40px;
+    background-color: $white;
 }
 .join-circle-input{
         font-family: $font;
@@ -414,7 +430,7 @@ FORMS
         border-top-left-radius: 0.5em;
         width: 74%;
         border: none;
-        margin-left: 2vw;
+        margin-left: 2em;
         padding: 0.5em;
     }
 
@@ -438,13 +454,15 @@ FORMS
 BUTTONS
 ==================*/
 @mixin action-button {
-
     @include genericShadow();
     @include actionTheme();
     margin-top: 1rem;
     padding: 0.6em;
     border: none;
     border-radius: 30px;
+    background-color: $white;
+    color: $black;
+    border: solid 1px $action-color;
 }
 .login-action-button {
     @include action-button();
@@ -459,6 +477,7 @@ BUTTONS
     max-width: 60em;
     min-width: 6em;
     max-height: 2.2em;
+    transition: background 0.10s;
     // align-self: flex-end;
 }
 .join-circle-button {
@@ -467,7 +486,7 @@ BUTTONS
     transform: rotate(180deg);
     border: none;
     height: 100%;
-    padding-left: 17px;
+    padding-left: .3em;
     img{
         width: 80%;
     }
@@ -532,10 +551,10 @@ POP-UPS & INFO CLOUDS
     @include flexCenter(column);
     border-radius: 20px;
     background-color: $grey;
-    height: 80vh;
+    min-height: 40em;
     width: 15em;
     min-height: 10em;
-    max-height: 20em;
+    max-height: 50em;
     button{
         width: 8em;
     }
@@ -614,11 +633,13 @@ MESSAGES
 }
 .enemy-message{
     @include message;
+    word-wrap: break-word;
     background-color: $dark-grey;
     border-top-left-radius: 0px;
 }
 .my-message{
     @include message;
+    word-wrap: break-word;
     color: $white;
     border-top-right-radius: 0px;
     background-color: $action-color;
