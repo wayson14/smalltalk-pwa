@@ -379,17 +379,18 @@ FORMS
     border-radius: 1em 1em 0 0;
     height: 3em;
     width: 100vw;
-    input {
+    input{
         border: none;
         min-width: 19em;
         height: 2em;
         border-radius: 20px;
+        padding-left: 1em;
     }
     button{
         background: $white;
         border: none;
         height: 2em;
-        margin-left: -1.5em;
+        padding-right: .5em;
         border-radius: 8px;
         z-index: 3;
     }
