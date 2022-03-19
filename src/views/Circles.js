@@ -110,7 +110,7 @@ const Circles = () => {
               })
               .then(res => {
                 // reload *= -1
-              })}>opuść krąg</button>
+              })}>Opuść krąg</button>
           </div>
         )
       }
