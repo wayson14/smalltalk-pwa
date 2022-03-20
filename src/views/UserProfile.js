@@ -47,7 +47,7 @@ const UserProfile = ({handleClose, userData}) => {
                 <div className="profile-about">
                     </div>
                 <button className="action-button" onClick={e => {
-                    navigate('/addFacebook')
+                    navigate('/') //addFacebook
                 }}>Edytuj</button>
                 <button className="action-button" 
                     onClick={() => {

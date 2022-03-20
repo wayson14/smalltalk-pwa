@@ -172,7 +172,7 @@ const Login = ({ passedInfo }) => {
           setInfo({
           })
           console.log('login');
-          navigate('/addFacebook')
+          navigate('/') //addFacebook
   
         })
         .catch(err => {
