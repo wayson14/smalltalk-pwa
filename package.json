@@ -16,6 +16,7 @@
     "react-scripts": "5.0.0",
     "react-scroll-to-bottom": "^4.2.0",
     "sass": "^1.49.7",
+    "use-sound": "^4.0.1",
     "uuid-js": "^0.7.5",
     "web-vitals": "^0.2.4",
     "websocket": "^1.0.34",

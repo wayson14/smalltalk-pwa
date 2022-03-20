@@ -69,8 +69,9 @@ $secondaryText: 12px;
 }
 .bold-header {
     text-align: center;
-    padding-left: 1em;
-    padding-right: 1em;
+    padding-left: -5em;
+    padding-right: -5em;
+    width: 9em;
 }
 /* =================
 GLOBALS & UTILITIES
@@ -648,17 +649,19 @@ POP-UPS & INFO CLOUDS
     min-height: 40em;
     width: 15em;
     min-height: 10em;
-    max-height: 50em;
+    max-height: 80em;
     button{
         width: 8em;
     }
-    padding: 2em;
+    padding: .5em;
 }
 .reavel{
     margin-top: -3em;
 }
 .pop-up-container {
     @include flexCenter(column);
+    padding: 1em;
+
 }
 /* =================
 ICONS & IMAGES

@@ -1,3 +1,6 @@
+import useSound from 'use-sound';
+import boopSfx from './loginIcon/sadSound.mp3';
+import boopSfxx from './loginIcon/godSound.mp3';
 import { React, useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router';
@@ -16,8 +19,8 @@ const UserProfile = ({ handleClose,
 
     const navigate = useNavigate();
     const [checked, setChecked] = useState(true);
-
-
+    const [playSad] = useSound(boopSfx);
+    const [playVictory] = useSound(boopSfxx);
     return <div className="viewport-center-content" >
         <OutsideClickHandler
             onOutsideClick={() => {
@@ -51,15 +54,16 @@ const UserProfile = ({ handleClose,
                 </div>}
 
                 {type === 'rejected-view' && <div className="">
-                    <h2>Nie tym razem... Spróbuj jeszcze raz!</h2>
+                    <h2>Następnym razem będzie lepiej. <br/> Spróbuj jeszcze raz! <br/>&#128546;</h2>
+                    {playSad()}
                     <div choice-button-container>
-                        <button className="action-button" onClick={() => navigate("/")}>Powrót do menu głównego</button>
+                        <button className="action-button" onClick={() => navigate("/")}>Powrót</button>
                     </div>
                 </div>}
 
                 {type === 'revealed-view' && <div className="pop-up-container">
-                    <h2 className="bold-header">Gratulacje! Właśnie poznałeś: </h2>
-
+                    <h2 className="bold-header">🎉 Gratulacje! 🎉<br/>Właśnie poznałeś: </h2>
+                    {playVictory()}
                     {/* <img className="profile-avatar" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.DtHViTj3wtToVQA0O9qmbgHaHa%26pid%3DApi&f=1" /> */}
 
                     <h4 className="profile-username">

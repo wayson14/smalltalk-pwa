@@ -364,7 +364,7 @@ const rejectUser = () => {
 
       {/* {ifRejected && <ChatEndView type='reject'></ChatEndView>} */}
       {ifRejected && <PopUpBase type='rejected-view'/>}
-      {ifRevealed && <PopUpBase type='revealed-view' revealObject={revealObject}/>}
+      <PopUpBase type='revealed-view' revealObject={revealObject}/>
       {/* {show3 && <PopUp show3={show3} setShow3={setShow3} avatar={userLogo} head1={"Szymon"} imagine3={fbLogo} imagine4={instLogo} instaInfo={"Szymon Kowal"} fbInfo={"Szymon Kowal"} clas={'profile contentt'}/>} */}
     </div>
     // </div>
