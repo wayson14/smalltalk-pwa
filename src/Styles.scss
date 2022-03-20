@@ -650,6 +650,7 @@ POP-UPS & INFO CLOUDS
     background-color: lightgreen;
     opacity: 95%;
     font-size: 1.4em;
+    // transition: opacity 1s ease-in-out;
 }
 .user-profile {
     @include flexCenter(column);

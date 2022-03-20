@@ -40,7 +40,7 @@ export const request = ({
             queryString = new URLSearchParams(query).toString();
             queryString = queryString && `?${queryString}`;
         }
-
+        // console.log('REQUEST CONFIG:',requestConfig)
         return fetch(`${host}${path}${queryString}`, requestConfig)
         .then(res => {
             // if (!res.ok) {
@@ -87,7 +87,7 @@ function assertPath(path) {
 
 export const handleErrorResponse = (res, message) => {
     return new Promise ((resolve, reject) => {
-        console.log(res)
+        // console.log(res)
         if (res === null) {
             reject(message)
         }

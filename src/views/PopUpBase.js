@@ -72,11 +72,11 @@ const UserProfile = ({ handleClose,
                     <div className="profile-social center-content">
                         <div className="reveal-line">
                             <h4>{revealObject.u1}:</h4>
-                            <a href={`${revealObject.s1}`}>{revealObject.s1}</a>
+                            {/* <a href={`${revealObject.s1}`}>{revealObject.s1}</a> */}
                         </div>
                         <div className="reveal-line">
                             <h4>{revealObject.u2}:</h4>
-                            <a href={`${revealObject.s2}`}>{revealObject.s2}</a>
+                            {/* <a href={`${revealObject.s2}`}>{revealObject.s2}</a> */}
                         </div>
                     </div>
                     <div className="profile-about">

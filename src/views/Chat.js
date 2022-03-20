@@ -43,6 +43,7 @@ const Chat = () => {
   const [ifWantToReject, setIfWantToReject] = useAsyncState(false);
   const [ifRevealed, setIfRevealed] = useAsyncState(false);
   const [ifRejected, setIfRejected] = useAsyncState(false);
+  const [cooldown, setCooldown] = useAsyncState(0)
 
   
   const [enemyUsername, setEnemyUsername] = useState();
@@ -193,7 +194,7 @@ const Chat = () => {
       // console.log(e)
       console.log('Występił błąd, próba ponownego połączenia...');
       setInfo({
-        text: 'Problem z połączeniem WS',
+        text: 'Problem z połączeniem, spróbuj wyjść i wejść jeszcze raz.',
         type: 'error'
       })
       client.current.close()
@@ -218,15 +219,22 @@ const Chat = () => {
     }
   }, [])
 
-  function sendIcebrear(){
-    getIcebreaker().then(icebreaker =>
-    client.current.send(JSON.stringify({
-      type: "message",
-      message: `#008 ${icebreaker}`,
-      username: user.username,
-      sendTime: new Date()
-    }))
-    ).then(() => playIcebreak())
+  function sendIcebreaker(){
+    if (cooldown === 0){
+      getIcebreaker().then(icebreaker =>
+      client.current.send(JSON.stringify({
+        type: "message",
+        message: `#008 ${icebreaker}`,
+        username: user.username,
+        sendTime: new Date()
+      }))
+      ).then(() => playIcebreak()).then(() => setCooldown(120))}
+    else {
+      setInfo({
+        text: `Możesz użyć IceBreakera co ${cooldown} sekund.`,
+        type: 'info'
+      })
+    }
   }
   const revealUser = () => {
     setIfWanting(ifWantint => !ifWanting)
@@ -343,7 +351,11 @@ const Chat = () => {
   // useEffect(() => {
   //   console.log(messagesArray);
   // }, [messagesArray])
-
+  useEffect(() => {
+    if (cooldown > 0){
+      setCooldown(cooldown => cooldown--)
+    }
+  }, [cooldown])
   useEffect(() => {
     if (scrollBody) {
       scrollBody.current.addEventListener('DOMNodeInserted', event => {
@@ -411,11 +423,11 @@ const Chat = () => {
           <button onClick={e => {
             // setMessage('');
             e.preventDefault()
-            console.log(e.target.parentElement.parentElement.querySelector('input').focus())
+            e.target.parentElement.parentElement.querySelector('input').focus()
             sendMessage(e, message);
           }}><img src={sendLogo} /></button>
         </div>
-        <img className='iceBraker chat-icon' onClick={() => sendIcebrear()} src={iceLogo} alt="" />
+        <img className='iceBraker chat-icon' onClick={() => sendIcebreaker()} src={iceLogo} alt="" />
       </div>
       {showRevealPanel && <PopUp show={showRevealPanel} setShow={setShowRevealPanel} head2={"Druga osoba chce cię poznać"} clas={'chatBttns'} funCtion1={revealUser} />}
 

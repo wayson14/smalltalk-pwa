@@ -265,7 +265,7 @@ const Login = ({ passedInfo }) => {
           </div>
           <div className="consent-container">
             <div>
-              <label  className="consent-text" for="pivacyConsent">Wyrażam zgodę na przetwarzanie moich danych osobowyc</label>
+              <label  className="consent-text" for="pivacyConsent">Wyrażam zgodę na przetwarzanie moich danych osobowych</label>
               <br/>
               <a href="https://smalltalk.today/">Regulamin</a>
             </div>

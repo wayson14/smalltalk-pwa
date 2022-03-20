@@ -27,9 +27,11 @@ const AddFacebook = () => {
 
   const handleChangeSocial = (e) => {
     e.preventDefault()
+    console.log('COOKIES:',cookies)
     changeSocial({
       csrftoken: cookies.csrftoken,
-      link: facebook
+      link: facebook,
+      token: user.token
     })
       .then(mes => {
         setInfo({
@@ -39,10 +41,12 @@ const AddFacebook = () => {
         console.log(mes)
         navigate('/')
       })
-      .catch(err => setInfo({
+      .catch(err => {
+        console.log(err)
+        setInfo({
         text: 'Nieprawidłowy link.',
         type: 'error'
-      }))
+      })})
       
     }
 
