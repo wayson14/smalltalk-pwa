@@ -48,7 +48,7 @@ const AddFacebook = () => {
 
 return (
   <div className="Add-facebook-view">
-    <span>Do prawidłowego funkcjonowania aplikacji potrzebujemy linku do Twojego profilu oraz krótkiego Twojego opisu. Będą one wyświetlane jedynie osobom, które zdecydujesz się poznać.</span>
+    <span>⛔ Do prawidłowego funkcjonowania aplikacji potrzebujemy linku do Twojego profilu na Facebooku. Będzie on wyświetlany tylko osobom które zdecydujesz się poznać. ⛔</span>
     <form>
       <div className={`input-form-line`}>
         <img className='fbLogo' src={fbLogo} alt="" />
@@ -64,7 +64,7 @@ return (
         (e) => setFacebook(e.target.value)
       }></input> */}
       <div className="center-content">
-        <button className="action-button" onClick={(e) => handleChangeSocial(e)}>{user?.socialContact ? 'Zmień' : 'Zatwierdź'}</button>
+        <button className="action-button change" onClick={(e) => handleChangeSocial(e)}>{user?.socialContact ? 'Zmień' : 'Zatwierdź'}</button>
         <button className="action-button" onClick={() => navigate('/')}>Menu</button>
       </div>
     </form>
