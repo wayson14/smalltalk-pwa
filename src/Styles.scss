@@ -113,6 +113,11 @@ GLOBALS & UTILITIES
     @include flexCenter(column)
 
 }
+.reveal-line {
+    @include flexCenter(row);
+    gap: 10px;
+
+}
 .viewport-center-content {
     @include flexCenter(column);
     position: fixed;
@@ -680,9 +685,9 @@ POP-UPS & INFO CLOUDS
     }
     padding: .5em;
 }
-.reavel{
-    margin-top: -3em;
-}
+// .reavel{
+//     margin-top: -3em;
+// }
 .pop-up-container {
     @include flexCenter(column);
     padding: 1em;

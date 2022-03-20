@@ -1,5 +1,5 @@
 // #TODO: problem zamykania poprawnego sesji, użytkownik jeżęli nie opuście samodzielnie sesji to może wejść do niej z powrotem
-
+import useSound from 'use-sound';
 import { React, useState, useEffect, useRef, useContext } from 'react';
 import { useNavigate } from 'react-router';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
@@ -19,16 +19,21 @@ import fbLogo from './loginIcon/fb.svg';
 import instLogo from './loginIcon/instagram.svg';
 import userLogo from './loginIcon/Avatar.svg';
 import PopUpBase from './PopUpBase'
+
+import sweden from '../media/Sweden.mp3'
+import icebreakSound from '../media/Glass_dig1.mp3'
+
 const Chat = () => {
   const navigate = useNavigate();
   const el = document.getElementById('messages-array');
   // if (el) {
   //   el.scrollTop = el.scrollHeight;
   // }
-
+  const [playSweden] = useSound(sweden);
   const { user, setUser } = useContext(UserContext);
   const { info, setInfo } = useContext(InfoContext);
 
+  const [playIcebreak] = useSound(icebreakSound);
 
   const client = useRef();
   const scrollBody = useRef();
@@ -39,6 +44,7 @@ const Chat = () => {
   const [ifRevealed, setIfRevealed] = useAsyncState(false);
   const [ifRejected, setIfRejected] = useAsyncState(false);
 
+  
   const [enemyUsername, setEnemyUsername] = useState();
 
   const [showRevealPanel, setShowRevealPanel] = useState(false);
@@ -220,7 +226,7 @@ const Chat = () => {
       username: user.username,
       sendTime: new Date()
     }))
-    )
+    ).then(() => playIcebreak())
   }
   const revealUser = () => {
     setIfWanting(ifWantint => !ifWanting)
