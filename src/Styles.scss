@@ -159,6 +159,10 @@ VIEWS
         }
     }
 }
+.Add-facebook-view {
+    @include view;
+    height: 100vh; 
+}
 .Match-view {
     @include view;
 
@@ -477,6 +481,7 @@ FORMS
     @include flexCenter(column);
 
 }
+
 .send-message {
     width: 100%;
     @include flexCenter(row)

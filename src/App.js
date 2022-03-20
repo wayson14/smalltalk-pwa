@@ -20,6 +20,7 @@ import Friends from './views/Friends';
 import CreateCircle from './views/CreateCircle';
 import InfoCloud  from './components/InfoCloud';
 import Chattt from './views/Chattt';
+import AddFacebook from './views/AddFacebook';
 // import OneSignal from 'react-onesignal';
 import NIY from './views/NIY';
 import { request } from './services/client';
@@ -161,6 +162,7 @@ function App() {
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/chattt" element={<Chattt/>}/>
                 <Route path="/test" element={!true ? <NIY/> : <Test/>}/>
+                <Route path="/addFacebook" element={<AddFacebook/>}/>
                 {/* lol */}
                 <Route path="/friends" element={true ? <NIY/> : <Friends/>}/>
                 <Route path="/createCircle" element={user ? (!user.isStaff ? <NIY/> : <CreateCircle/>) : <Login info="Musisz się najpierw zalogować!"/>}/>

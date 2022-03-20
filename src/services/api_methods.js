@@ -51,7 +51,7 @@ export const getUser = (token) => {
         token: token,
     })
 }
-export const getWholeUser = (id) => {
+export const getWholeUser = ({token, id}) => {
     return request({
         path: '/models/users/'+id+'/'
     })
@@ -69,7 +69,9 @@ export const parseUserObject = (user, token) => {
         email: user.email,
         token: token,
         roomID: (user ? user?.room_id : null ),
-        isStaff: user.is_staff
+        isStaff: user.is_staff,
+        socialContact: user.social_link,
+        stats: user.stats
         // first_name: user.first_name,
         // last_name: user.last_name
       }
@@ -299,4 +301,22 @@ export const getIcebreaker = () =>{
     console.log(chosen)
     console.log(icebreakers[chosen])
     return placeholderPromise('string').then(() => icebreakers[chosen])
+}
+
+export const changeSocial = ({link = 'wp.pl', csrftoken}) => {
+    
+    const body = JSON.stringify({facebook: `${link}`})
+    
+    return request({
+        path: '/change_social/',
+        csrftoken: csrftoken,
+        address: chatApiUrl,
+        options: {
+            headers: {
+                'X-CSRFToken' : csrftoken
+            },
+            method: 'POST',
+            body: body
+        }
+    })
 }

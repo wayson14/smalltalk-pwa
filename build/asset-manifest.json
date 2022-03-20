@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.7ea6c8e9.css",
-    "main.js": "/static/js/main.cad2dd38.js",
+    "main.css": "/static/css/main.bafb8353.css",
+    "main.js": "/static/js/main.67042e69.js",
     "service-worker.js": "/service-worker.js",
     "static/media/Warstwa 1.svg": "/static/media/Warstwa 1.8fbdf68ebf99a2786081c207221a9f67.svg",
     "static/media/QR.svg": "/static/media/QR.a4615518c2e128067f7ee18ce7051e10.svg",
@@ -21,11 +21,11 @@
     "static/media/icons8-facebook.svg": "/static/media/icons8-facebook.8c9f6312c8f081298c3f5458ab6dfd88.svg",
     "static/media/X 2.svg": "/static/media/X 2.1f43be982975f817d7be58a8378d8ea4.svg",
     "static/media/check.svg": "/static/media/check.56500640a1bc7ecd0007bbce5bca0d60.svg",
-    "main.7ea6c8e9.css.map": "/static/css/main.7ea6c8e9.css.map",
-    "main.cad2dd38.js.map": "/static/js/main.cad2dd38.js.map"
+    "main.bafb8353.css.map": "/static/css/main.bafb8353.css.map",
+    "main.67042e69.js.map": "/static/js/main.67042e69.js.map"
   },
   "entrypoints": [
-    "static/css/main.7ea6c8e9.css",
-    "static/js/main.cad2dd38.js"
+    "static/css/main.bafb8353.css",
+    "static/js/main.67042e69.js"
   ]
 }

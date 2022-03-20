@@ -52,10 +52,12 @@ const Searching = () => {
         
         // console.log(`User id: ${user.id} has been given a new room ID: ${user.roomID}`)
         navigate('/chat')})
-      .catch(err => setInfo({
+      .catch(err => {
+        if(err.message!=='Poczekaj na przydzielenie do pokoju przez administratora.'){setInfo({
         text: err.message,
         type: err.type
-      }))
+      })}
+    })
   }
   return (
   <div className="Searching-view">
