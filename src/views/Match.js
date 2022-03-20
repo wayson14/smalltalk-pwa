@@ -4,11 +4,12 @@ import TopBar from './TopBar';
 import BottomBar from './BottomBar';
 import { UserContext } from "../services/UserContext";
 import { InfoContext } from '../services/InfoContext';
-import { joinCircle, getUserCirclesIDs } from '../services/api_methods'
-import { getRoomID, joinWaitingroom, leaveWaitingroom, getUser, parseUserObject } from "../services/api_methods";
+import { joinCircle, getUserCirclesIDs, getWholeUser } from '../services/api_methods'
+import { changeSocial, getRoomID, joinWaitingroom, leaveWaitingroom, getUser, parseUserObject } from "../services/api_methods";
 import arrowLogo from './loginIcon/Arrow 2.svg';
 import qrLogo from './loginIcon/QR.svg';
 import { handleErrorResponse } from '../services/client'
+import { useCookies } from "react-cookie";
 
 const Match = () => {
   const { user, setUser } = useContext(UserContext);
@@ -17,14 +18,19 @@ const Match = () => {
   const [showBottomBar, setShowBottomBar] = useState(false);
   const [circleCode, setCircleCode] = useState('')
   const [style, setStyle] = useState('');
+  
+  const [cookies, setCookie] = useCookies();
 
   useEffect(() => {
-    getUser(user.token)
+    // getWholeUser(user.id).then(gottenUser => console.log(gottenUser))
+    getWholeUser({token: user.token, id: user.id})
       .then(gottenUser => {
+        // console.log(gottenUser)
         setUser(parseUserObject(gottenUser, user.token))
       })
       .catch(err => {console.log(err)
       })
+    // console.log('COOKIES:',cookies)
   }, [])
   const loginError = () => {
     setTimeout(function () { setStyle('codeCircleError') }, 100)
@@ -50,7 +56,7 @@ const Match = () => {
         setUser(user => ({ ...user, roomID: res.message }))
       })
       .then(() => {
-        console.log(`User id: ${user.id} has been given a new room ID: ${user.roomID}`)
+        // console.log(`User id: ${user.id} has been given a new room ID: ${user.roomID}`)
         setInfo({
           text: "Pomyślnie dołączono do sesji!",
           type: "success"
@@ -80,6 +86,7 @@ const Match = () => {
       e.key === 'Enter' && enterChat()
     }}>
       <TopBar />
+  
       <div className='Match-view'>
         <div className='scanner content-container'>
         <h4>Dodaj się do kręgu</h4>
@@ -101,7 +108,7 @@ const Match = () => {
                     .then(res => {
 
                       let IDs = [];
-                      console.log(res)
+                      // console.log(res)
                       setInfo({
                         text: res.message,
                         type: res.typeoin
@@ -113,7 +120,7 @@ const Match = () => {
                         text: err,
                         type: 'error'
                       })
-                      console.log(err)
+                      // console.log(err)
                     })
                 }
               }>

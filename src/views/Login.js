@@ -1,14 +1,15 @@
 import { React, useState, useContext, useEffect } from 'react';
 import { UserContext } from '../services/UserContext';
 import { InfoContext } from '../services/InfoContext';
-
+import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import userLogo from './loginIcon/user.svg';
 import passwordLogo from './loginIcon/Group 2.svg';
 import fbLogo from './loginIcon/icons8-facebook.svg';
 
+
 import ArrayList from '../components/ArrayList';
-import { authUserLogin, authUserLogout, authUserRegister, getUser, parseResponseToInfo, parseErrorToInfo, parseUserObject } from '../services/api_methods';
+import { changeSocial, authUserLogin, authUserLogout, authUserRegister, getUser, parseResponseToInfo, parseErrorToInfo, parseUserObject } from '../services/api_methods';
 import useAsyncState from '../services/useAsyncState';
 
 // import coreapi from 'coreapi' 
@@ -16,6 +17,8 @@ const Login = ({ passedInfo }) => {
 
   const { user, setUser } = useContext(UserContext);
   const { info, setInfo } = useContext(InfoContext);
+
+  const [cookies, setCookie] = useCookies();
 
   const [style, setStyle] = useState('');
   const [email, setEmail] = useState('');
@@ -26,7 +29,7 @@ const Login = ({ passedInfo }) => {
   const [privacyConsent, setPrivacyConsent] = useState();
 
   const [gottenToken, setGottenToken] = useAsyncState('');
-
+  const [loggedIn, setLoggedIn] = useState()
   const [formType, setFormType] = useState('login');
   const [loginInfo, setLoginInfo] = useState([]);
 
@@ -47,6 +50,15 @@ const Login = ({ passedInfo }) => {
 
   }, [password, confirmPassword, socialContact, email])
 
+  // useEffect(() => {
+  //   console.log('SPRAWDZONE')
+  //   if (true){
+  //     changeSocial({
+  //       csrftoken: cookies.csrftoken,
+  //       socialContact: 'socialContact'})
+  //     .then(mes => console.log(mes))
+  //   }
+  // }, [cookies.csrftoken])
   const checkCredentials = () => {
     return true;
   }
@@ -102,6 +114,7 @@ const Login = ({ passedInfo }) => {
         setInfo({
         })
         console.log('login');
+        setLoggedIn(true)
         navigate('/')
 
       })
@@ -134,6 +147,7 @@ const Login = ({ passedInfo }) => {
           if(res !== null){
             setInfo({
             })
+            
             // navigate('/login')
             return res.key
           } 
@@ -143,7 +157,6 @@ const Login = ({ passedInfo }) => {
             throw 'Złe dane przy tworzeniu użytkownika!'
           }
         })
-
         .then(token => {
           // let auth = client.auth.TokenAuthentication({
           //   token: token
@@ -159,21 +172,9 @@ const Login = ({ passedInfo }) => {
           setInfo({
           })
           console.log('login');
-          navigate('/')
+          navigate('/addFacebook')
   
         })
-        // .then(token => {
-        //   return setGottenToken(token).then(() => getUser(token))
-        // })
-        // .then(user => {
-        //   setUser(parseUserObject(user, gottenToken));
-        //   setInfo({
-        //   type: 'success',
-        //   text: 'Pomyślnie zalogowano!'
-        // })
-        // console.log('login');
-        
-        // })
         .catch(err => {
           parseErrorToInfo(err).then(res => {
           setInfo({
@@ -246,11 +247,11 @@ const Login = ({ passedInfo }) => {
             
           </div>
 
-          <div className={`input-form-line ${style}`}>
+          {/* <div className={`input-form-line ${style}`}>
             <img className='fbLogo' src={fbLogo} alt="" />
             <input type="text" placeholder='Link do Twojego FB' onChange={(e) => setSocialContact(e.target.value)}></input>
             
-          </div>
+          </div> */}
 
           <div className={`input-form-line ${style}`}>
             <img src={passwordLogo} alt="" />

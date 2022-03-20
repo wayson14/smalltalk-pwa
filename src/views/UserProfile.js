@@ -26,13 +26,15 @@ const UserProfile = ({handleClose, userData}) => {
                 }}
             >
             <div className="user-profile">
-                <img className="profile-avatar" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.DtHViTj3wtToVQA0O9qmbgHaHa%26pid%3DApi&f=1"/>
+                <img className="profile-avatar" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.3dsds66lkcj9C02v5mLCgQHaHg%26pid%3DApi&f=1"/>
                     
                 <h4 className="profile-username">
                     {userData.username}
                 </h4>
                 <div className="profile-social">
-                    <span>{userData.socialLink && `Kontakt: ${userData.socialLink}`} </span>
+                    {/* {console.log('facebook', userData?.socialContact?.facebook)} */}
+                    <span>{userData?.socialContact?.facebook  && `Kontakt: ${userData.socialContact.facebook}`} </span>
+                        {/* {console.log('CONTACT:',userData?.socialContact?.facebook)} */}
                     </div>
                 <div className="profile-social">
                     <span>{userData.id && `ID użytkownika: ${userData.id}`} </span>
@@ -44,7 +46,9 @@ const UserProfile = ({handleClose, userData}) => {
              
                 <div className="profile-about">
                     </div>
-                <button className="action-button">Edytuj</button>
+                <button className="action-button" onClick={e => {
+                    navigate('/addFacebook')
+                }}>Edytuj</button>
                 <button className="action-button" 
                     onClick={() => {
                         authUserLogout().then(res => setUser(res))
