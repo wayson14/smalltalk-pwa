@@ -170,13 +170,50 @@ VIEWS
     text-align: center;
     padding: 1rem;
 }
-.Create-circle-view {
-    // @include flexCenter(column);
-    .form{
-        @include flexCenter(column);
+.Create-cricle-view{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    form{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        input{
+            font-family: $font;
+            text-align: center;
+            width: 22em;
+            height: 2em;
+            @include genericShadow();
+            border-radius: 10px;
+            margin-bottom: 1em;
+            border: none;
+        }
+        textarea{
+            font-family: $font;
+            width: 18em;
+            height: 10em;
+            @include genericShadow();
+            border-radius: 10px;
+            margin-bottom: 1em;
+            border: none;
+            resize: none;
+        }
     }
-    @include view;
-    height: 100vh;
+    width: 100vw;
+    height: 88vh;
+    .time{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        flex-direction: column;
+        input{
+            height: 2em;
+            max-width: 21em;
+            text-align: center;
+        }
+    }
 }
 .Circles-view {
     // @include flexCenter(column);
@@ -215,6 +252,12 @@ VIEWS
         margin-right: 1em;
     }
 }
+.NIY{
+    text-align: center;
+    margin-top: 10em;
+    width: 98vw;
+    height: 82vh;
+}
 /* =================
 TOP BAR & BOTTOM BAR
 ==================*/
@@ -230,6 +273,7 @@ TOP BAR & BOTTOM BAR
         margin-left: 3vw;
     }
     img{
+        cursor:pointer;
         margin-right: 3vw;
         height: 40%;
     }
@@ -535,6 +579,9 @@ BUTTONS
     img{
         width: 80%;
     }
+}
+.Create-cricle-button{
+    @include action-button();
 }
 .show-bottombar-button {
     @include action-button();

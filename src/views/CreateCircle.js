@@ -45,9 +45,8 @@ const CreateCircle = () => {
     <div>
       <TopBar />
       <BottomBar isLoggedin={show} />
-      <h1>Stwórz krąg</h1>
       <div className='Create-cricle-view' onClick={() => setShow(false)} >
-
+      <h1>Stwórz krąg</h1>
         <form>
           {/* <PopUp head2={"Ta funkcja będzie dostępna w pełnej wersji aplikacji"} clas={'chatBttns maybeLater'}/> */}
           <input onChange={e => handleChangeField(e)} name="name" type="text" placeholder='Nazwa' onFocus={(e) => setShow(false)} />
@@ -58,7 +57,7 @@ const CreateCircle = () => {
             <input onChange={e => handleChangeField(e)} name="max_users" type="text" pattern="\d*" placeholder='Ilość użytkowników' maxLength='3' onClick={() => setShow(false)} />
             <input onChange={e => handleChangeField(e)} name="expire_date" type="datetime-local" pattern="\d*" placeholder='Dni do wygaśnięcia' maxLength='3' onClick={() => setShow(false)} />
           </div>
-          <button onClick={(e) => createCircleHandler(e)}>STWÓRZ</button>
+          <button className='Create-cricle-button' onClick={(e) => createCircleHandler(e)}>STWÓRZ</button>
         </form>
       </div>
 

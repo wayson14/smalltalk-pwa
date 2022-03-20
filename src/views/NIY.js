@@ -5,8 +5,10 @@ const NIY = () => {
     const navigate = useNavigate();
   return (
       <>
-    <div className="center-content"><h1>Not implemented yet!</h1>
-    <button className="action-button" onClick={() => {navigate("/")}}>Powrót</button>
+    <div className='NIY'>
+      <div className="center-content"><h1>TRWAJĄ PRACE <br/> ⛔</h1>
+      <button className="action-button" onClick={() => {navigate("/")}}>Powrót</button>
+      </div>
     </div>
   </>
   )
