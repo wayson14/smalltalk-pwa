@@ -10,7 +10,7 @@ import ScrollToBottom, {useAtBottom} from 'react-scroll-to-bottom';
 import useAsyncState from '../services/useAsyncState';
 import ChatEndView from './ChatEndView';
 import PopUp from './PopUp';
-import iceLogo from './loginIcon/Ice.svg';
+import iceLogo from './loginIcon/Ice.png';
 import sendLogo from './loginIcon/sendArrow.svg';
 import XLogo from './loginIcon/X.svg';
 import X2Logo from './loginIcon/X 2.svg';
@@ -345,7 +345,7 @@ const rejectUser = () => {
           <button onClick={e => {
             setMessage('');
             sendMessage(e, message);
-          }}><img src={sendLogo}/></button>
+          }}><img className='sendArrow' src={sendLogo}/></button>
         </div>
         <img className='iceBraker chat-icon' src={iceLogo} alt="" />
       </div>

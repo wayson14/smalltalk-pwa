@@ -5,7 +5,7 @@ import { InfoContext } from '../services/InfoContext';
 const InfoCloud = () => {
     const { user, setUser } = useContext(UserContext);
     const { info, setInfo } = useContext(InfoContext);
-    const [ hover, setHover ] = useState(true);
+    const [ hover, setHover ] = useState(false);
     let style = {
         info: {
             backgroundColor: "lightblue"
@@ -29,26 +29,26 @@ const InfoCloud = () => {
     useEffect(() => {
         // console.log(hover)
         // changeHover().then(()=>setHover(hover => !hover))
-        if (!hover){
-            info.type = 'info';
-            info.text = '';
-            changeHover().then(()=>setHover(hover => !hover))
-            // setHover(hover => !hover)
-                
+        if (info.text !== ''){
+            setHover(true)
+            changeHover()
         }
-    }, [hover])
+            
+    }, [info])
     const changeHover = () => {
         return new Promise(resolve => {
             setTimeout(()=>{
+                setHover(false)
                 resolve(true)
-            }, 500)
+                // console.log('teste')
+            }, 3000)
         })
     }
   return (
     <div 
-    onClick ={() => setHover(hover => !hover)}
+    onClick ={() => setHover(false)}
     
-     style={info.text ? style.display : style.hide}>
+     style={hover ? style.display : style.hide}>
         <div style={style[info.type]} className="info-cloud">
             {info.text}
         </div>

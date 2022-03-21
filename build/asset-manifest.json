@@ -1,8 +1,13 @@
 {
   "files": {
-    "main.css": "/static/css/main.bafb8353.css",
-    "main.js": "/static/js/main.67042e69.js",
+    "main.css": "/static/css/main.5c61ab22.css",
+    "main.js": "/static/js/main.a891ae8d.js",
+    "static/js/845.4d84f23c.chunk.js": "/static/js/845.4d84f23c.chunk.js",
+    "static/media/Sweden.mp3": "/static/media/Sweden.b7159782763228f39b83.mp3",
+    "static/media/sadSound.mp3": "/static/media/sadSound.fe36afef05b1356191c3.mp3",
+    "static/media/godSound.mp3": "/static/media/godSound.59d74a083634a3b88fc2.mp3",
     "service-worker.js": "/service-worker.js",
+    "static/media/Glass_dig1.mp3": "/static/media/Glass_dig1.23b72613522a7f53396c.mp3",
     "static/media/Warstwa 1.svg": "/static/media/Warstwa 1.8fbdf68ebf99a2786081c207221a9f67.svg",
     "static/media/QR.svg": "/static/media/QR.a4615518c2e128067f7ee18ce7051e10.svg",
     "static/media/instagram.svg": "/static/media/instagram.653b98c4a2d89ce850c85efb0c20c941.svg",
@@ -21,11 +26,12 @@
     "static/media/icons8-facebook.svg": "/static/media/icons8-facebook.8c9f6312c8f081298c3f5458ab6dfd88.svg",
     "static/media/X 2.svg": "/static/media/X 2.1f43be982975f817d7be58a8378d8ea4.svg",
     "static/media/check.svg": "/static/media/check.56500640a1bc7ecd0007bbce5bca0d60.svg",
-    "main.bafb8353.css.map": "/static/css/main.bafb8353.css.map",
-    "main.67042e69.js.map": "/static/js/main.67042e69.js.map"
+    "main.5c61ab22.css.map": "/static/css/main.5c61ab22.css.map",
+    "main.a891ae8d.js.map": "/static/js/main.a891ae8d.js.map",
+    "845.4d84f23c.chunk.js.map": "/static/js/845.4d84f23c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.bafb8353.css",
-    "static/js/main.67042e69.js"
+    "static/css/main.5c61ab22.css",
+    "static/js/main.a891ae8d.js"
   ]
 }

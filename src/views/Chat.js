@@ -1,5 +1,5 @@
 // #TODO: problem zamykania poprawnego sesji, użytkownik jeżęli nie opuście samodzielnie sesji to może wejść do niej z powrotem
-
+import useSound from 'use-sound';
 import { React, useState, useEffect, useRef, useContext } from 'react';
 import { useNavigate } from 'react-router';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
@@ -10,7 +10,7 @@ import { InfoContext } from '../services/InfoContext';
 import useAsyncState from '../services/useAsyncState';
 import ChatEndView from './ChatEndView';
 import PopUp from './PopUp';
-import iceLogo from './loginIcon/Ice.svg';
+import iceLogo from './loginIcon/Ice.png';
 import sendLogo from './loginIcon/sendArrow.svg';
 import XLogo from './loginIcon/X.svg';
 import X2Logo from './loginIcon/X 2.svg';
@@ -19,16 +19,21 @@ import fbLogo from './loginIcon/fb.svg';
 import instLogo from './loginIcon/instagram.svg';
 import userLogo from './loginIcon/Avatar.svg';
 import PopUpBase from './PopUpBase'
+
+import sweden from '../media/Sweden.mp3'
+import icebreakSound from '../media/Glass_dig1.mp3'
+
 const Chat = () => {
   const navigate = useNavigate();
   const el = document.getElementById('messages-array');
   // if (el) {
   //   el.scrollTop = el.scrollHeight;
   // }
-
+  const [playSweden] = useSound(sweden);
   const { user, setUser } = useContext(UserContext);
   const { info, setInfo } = useContext(InfoContext);
 
+  const [playIcebreak] = useSound(icebreakSound);
 
   const client = useRef();
   const scrollBody = useRef();
@@ -38,7 +43,9 @@ const Chat = () => {
   const [ifWantToReject, setIfWantToReject] = useAsyncState(false);
   const [ifRevealed, setIfRevealed] = useAsyncState(false);
   const [ifRejected, setIfRejected] = useAsyncState(false);
+  const [cooldown, setCooldown] = useState(false)
 
+  
   const [enemyUsername, setEnemyUsername] = useState();
 
   const [showRevealPanel, setShowRevealPanel] = useState(false);
@@ -187,7 +194,7 @@ const Chat = () => {
       // console.log(e)
       console.log('Występił błąd, próba ponownego połączenia...');
       setInfo({
-        text: 'Problem z połączeniem WS',
+        text: 'Problem z połączeniem, spróbuj wyjść i wejść jeszcze raz.',
         type: 'error'
       })
       client.current.close()
@@ -212,15 +219,24 @@ const Chat = () => {
     }
   }, [])
 
-  function sendIcebrear(){
-    getIcebreaker().then(icebreaker =>
-    client.current.send(JSON.stringify({
-      type: "message",
-      message: `#008 ${icebreaker}`,
-      username: user.username,
-      sendTime: new Date()
-    }))
-    )
+  function sendIcebreaker(){
+    if (!cooldown){
+      getIcebreaker().then(icebreaker =>
+      client.current.send(JSON.stringify({
+        type: "message",
+        message: `#008 ${icebreaker}`,
+        username: user.username,
+        sendTime: new Date()
+      }))
+      ).then(() => playIcebreak())
+      .then(() => setCooldown(true))
+      .then(() => setTimeout(() => setCooldown(false), 120000))}
+    else {
+      setInfo({
+        text: `Możesz użyć IceBreakera co 120 sekund.`,
+        type: 'info'
+      })
+    }
   }
   const revealUser = () => {
     setIfWanting(ifWantint => !ifWanting)
@@ -337,7 +353,9 @@ const Chat = () => {
   // useEffect(() => {
   //   console.log(messagesArray);
   // }, [messagesArray])
-
+  // useEffect(() => {
+  //   if ()
+  // }, [cooldown])
   useEffect(() => {
     if (scrollBody) {
       scrollBody.current.addEventListener('DOMNodeInserted', event => {
@@ -405,11 +423,11 @@ const Chat = () => {
           <button onClick={e => {
             // setMessage('');
             e.preventDefault()
-            console.log(e.target.parentElement.parentElement.querySelector('input').focus())
+            e.target.parentElement.parentElement.querySelector('input').focus()
             sendMessage(e, message);
           }}><img src={sendLogo} /></button>
         </div>
-        <img className='iceBraker chat-icon' onClick={() => sendIcebrear()} src={iceLogo} alt="" />
+        <img className='iceBraker chat-icon' onClick={() => sendIcebreaker()} src={iceLogo} alt="" />
       </div>
       {showRevealPanel && <PopUp show={showRevealPanel} setShow={setShowRevealPanel} head2={"Druga osoba chce cię poznać"} clas={'chatBttns'} funCtion1={revealUser} />}
 

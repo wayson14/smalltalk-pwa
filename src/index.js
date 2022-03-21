@@ -6,6 +6,11 @@ import { CookiesProvider } from "react-cookie";
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 // import reportWebVitals from './reportWebVitals';
 
+// window.addEventListener('appinstalled', (event) => {
+//   if ( 'function' === typeof ga ) {
+//       // Default GA.
+//       ga( 'send', 'event', 'test', 'test', 'test', 'installed' );
+//   }}); 
 
 ReactDOM.render(
   <CookiesProvider>

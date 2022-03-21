@@ -62,28 +62,26 @@ const UserProfile = ({ handleClose,
                 </div>}
 
                 {type === 'revealed-view' && <div className="pop-up-container">
-                    <h2 className="bold-header">🎉 Gratulacje! 🎉<br/>Właśnie poznałeś: </h2>
-                    {playVictory()}
+                    <h2 className="bold-header">🎉 Gratulacje! 🎉<br/>Właśnie się poznaliście: </h2>
+                    {/* {playVictory()} */}
                     {/* <img className="profile-avatar" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.DtHViTj3wtToVQA0O9qmbgHaHa%26pid%3DApi&f=1" /> */}
 
-                    <h4 className="profile-username">
-                        {revealObject.u1}
-                    </h4>
-                    <h4 className="profile-username">
-                        &
-                    </h4>
-                    <h4 className="profile-username">
-                        {revealObject.u2}
-                    </h4>
-                    <div className="profile-social">
-                        {revealObject.s1}
-                    </div>
-                    <div className="profile-social">
-                        {revealObject.s2}
+                    {/* <h4 className="profile-username">
+                        {`${revealObject.u1} & ${revealObject.u2}`} 
+                    </h4> */}
+                    <div className="profile-social center-content">
+                        <div className="reveal-line">
+                            <h4>{revealObject.u1}:</h4>
+                            {/* <a href={`${revealObject.s1}`}>{revealObject.s1}</a> */}
+                        </div>
+                        <div className="reveal-line">
+                            <h4>{revealObject.u2}:</h4>
+                            {/* <a href={`${revealObject.s2}`}>{revealObject.s2}</a> */}
+                        </div>
                     </div>
                     <div className="profile-about">
                     </div>
-                    <button className="action-button reavel" onClick={() => navigate("/")}>Powrót</button>
+                    <button className="action-button" onClick={() => navigate("/")}>Powrót</button>
               
                 </div>}
             </div>

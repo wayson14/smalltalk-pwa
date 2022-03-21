@@ -113,6 +113,11 @@ GLOBALS & UTILITIES
     @include flexCenter(column)
 
 }
+.reveal-line {
+    @include flexCenter(row);
+    gap: 10px;
+
+}
 .viewport-center-content {
     @include flexCenter(column);
     position: fixed;
@@ -265,7 +270,6 @@ VIEWS
 }
 .footer {
     @include flexCenter(row);
-    width: 64vw;
     font-size: $secondaryText;
     // bottom: 0px;
     p{
@@ -461,7 +465,7 @@ FORMS
     width: 100vw;
     input{
         border: none;
-        min-width: 19em;
+        min-width: 18em;
         height: 2em;
         border-radius: 20px;
         padding-left: 1em;
@@ -470,9 +474,14 @@ FORMS
         background: $white;
         border: none;
         height: 2em;
-        padding-right: .5em;
+        padding-right: .7em;
+        padding-left: .4em;
         border-radius: 8px;
+        padding-top: .3em;
         z-index: 3;
+    }
+    .sendArrow{
+        height: 1.1em;
     }
     .send-message{
         @include genericShadow();
@@ -481,12 +490,14 @@ FORMS
         background-color:$white;
     }
     .iceBraker{
+        margin-left: 0.4em;
         margin-top: 0.3em;
         height: 3em;
     }
     .xLogo{
+        margin-right: 0.4em;
         margin-top: 0.3em;
-        margin-left: 0.5em;
+        margin-left: 0.4em;
     }
 }
 .messages-array{
@@ -529,6 +540,7 @@ FORMS
     background-color: $white;
 }
 .join-circle-input{
+        text-transform: uppercase;
         font-family: $font;
         font-size: 17px;
         border-bottom-left-radius: 0.5em;
@@ -537,7 +549,11 @@ FORMS
         border: none;
         margin-left: 2em;
         padding: 0.5em;
-    }
+}
+.join-circle-input::placeholder {
+    text-transform: none;
+  }
+  
 
 .codeInput{
     display: flex;
@@ -587,23 +603,23 @@ BUTTONS
 }
 .chat-action-button {
     @include action-button();
-    padding: 1.2rem;
+    // padding: 1.2rem;
     font-size: 30px;
     max-width: 60em;
     min-width: 6em;
-    max-height: 2.2em;
+    // max-height: 2.2em;
     transition: background 0.10s;
     // align-self: flex-end;
 }
 .join-circle-button {
-    border-top-right-radius: 0.5em;
-    border-bottom-right-radius: 0.5em;
     transform: rotate(180deg);
+    border-radius: 12px;
     border: none;
     height: 100%;
-    padding-left: .3em;
+    padding-left: .6em;
     img{
-        width: 80%;
+        padding-right: .5em;
+        width: 100%;
     }
 }
 .Create-cricle-button{
@@ -645,6 +661,7 @@ POP-UPS & INFO CLOUDS
     background-color: lightgreen;
     opacity: 95%;
     font-size: 1.4em;
+    // transition: opacity 1s ease-in-out;
 }
 .user-profile {
     @include flexCenter(column);
@@ -680,9 +697,9 @@ POP-UPS & INFO CLOUDS
     }
     padding: .5em;
 }
-.reavel{
-    margin-top: -3em;
-}
+// .reavel{
+//     margin-top: -3em;
+// }
 .pop-up-container {
     @include flexCenter(column);
     padding: 1em;

@@ -172,7 +172,7 @@ const Login = ({ passedInfo }) => {
           setInfo({
           })
           console.log('login');
-          navigate('/addFacebook')
+          navigate('/') //addFacebook
   
         })
         .catch(err => {
@@ -265,9 +265,11 @@ const Login = ({ passedInfo }) => {
           </div>
           <div className="consent-container">
             <div>
-              <label  className="consent-text" for="pivacyConsent">Wyrażam zgodę na przetwarzanie moich danych osobowyc</label>
+              <label  className="consent-text" for="pivacyConsent">Wyrażam zgodę na przetwarzanie moich danych osobowych</label>
               <br/>
-              <a href="https://smalltalk.today/">Regulamin</a>
+              <a href="https://dev.smalltalk.today/rodo">Regulamin</a>
+              <br/>
+              <a href="https://dev.smalltalk.today/cookies">Cookies</a>
             </div>
             <input onChange={(e) => {setPrivacyConsent(e.target.checked)}} className="consent-checkbox" type="checkbox" id="privacyConsent"/>
           </div>

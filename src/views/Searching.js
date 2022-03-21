@@ -5,16 +5,27 @@ import ellipse from './loginIcon/Ellipse.svg';
 import {useNavigate} from "react-router-dom";
 import { getRoomID, joinWaitingroom, leaveWaitingroom } from "../services/api_methods";
 import {handleErrorResponse} from '../services/client'
+import useSound from 'use-sound';
+import sweden from '../media/Sweden.mp3'
 
 const Searching = () => {
+
+  const [playSweden] = useSound(sweden);
   const { user, setUser } = useContext(UserContext);
   const { info, setInfo } = useContext(InfoContext);
   const navigate = useNavigate();
    
   useEffect(() => {
+    playSweden()
+  }, [])
+
+  
+  useEffect(() => {
+    
     FindMatch()
     let interval = setInterval(() => {
       FindMatch()}, 3000)
+
     return () => {clearInterval(interval)}
   }, [])
   const chat = () => {
@@ -60,7 +71,7 @@ const Searching = () => {
     })
   }
   return (
-  <div className="Searching-view">
+  <div className="Searching-view" >
       <img className="elipse" src={ellipse} />
       <h1>Oczekiwanie na przydzielenie do sesji<span className='dot'>.</span><span className='dot'>.</span><span className='dot'>.</span></h1>
       <div className='searching-button-panel'>

@@ -295,25 +295,62 @@ export const getIcebreaker = () =>{
     let icebreakers = [
         'Lubisz Bounty?',
         'Słuchasz Mandaryny?',
-        'Jesteś przyjacielem Piaska?'
+        'Co robisz, aby pozbyć się stresu?',
+'Jakie trzy słowa najlepiej Cię opisują?',
+'Jaki byłby Twój idealny weekend?',
+'Co będziesz robić w ten weekend?',
+'Jaka jest Twoja ulubiona liczba? Czemu?',
+'Co jest teraz popularne, co Cię irytuje?',
+'Czym się tak naprawdę interesowałeś, gdy byłeś dzieckiem?',
+'Czy jesteś osobą bardzo zorganizowaną?',
+'Jaka jest Twoja najbardziej kontrowersyjna opinia?',
+'Kto wywarł największy wpływ na osobę, którą się stałeś?',
+'Czego się boisz, skrywa się w ciemności?',
+'Co chcesz osiągnąć przed śmiercią?',
+'Gdzie jest najlepsze miejsce na randkę?',
+'Co cię denerwuje?',
+'Co myślisz o teleturniejach? Czy masz ulubiony?', 
+'Lubisz Bounty?', 
+'Szybka ocenka pizzy hawajskiej',
+'Jak wymawiasz "croissant"?',
+'Psy czy Koty?',
       ]
     let chosen = Math.floor(icebreakers.length*Math.random())
-    console.log(chosen)
-    console.log(icebreakers[chosen])
+    // console.log(chosen)
+    // console.log(icebreakers[chosen])
     return placeholderPromise('string').then(() => icebreakers[chosen])
 }
 
-export const changeSocial = ({link = 'wp.pl', csrftoken}) => {
+// export const changeSocial = ({link = 'wp.pl', csrftoken}) => {
+    
+//     const body = JSON.stringify({facebook: `${link}`})
+    
+//     return request({
+//         path: '/change_social/',
+//         csrftoken: csrftoken,
+//         address: chatApiUrl,
+//         options: {
+//             headers: {
+//                 'X-CSRFToken' : csrftoken
+//             },
+//             method: 'POST',
+//             body: body
+//         }
+//     })
+// }
+
+export const changeSocial = ({link = 'wp.pl', csrftoken, token}) => {
     
     const body = JSON.stringify({facebook: `${link}`})
     
     return request({
         path: '/change_social/',
+        token: token,
         csrftoken: csrftoken,
         address: chatApiUrl,
         options: {
             headers: {
-                'X-CSRFToken' : csrftoken
+                'X-CSRFToken' : 'csrftoken'
             },
             method: 'POST',
             body: body

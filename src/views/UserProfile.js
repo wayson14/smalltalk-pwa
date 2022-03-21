@@ -46,9 +46,9 @@ const UserProfile = ({handleClose, userData}) => {
              
                 <div className="profile-about">
                     </div>
-                <button className="action-button" onClick={e => {
-                    navigate('/addFacebook')
-                }}>Edytuj</button>
+                {/* <button className="action-button" onClick={e => {
+                    navigate('/addFacebook') //addFacebook
+                }}>Edytuj</button> */}
                 <button className="action-button" 
                     onClick={() => {
                         authUserLogout().then(res => setUser(res))
