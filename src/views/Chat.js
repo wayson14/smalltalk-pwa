@@ -43,7 +43,7 @@ const Chat = () => {
   const [ifWantToReject, setIfWantToReject] = useAsyncState(false);
   const [ifRevealed, setIfRevealed] = useAsyncState(false);
   const [ifRejected, setIfRejected] = useAsyncState(false);
-  const [cooldown, setCooldown] = useAsyncState(0)
+  const [cooldown, setCooldown] = useState(false)
 
   
   const [enemyUsername, setEnemyUsername] = useState();
@@ -220,7 +220,7 @@ const Chat = () => {
   }, [])
 
   function sendIcebreaker(){
-    if (cooldown === 0){
+    if (!cooldown){
       getIcebreaker().then(icebreaker =>
       client.current.send(JSON.stringify({
         type: "message",
@@ -228,10 +228,12 @@ const Chat = () => {
         username: user.username,
         sendTime: new Date()
       }))
-      ).then(() => playIcebreak()).then(() => setCooldown(120))}
+      ).then(() => playIcebreak())
+      .then(() => setCooldown(true))
+      .then(() => setTimeout(() => setCooldown(false), 120000))}
     else {
       setInfo({
-        text: `Możesz użyć IceBreakera co ${cooldown} sekund.`,
+        text: `Możesz użyć IceBreakera co 120 sekund.`,
         type: 'info'
       })
     }
@@ -351,11 +353,9 @@ const Chat = () => {
   // useEffect(() => {
   //   console.log(messagesArray);
   // }, [messagesArray])
-  useEffect(() => {
-    if (cooldown > 0){
-      setCooldown(cooldown => cooldown--)
-    }
-  }, [cooldown])
+  // useEffect(() => {
+  //   if ()
+  // }, [cooldown])
   useEffect(() => {
     if (scrollBody) {
       scrollBody.current.addEventListener('DOMNodeInserted', event => {

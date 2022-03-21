@@ -295,7 +295,6 @@ export const getIcebreaker = () =>{
     let icebreakers = [
         'Lubisz Bounty?',
         'Słuchasz Mandaryny?',
-        'Jesteś przyjacielem Piaska?',
         'Co robisz, aby pozbyć się stresu?',
 'Jakie trzy słowa najlepiej Cię opisują?',
 'Jaki byłby Twój idealny weekend?',
@@ -304,9 +303,8 @@ export const getIcebreaker = () =>{
 'Co jest teraz popularne, co Cię irytuje?',
 'Czym się tak naprawdę interesowałeś, gdy byłeś dzieckiem?',
 'Czy jesteś osobą bardzo zorganizowaną?',
-'Jaka jest Twoja kontrowersyjna opinia?',
+'Jaka jest Twoja najbardziej kontrowersyjna opinia?',
 'Kto wywarł największy wpływ na osobę, którą się stałeś?',
-'Która z ostatnich wiadomości jest najbardziej interesująca?',
 'Czego się boisz, skrywa się w ciemności?',
 'Co chcesz osiągnąć przed śmiercią?',
 'Gdzie jest najlepsze miejsce na randkę?',
@@ -315,8 +313,6 @@ export const getIcebreaker = () =>{
 'Lubisz Bounty?', 
 'Szybka ocenka pizzy hawajskiej',
 'Jak wymawiasz "croissant"?',
-'Który z prezenterów jest największym debilem?',
-'Co robimy z PiSem?',
 'Psy czy Koty?',
       ]
     let chosen = Math.floor(icebreakers.length*Math.random())
