@@ -267,7 +267,9 @@ const Login = ({ passedInfo }) => {
             <div>
               <label  className="consent-text" for="pivacyConsent">Wyrażam zgodę na przetwarzanie moich danych osobowych</label>
               <br/>
-              <a href="https://smalltalk.today/">Regulamin</a>
+              <a href="https://dev.smalltalk.today/Polityka-prywatno%C5%9Bci-RODO.pdf">Regulamin</a>
+              {/* <br/> */}
+              {/* <a href="https://dev.smalltalk.today/Polityka-Cookies.pdf">Cookies</a> */}
             </div>
             <input onChange={(e) => {setPrivacyConsent(e.target.checked)}} className="consent-checkbox" type="checkbox" id="privacyConsent"/>
           </div>

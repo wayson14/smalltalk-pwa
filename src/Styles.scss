@@ -592,11 +592,11 @@ BUTTONS
 }
 .chat-action-button {
     @include action-button();
-    padding: 1.2rem;
+    // padding: 1.2rem;
     font-size: 30px;
     max-width: 60em;
     min-width: 6em;
-    max-height: 2.2em;
+    // max-height: 2.2em;
     transition: background 0.10s;
     // align-self: flex-end;
 }
