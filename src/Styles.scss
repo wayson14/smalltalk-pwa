@@ -428,6 +428,7 @@ BOXES & CONTAINERS
     @include flexCenter(column);
     overflow: auto;
     border-radius: 10px;
+    margin-bottom: 2em;
     // width: clamp(120px, 60vw, 500px);
 }
 .circle-admin-section {

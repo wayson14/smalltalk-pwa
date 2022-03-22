@@ -93,9 +93,10 @@ const Match = () => {
           <form className={`codeInput ${style}`}>
             <div className="join-circle-input-form-line">
               
-              <input className="join-circle-input" maxLength={8} type="text" placeholder="Wpisz kod kręgu" onChange={
+              <input className="join-circle-input" maxLength="8" type="text" placeholder="Wpisz kod kręgu" onChange={
                 (e) => {
-                  setCircleCode(() => e.target.value)
+                  setCircleCode(() => e.target.value.toUpperCase())
+                  console.log(circleCode)
                 }
               }></input>
               <button className="join-circle-button" onClick={
