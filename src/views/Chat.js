@@ -19,6 +19,10 @@ import fbLogo from './loginIcon/fb.svg';
 import instLogo from './loginIcon/instagram.svg';
 import userLogo from './loginIcon/Avatar.svg';
 import PopUpBase from './PopUpBase'
+import homeLogo from './loginIcon/homeLogo.svg';
+import {Link } from "react-router-dom";
+// import CancelIcon from '@mui/icons-material/Cancel';
+
 
 import sweden from '../media/Sweden.mp3'
 import icebreakSound from '../media/Glass_dig1.mp3'
@@ -381,13 +385,17 @@ const Chat = () => {
       
       {/* #TODO: dodać topbar taki jak w figmie */}
       <div className="top-chat-bar">
+      <img className='xLogo chat-icon' src={XLogo} alt="" onClick={() => setShowRejectChoice(true)} />
+      {/* <CancelIcon></CancelIcon> */}
         <button className="action-button" onClick={() => setShowRevealChoice(true)}>{ifWanting ? "Zrezygnuj" : "Odkryj"}</button>
-        <h4>{enemyUsername}</h4>
+        {/* <h4>{enemyUsername}</h4> */}
         {/* <button onClick={() => {
           scrollBody.current.scrollTop = 0
           //  scrollBody.current.scrollHeight
         }}>do dołu</button> */}
-        <button className="action-button" onClick={() => navigate("/")}>Menu</button>
+        <Link to="/" ><img src={homeLogo} alt="" className="homeLogo chat-icon"/></Link>
+
+        {/* <button className="action-button" onClick={() => navigate("/")}>Menu</button> */}
       </div>
       
       <div className='chatFlip chat-body ' id="chatBody" ref={scrollBody}>
@@ -417,7 +425,8 @@ const Chat = () => {
       </div>
       {/* <div className="input-chat bottom-bar"> zamienione*/} 
       <div className="input-chat">
-        <img className='xLogo chat-icon' src={XLogo} alt="" onClick={() => setShowRejectChoice(true)} />
+      <img className='iceBraker chat-icon' onClick={() => sendIcebreaker()} src={iceLogo} alt="" />
+
         <div className='send-message'>
           <input  placeholder='Napisz coś...' value={message} maxlength="255" type="text" onChange={e => setMessage(e.target.value)}></input>
           <button onClick={e => {
@@ -427,7 +436,6 @@ const Chat = () => {
             sendMessage(e, message);
           }}><img src={sendLogo} /></button>
         </div>
-        <img className='iceBraker chat-icon' onClick={() => sendIcebreaker()} src={iceLogo} alt="" />
       </div>
       {showRevealPanel && <PopUp show={showRevealPanel} setShow={setShowRevealPanel} head2={"Druga osoba chce cię poznać"} clas={'chatBttns'} funCtion1={revealUser} />}
 

@@ -9,6 +9,7 @@ $black: #000000;
 $red: #FC7171;
 $dark-grey: #cececeb2;
 
+$icon-width: clamp(30px, 30px, 40px);
 $top-bar-height: 75px;
 $bottom-bar-height: 50px;
 *{
@@ -455,7 +456,9 @@ FORMS
 ==================*/
 .input-chat {
     @include flexCenter(row);
-    justify-content: space-between;
+    gap: 10px;
+    justify-content: center;
+    align-content: center;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -486,7 +489,8 @@ FORMS
     }
     .send-message{
         @include genericShadow();
-        width: 17em;
+        max-width: 17em;
+        margin-right: 1em;
         border-radius: 20px;
         background-color:$white;
     }
@@ -494,13 +498,18 @@ FORMS
         margin-left: 0.4em;
         margin-top: 0.3em;
         height: 3em;
+        max-height: 35px;
+        width: 35px;
     }
     .xLogo{
+        width: $icon-width;
+        color: black;
         margin-right: 0.4em;
         margin-top: 0.3em;
         margin-left: 0.4em;
     }
 }
+
 .messages-array{
     height: 100vh;
     display: flex;
@@ -516,7 +525,8 @@ FORMS
 
 .send-message {
     width: 100%;
-    @include flexCenter(row)
+    @include flexCenter(row);
+    
 }
 .input-form-line {
     padding-top: 0.5rem;
@@ -737,8 +747,10 @@ ICONS & IMAGES
 .chat-icon {
     // height: clamp(5vw, 20px, 40px);
     // width: clamp(5vw, 20px, 40px);
+    width: $icon-width;
+    max-height: $icon-width;
     min-height: 1em;
-    max-height: 4em;
+    // max-height: 4em;
 }
 /* =================
 MESSAGES
