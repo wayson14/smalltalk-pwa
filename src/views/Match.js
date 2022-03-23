@@ -151,7 +151,7 @@ const Match = () => {
   
       <div className='Match-view'>
         <div className='scanner content-container'>
-        <h4>Dodaj się do kręgu kodem dołączeniowym (8 znaków)</h4>
+        <h4>Dodaj się do kręgu za pomoca kodu</h4>
           <form className={`codeInput ${style}`}>
             <div className="join-circle-input-form-line">
               
