@@ -18,11 +18,12 @@ const Match = () => {
   const [showBottomBar, setShowBottomBar] = useState(false);
   const [circleCode, setCircleCode] = useState('')
   const [style, setStyle] = useState('');
-  
+  const [showChatButton, setShowChatButton] = useState(false)
   const [cookies, setCookie] = useCookies();
 
   useEffect(() => {
     // getWholeUser(user.id).then(gottenUser => console.log(gottenUser))
+    getUserCirclesIDs().then(res => (res.type == 'error' ? setShowChatButton(false) : setShowChatButton(true)))
     getWholeUser({token: user.token, id: user.id})
       .then(gottenUser => {
         // console.log(gottenUser)
@@ -81,6 +82,7 @@ const Match = () => {
             type: res.type
           })
           // throw new Error(res.message)
+          console.log(res.message)
         }
         setUser(user => ({ ...user, roomID: res.message }))
       })
@@ -101,13 +103,44 @@ const Match = () => {
   }
 
   const enterChat = () => {
-    
-    joinWaitingroom().then(
-      (res) => {
-        // res.type === 'error'
-        searching()
-      }
-    )
+    getUserCirclesIDs()
+      .then(res => {
+        if (res.type == 'error'){
+          throw new Error(res.message);
+        }
+        else return res
+        // return (res.type == 'error' ? reject(res.message) : res)
+      })
+      .then(res => {
+        // console.log(res)
+        // console.log('przeszło')
+        // setInfo({
+        //   text: '',
+        //   type: res.type
+        // })
+        return res
+      })
+      .then(res => {
+        joinWaitingroom().then(
+          (res) => {
+            // res.type === 'error'
+            searching()
+          }
+        )
+      })
+      .catch(err => {
+        setInfo({
+          text: err.message,
+          type: 'error'
+        })
+      })
+      
+    // joinWaitingroom().then(
+    //   (res) => {
+    //     // res.type === 'error'
+    //     searching()
+    //   }
+    // )
   }
 
   return (
@@ -139,7 +172,7 @@ const Match = () => {
           <img src={qrLogo} className='qr' />
           {undefined !== undefined? <button className='continue-action-button' onClick={enterChat}>Kontynuuj</button> 
             : 
-          <button className='chat-action-button' onClick={enterChat}>Chatuj</button>}
+          (showChatButton && <button className='chat-action-button' onClick={enterChat}>Chatuj</button>)}
         </div>
         <BottomBar />
       </div>
