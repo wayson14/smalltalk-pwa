@@ -41,6 +41,35 @@ const Match = () => {
     const path = `/searching`;
     navigate(path);
   }
+
+  const joinCircleHandler = (e) => {
+      //to będzie robione w Django
+      e.preventDefault();
+      joinCircle(circleCode) //TODO: błędy powinny być przekazywane do popupu z requesta
+        .then(res => handleErrorResponse(res, "Błąd przy dołączaniu do kręgu!"))
+        .then(res => {
+          document.getElementsByClassName("join-circle-input").value = ''
+
+          // document.getElementsById("join-circle-input").value = ''
+          let IDs = [];
+          // console.log(res)
+          setInfo({
+            text: res.message,
+            type: res.type
+          })
+          enterChat();
+          // navigate('/circles')
+
+        })
+        .catch(err => {
+          document.getElementById("joinCircleInput").value = ''
+          setInfo({
+            text: err,
+            type: 'error'
+          })
+          // console.log(err)
+        })
+  }
   const FindMatch = () => {
     getUserCirclesIDs()
       .then(res => (res.type === 'error' ? Error(res.message) : getRoomID()))
@@ -89,43 +118,21 @@ const Match = () => {
   
       <div className='Match-view'>
         <div className='scanner content-container'>
-        <h4>Dodaj się do kręgu</h4>
+        <h4>Dodaj się do kręgu kodem dołączeniowym (8 znaków)</h4>
           <form className={`codeInput ${style}`}>
             <div className="join-circle-input-form-line">
               
-              <input className="join-circle-input" maxLength="8" type="text" placeholder="Wpisz kod kręgu" onChange={
+              <input id="joinCircleInput" className="join-circle-input" maxLength="8" type="text" placeholder="Kod kręgu" onChange={
                 (e) => {
                   setCircleCode(() => e.target.value.toUpperCase())
+                  // e.target.value = circleCode
                   console.log(circleCode)
                 }
               }></input>
-              <button className="join-circle-button" onClick={
-                (e) => {
-                  //to będzie robione w Django
-                  e.preventDefault();
-
-                  joinCircle(circleCode) //TODO: błędy powinny być przekazywane do popupu z requesta
-                    .then(res => handleErrorResponse(res, "Błąd przy dołączaniu do kręgu!"))
-                    .then(res => {
-
-                      let IDs = [];
-                      // console.log(res)
-                      setInfo({
-                        text: res.message,
-                        type: res.typeoin
-                      })
-                      navigate('/circles')
-                    })
-                    .catch(err => {
-                      setInfo({
-                        text: err,
-                        type: 'error'
-                      })
-                      // console.log(err)
-                    })
-                }
-              }>
-                <img src={arrowLogo} alt="" />
+              <button className="join-circle-button" onClick={e => joinCircleHandler(e) }
+              >
+                {/* <img src={arrowLogo} alt="" /> */}
+                +
               </button>
             </div>
           </form>

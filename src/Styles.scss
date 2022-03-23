@@ -538,18 +538,21 @@ FORMS
     margin-bottom: 1em;
     border: none;
     border-radius: 40px;
+    // height: 0.7em;
     background-color: $white;
+    // font-size: 4rem;
 }
 .join-circle-input{
         text-transform: uppercase;
         font-family: $font;
-        font-size: 17px;
-        border-bottom-left-radius: 0.5em;
-        border-top-left-radius: 0.5em;
-        width: 74%;
+        font-size: 30px;
+        border-bottom-left-radius:40px;
+        border-top-left-radius: 40px;
+        width: 100%;
         border: none;
-        margin-left: 2em;
+        // margin-left: 2em;
         padding: 0.5em;
+        margin: 0px;
 }
 .join-circle-input::placeholder {
     text-transform: none;
@@ -613,11 +616,14 @@ BUTTONS
     // align-self: flex-end;
 }
 .join-circle-button {
-    transform: rotate(180deg);
-    border-radius: 12px;
+    // transform: rotate(180deg);
+    border-radius: 40px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
     border: none;
     height: 100%;
-    padding-left: .6em;
+    font-size: 3rem;
+    // padding-left: .6em;
     img{
         padding-right: .5em;
         width: 100%;
